@@ -7,8 +7,8 @@ admin.site.site_header = "Inventory Management System"
 
 class ProductAdmin(admin.ModelAdmin):
     model = failureInfo
-    list_display = ("model", "testStation","faildate","failureDescription")
-    list_filter = ["testStation"]
+    list_display = ("test_Cells","model", "failure_Station","failure_Description","failure_date")
+    list_filter = ["failure_date"]
     search_fields = ["model"]
 
 
@@ -17,7 +17,6 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ("info", "order_quantity", "date")
     list_filter = ["date"]
     search_fields = ["info"]
-
 
 class UserProfileAdmin(admin.ModelAdmin):
     model = UserProfile

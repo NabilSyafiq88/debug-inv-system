@@ -2,13 +2,40 @@
 from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
+from django import forms
 
-TEST_STATION = (
+FAILURE_STATION = (
     ("PCA Burn IN", "PCA Burn IN"),
     ("Calibration", "Calibration"),
     ("Final Test", "Final Test"),
+    ("Temperature Test", "Temperature Test"),
+    ("Manual Test", "Manual Test"),
+    ("LCD Check", "LCD Check"),
+    ("Laser Alignment", "Laser Alignment"),
+    ("Manual Test", "Manual Test"),
 )
 
+TEST_STATION = (
+    ("CRICKET", "CRICKET"),
+    ("FANJI", "FANJI"),
+    ("BASS", "BASS"),
+    ("CARP", "CARP"),
+    ("BEIDOU", "BEIDOU"),
+    ("72X", "72X"),
+    ("HPUMP HTP", "HPUMP HTP"),
+    ("5X", "5X"),
+    ("TIC300", "TIC300"),
+    ("LEPTON", "LEPTON"),
+    ("ZULU", "ZULU"),
+    ("SHAKA", "SHAKA"),
+    ("PRO3000 PROBE", "PRO3000 PROBE"),
+    ("PRO3000 TONER", "PRO3000 TONER"),
+    ("INTELLITONE PROBE", "INTELLITONE PROBE"),
+    ("INTELLITONE TONER", "INTELLITONE TONER"),
+    ("MS2", "MS2"),
+    ("MS-POE", "MS-POE"),
+    ("WIREMAP", "WIREMAP"),
+)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -21,12 +48,12 @@ class UserProfile(models.Model):
 
 
 class failureInfo(models.Model):
+    test_Cells = models.CharField(max_length=20, choices=TEST_STATION, null=True)
     model = models.CharField(max_length=100, null=True)
-    testStation = models.CharField(max_length=20, choices=TEST_STATION, null=True)
-    quantity = models.PositiveIntegerField(null=True)
-    failureDescription = models.CharField(max_length=200, null=True)
-    faildate = models.DateTimeField(auto_now_add=True)
-    
+    failure_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
+    PCA_SN_Number = models.CharField(max_length=100, null=True)
+    failure_Description = models.CharField(max_length=200, null=True)
+    failure_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.model

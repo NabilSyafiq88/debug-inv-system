@@ -23,7 +23,7 @@ class UserRegistry(UserCreationForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = failureInfo
-        fields = ["model", "testStation", "failureDescription"]
+        fields = ["model", "failure_Station", "failure_Description"]
 
 
 class OrderForm(forms.ModelForm):
