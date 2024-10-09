@@ -20,16 +20,18 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth
 from django.urls import include, path
+from inventoryapp.views import search_PCA_SN
 
 urlpatterns = [
     path("/", include("inventoryapp.urls")),
     path("admin/", admin.site.urls),
-    path(
-        "", auth.LoginView.as_view(template_name="inventory/login.html"), name="login"
-    ),
-    path(
-        "logout/",
-        auth.LogoutView.as_view(template_name="inventory/logout.html"),
-        name="logout",
-    ),
+    #path(
+        #"", auth.LoginView.as_view(template_name="inventory/login.html"), name="login"
+    #),
+    #path(
+        #"logout/",
+        #auth.LogoutView.as_view(template_name="inventory/logout.html"),
+        #name="logout",
+    #),
+    path('', search_PCA_SN, name='search_PCA_SN')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

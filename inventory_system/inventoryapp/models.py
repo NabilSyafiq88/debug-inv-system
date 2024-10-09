@@ -15,6 +15,11 @@ FAILURE_STATION = (
     ("Manual Test", "Manual Test"),
 )
 
+PRODUCT_STATUS = (
+    ("ACTIVE", "ACTIVE"),
+    ("INACTIVE", "INACTIVE"),
+)
+
 TEST_STATION = (
     ("CRICKET", "CRICKET"),
     ("FANJI", "FANJI"),
@@ -37,33 +42,52 @@ TEST_STATION = (
     ("WIREMAP", "WIREMAP"),
 )
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    physical_address = models.CharField(max_length=40, null=True)
-    mobile = models.CharField(max_length=12, null=True)
-    picture = models.ImageField(default="avatar.jpeg", upload_to="Pictures")
+class cells_Name(models.Model):
+    cell_Name = models.CharField(max_length=100, null=True)
+    date_registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.user.username
+        return self.cell_Name
 
-
-class failureInfo(models.Model):
-    test_Cells = models.CharField(max_length=20, choices=TEST_STATION, null=True)
-    model = models.CharField(max_length=100, null=True)
-    failure_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
+class Sku_Info(models.Model):
+    product_Status = models.CharField(max_length=20, choices=PRODUCT_STATUS, null=True)
+    #test_Cells = models.CharField(max_length=20, choices=TEST_STATION, null=True)
+    test_Cells = models.ForeignKey(cells_Name, on_delete=models.CASCADE, null=True)
+    product_Model = models.CharField(max_length=100, null=True)
+    FG_PartNo = models.CharField(max_length=100, null=True)
+    FG_Model = models.CharField(max_length=100, null=True)
+    #failure_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
     PCA_SN_Number = models.CharField(max_length=100, null=True)
-    failure_Description = models.CharField(max_length=200, null=True)
-    failure_date = models.DateTimeField(auto_now_add=True)
+    #failure_Description = models.CharField(max_length=200, null=True)
+    #failure_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.model
+        return self.product_Model
 
+#class getDebugData(forms.Form):
+  #info = forms.CharField(max_length=100)
+  #order_quantity = forms.IntegerField()
+  #date = forms.DateTimeField()
 
-class getDebugData(models.Model):
-    info = models.ForeignKey(failureInfo, on_delete=models.CASCADE, null=True)
-    created_by = models.ForeignKey(User, models.CASCADE, null=True)
-    order_quantity = models.PositiveIntegerField(null=True)
+class Failure_Mode(models.Model):
+    test_Cells = models.ForeignKey(cells_Name, on_delete=models.CASCADE, null=True)
+    test_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
+    failure_Mode = models.CharField(max_length=100, null=True)
+    #order_quantity = models.PositiveIntegerField(null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f"{self.info} ordered quantity {self.order_quantity}"
+        return self.test_Station
+        #return f"{self.info} ordered quantity {self.order_quantity}"
+      
+class Failure_Data(models.Model):
+    test_Cells = models.ForeignKey(cells_Name, on_delete=models.CASCADE, null=True)
+    test_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
+    failure_Mode = models.ForeignKey(Failure_Mode, on_delete=models.CASCADE, null=True)
+    #order_quantity = models.PositiveIntegerField(null=True)
+    date_Registered = models.DateTimeField(auto_now_add=True)
+    find_items = models.Lookup
+
+    def __str__(self) -> str:
+        return self.test_Station
+      

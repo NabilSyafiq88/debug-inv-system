@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from inventoryapp.models import failureInfo, getDebugData
+from inventoryapp.models import Sku_Info, Failure_Mode, Failure_Data
 
 
 class UserRegistry(UserCreationForm):
@@ -20,13 +20,18 @@ class UserRegistry(UserCreationForm):
         ]
 
 
-class ProductForm(forms.ModelForm):
+class SkuForm(forms.ModelForm):
     class Meta:
-        model = failureInfo
-        fields = ["model", "failure_Station", "failure_Description"]
+        model = Sku_Info
+        fields = ["test_Cells", "product_Model","FG_PartNo" ,"FG_Model", "PCA_SN_Number","product_Status"]
 
 
-class OrderForm(forms.ModelForm):
+class FailureForm(forms.ModelForm):
     class Meta:
-        model = getDebugData
-        fields = ["info", "order_quantity"]
+        model = Failure_Mode
+        fields = ["test_Cells", "test_Station","failure_Mode"]
+
+class FailureData(forms.ModelForm):
+    class Meta:
+        model = Failure_Data
+        fields = ["test_Cells", "test_Station","failure_Mode"]
