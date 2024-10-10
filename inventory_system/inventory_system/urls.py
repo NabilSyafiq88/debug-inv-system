@@ -21,6 +21,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth
 from django.urls import include, path
 from inventoryapp.views import search_PCA_SN, home, contact, loginUser, doLogin, registration, doRegistration
+from inventoryapp import AdminViews
 
 urlpatterns = [
     path("/", include("inventoryapp.urls")),
@@ -40,5 +41,15 @@ urlpatterns = [
         #auth.LogoutView.as_view(template_name="inventory/logout.html"),
         #name="logout",
     #),
-    path('', search_PCA_SN, name='search_PCA_SN')
+    path('', search_PCA_SN, name='search_PCA_SN'),
+    
+    #Admin page
+    path('admin_home/', AdminViews.admin_home, name="admin_home"),
+    path('manage_cells/', AdminViews.manage_cells, name="manage_cells"),
+    path('manage_sku/', AdminViews.manage_sku, name="manage_sku"),
+    path('manage_failuremode/', AdminViews.manage_failuremode, name="manage_failuremode"),
+    path('manage_failuredata/', AdminViews.manage_failuredata, name="manage_failuredata"),
+    #path('admin_home/', AdminViews.admin_home, name="admin_home"),
+    
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

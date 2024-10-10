@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django.urls import path
 from inventoryapp import views
+from .import AdminViews
 
 urlpatterns = [
     #path("dash/", views.index, name="dash"),
@@ -20,4 +21,9 @@ urlpatterns = [
     path('doLogin', views.doLogin, name="doLogin"),
     path('doRegistration', views.doRegistration, name="doRegistration"),
     path("find/", views.search_PCA_SN, name="find"),
+    
+    
+    
+  #Admin page
+  path('admin_home/', AdminViews.admin_home, name="admin_home"),
 ]

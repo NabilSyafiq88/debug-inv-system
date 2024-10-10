@@ -114,9 +114,9 @@ def doLogin(request):
     print(request.user)
     
     if user.user_type == CustomUser.OPERATOR:
-        return redirect('student_home/')
+        return redirect('operator_home/')
     elif user.user_type == CustomUser.ENGTECH:
-        return redirect('staff_home/')
+        return redirect('engtech_home/')
     elif user.user_type == CustomUser.ADMIN:
         return redirect('admin_home/')
 
@@ -174,7 +174,11 @@ def doRegistration(request):
         Operator.objects.create(admin=user)
     elif user_type == CustomUser.ADMIN:
         Admin.objects.create(admin=user)
-    return render(request, 'login_page.html')  
+    return render(request, 'login_page.html')
+  
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect('/')
   
  
 def search_PCA_SN (request):
