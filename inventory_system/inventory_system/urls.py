@@ -20,11 +20,18 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth
 from django.urls import include, path
-from inventoryapp.views import search_PCA_SN
+from inventoryapp.views import search_PCA_SN, home, contact, loginUser, doLogin, registration, doRegistration
 
 urlpatterns = [
     path("/", include("inventoryapp.urls")),
     path("admin/", admin.site.urls),
+    path('', home, name="home"),
+    path('contact', contact, name="contact"),
+    path('login', loginUser, name="login"),
+    path('doLogin', doLogin, name="doLogin"),
+    path('registration', registration, name="registration"),
+    path('doRegistration', doRegistration, name="doRegistration"),
+    
     #path(
         #"", auth.LoginView.as_view(template_name="inventory/login.html"), name="login"
     #),

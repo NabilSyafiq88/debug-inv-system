@@ -1,11 +1,11 @@
 # inventory/views.py
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from inventoryapp.forms import UserRegistry, SkuForm, FailureForm
-from inventoryapp.models import Sku_Info, Failure_Mode
-
-
+from inventoryapp.models import Sku_Info, Failure_Mode, CustomUser, engTech, Operator, Admin
+from django.contrib import messages
+from django.contrib.auth import logout, authenticate, login
 #@login_required
 #def index(request):
     #orders_user = Failure_Mode.objects.all()
@@ -82,8 +82,101 @@ from inventoryapp.models import Sku_Info, Failure_Mode
         #form = UserRegistry()
     #context = {"register": "Register", "form": form}
     #return render(request, "inventory/register.html", context)
+ 
+def home(request):
+    return render(request, 'home.html')
+
+def contact(request):
+    return render(request, 'contact.html')
+
+def loginUser(request):
+    return render(request, 'login_page.html')
   
+def doLogin(request):
+    
+    print("here")
+    user_name = request.GET.get('username')
+    password = request.GET.get('password')
+    # user_type = request.GET.get('user_type')
+    print(user_name)
+    print(password)
+    print(request.user)
+    if not (user_name and password):
+        messages.error(request, "Please provide all the details!!")
+        return render(request, 'login_page.html')
+    
+    user = CustomUser.objects.filter(username=user_name, password=password).last()
+    if not user:
+        messages.error(request, 'Invalid Login Credentials!!')
+        return render(request, 'login_page.html')
+
+    login(request, user)
+    print(request.user)
+    
+    if user.user_type == CustomUser.OPERATOR:
+        return redirect('student_home/')
+    elif user.user_type == CustomUser.ENGTECH:
+        return redirect('staff_home/')
+    elif user.user_type == CustomUser.ADMIN:
+        return redirect('admin_home/')
+
+    return render(request, 'home.html')
+
+def registration(request):
+    return render(request, 'registration.html')
+
+def doRegistration(request):
+    user_name = request.GET.get('username')
+    #last_name = request.GET.get('last_name')
+    #email_id = request.GET.get('email')
+    password = request.GET.get('password')
+    confirm_password = request.GET.get('confirmPassword')
+
+    print(user_name)
+    print(password)
+    print(confirm_password)
+    #print(first_name)
+    #print(last_name)
+    if not (user_name and password and confirm_password):
+        messages.error(request, 'Please provide all the details!!')
+        return render(request, 'registration.html')
+      
+    is_user_exists = CustomUser.objects.filter(username=user_name).exists()
+
+    if is_user_exists:
+        messages.error(request, 'User with this username already exists. Please proceed to login!!')
+        return render(request, 'registration.html')
+
+    user_type = get_user_type_from_username(user_name)
+    
+    if user_type is None:
+        messages.error(request, "Please use valid format for the username: '<username>.<engtech|operator>'")
+        return render(request, 'registration.html')
+
+    #username = user_name.split('.')[0]
+
+    #if CustomUser.objects.filter(username=user_name).exists():
+        #messages.error(request, 'User with this username already exists. Please use different username')
+        #return render(request, 'registration.html')
+
+    user = CustomUser()
+    user.username = user_name
+    #user.email = email_id
+    user.password = password
+    user.user_type = user_type
+    #user.first_name = first_name
+    #user.last_name = last_name
+    user.save()
+    
+    if user_type == CustomUser.ENGTECH:
+        engTech.objects.create(admin=user)
+    elif user_type == CustomUser.OPERATOR:
+        Operator.objects.create(admin=user)
+    elif user_type == CustomUser.ADMIN:
+        Admin.objects.create(admin=user)
+    return render(request, 'login_page.html')  
   
+ 
 def search_PCA_SN (request):
   if 'query' in request.GET:
       query = request.GET['query']
@@ -91,3 +184,12 @@ def search_PCA_SN (request):
   else:
       PCA_SN = Sku_Info.objects.none()
   return render (request, 'index.html',{'PCA_SN': PCA_SN})
+
+def get_user_type_from_username(user_name):
+
+    try:
+        #email_id = email_id.split('@')[0]
+        username_user_type = user_name.split('.')[1]
+        return CustomUser.EMAIL_TO_USER_TYPE_MAP[username_user_type]
+    except:
+        return None

@@ -1,6 +1,7 @@
 # inventory/admin.py
 from django.contrib import admin
-from inventoryapp.models import Sku_Info, Failure_Mode, cells_Name, Failure_Data
+from django.contrib.auth.admin import UserAdmin
+from inventoryapp.models import Sku_Info, Failure_Mode, cells_Name, Failure_Data, CustomUser, Admin, engTech, Operator
 
 admin.site.site_header = "Inventory Management System"
 
@@ -29,8 +30,15 @@ class FailureDataAdmin(admin.ModelAdmin):
     list_display = ("test_Cells", "test_Station","failure_Mode")
     #list_filter = ["date"]
     search_fields = ["test_Station"]
+    
+class UserModel(UserAdmin):
+    pass
 
+admin.site.register(CustomUser, UserModel)
 admin.site.register(Sku_Info, SkuAdmin)
 admin.site.register(Failure_Mode, FailureAdmin)
 admin.site.register(cells_Name, CellAdmin)
 admin.site.register(Failure_Data, FailureDataAdmin)
+admin.site.register(Admin)
+admin.site.register(engTech)
+admin.site.register(Operator)
