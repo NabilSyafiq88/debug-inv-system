@@ -2,6 +2,12 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
+  <a href="{% url 'admin_home' %}" class="brand-link">
+    <img src="{% static 'dist/img/Fluke Image.jpg' %}" alt="AdminLTE Logo" class="brand-image img-square elevation-3 ml-5"
+        style="opacity: .8">
+      <span class="brand-text font-weight-light">Venture</span>
+  </a>
+
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -19,7 +25,7 @@
             <li class="nav-item">
               {% url 'admin_home' as admin_home %}
               <a href="{{ admin_home }}" class="nav-link {% if request.path == admin_home %} active {% endif %}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon fas fa-home"></i>
                 <p>
                   Home
                 </p>
@@ -30,7 +36,7 @@
               {% url 'manage_staff' as manage_staff %}
               {% url 'edit_staff' staff_id=id as edit_staff %}
               <a href="{{ manage_staff }}" class="nav-link {% if request.path == manage_staff %} active {% endif %} {% if request.path == edit_staff %} active {% endif %}">
-                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <i class="nav-icon fas fa-info-circle"></i>
                 <p>
                   Manage SKU
                 </p>
@@ -51,7 +57,7 @@
               {% url 'manage_student' as manage_student %}
               {% url 'edit_student' student_id=id as edit_student %}
               <a href="{{ manage_student }}" class="nav-link {% if request.path == manage_student %} active {% endif %} {% if request.path == edit_student %} active {% endif %}">
-                <i class="nav-icon fas fa-user-graduate"></i>
+                <i class="nav-icon fas fa-desktop"></i>
                 <p>
                   Manage Test Cells
                 </p>
@@ -93,7 +99,7 @@
               {% url 'manage_subject' as manage_subject %}
               {% url 'edit_subject' subject_id=id as edit_subject %}
               <a href="{{ manage_subject }}" class="nav-link {% if request.path == manage_subject %} active {% endif %} {% if request.path == edit_subject %} active {% endif %}">
-                <i class="nav-icon fas fa-book"></i>
+                <i class="nav-icon far fa-lightbulb"></i>
                 <p>
                   Manage Product Status
                 </p>
@@ -115,7 +121,7 @@
               {% url 'manage_session' as manage_session %}
               {% url 'edit_session' session_id=id as edit_session %}
               <a href="{{ manage_session }}" class="nav-link {% if request.path == manage_session %} active {% endif %} {% if request.path == edit_session %} active {% endif %}">
-                <i class="nav-icon fas fa-graduation-cap"></i>
+                <i class="nav-icon 	fas fa-archive"></i>
                 <p>
                   Manage Stations 
                 </p>
