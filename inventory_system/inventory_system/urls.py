@@ -45,18 +45,19 @@ urlpatterns = [
     
     #Admin page
     path('admin_home/', AdminViews.admin_home, name="admin_home"),
-    path('manage_cells/', AdminViews.manage_cells, name="manage_cells"),
-    path('manage_sku/', AdminViews.manage_sku, name="manage_sku"),
+    
+
     path('manage_failuremode/', AdminViews.manage_failuremode, name="manage_failuremode"),
     path('manage_failuredata/', AdminViews.manage_failuredata, name="manage_failuredata"),
     
+    path('manage_cells/', AdminViews.manage_cells, name="manage_cells"),
     path('add_cells/', AdminViews.add_cells, name="add_cells"),
     path('add_cells_save/', AdminViews.add_cells_save, name="add_cells_save"),
-    #path('edit_cells/', AdminViews.edit_cells, name="edit_cells"),
     path('edit_cells/<cells_id>', AdminViews.edit_cells, name="edit_cells"),
     path('edit_cells_save/', AdminViews.edit_cells_save, name="edit_cells_save"),
     path('delete_cells/<cells_id>/', AdminViews.delete_cells, name="delete_cells"),
-    #path('delete_cell/', AdminViews.delete_cell, name="delete_cell"),
+    
+    path('manage_sku/', AdminViews.manage_sku, name="manage_sku"),
     path('add_sku/', AdminViews.add_sku, name="add_sku"),
     path('add_sku_save/', AdminViews.add_sku_save, name="add_sku_save"),
     path('add_failuremode/', AdminViews.add_failuremode, name="add_failuremode"),
@@ -64,5 +65,11 @@ urlpatterns = [
   
     #path('admin_home/', AdminViews.admin_home, name="admin_home"),
     
-    
+    path('manage_station/', AdminViews.manage_station, name="manage_station"),
+    path('add_station/', AdminViews.add_station, name="add_station"),
+    path('add_station_save/', AdminViews.add_station_save, name="add_station_save"),    
+    path('edit_station/<station_id>', AdminViews.edit_station, name="edit_station"),
+    path('edit_station_save/', AdminViews.edit_station_save, name="edit_station_save"),
+    path('delete_station/<station_id>/', AdminViews.delete_station, name="delete_station"),
+        
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

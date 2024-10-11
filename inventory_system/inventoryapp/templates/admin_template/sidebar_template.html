@@ -33,9 +33,9 @@
             </li>
 
             <li class="nav-item">
-              {% url 'manage_staff' as manage_staff %}
-              {% url 'edit_staff' staff_id=id as edit_staff %}
-              <a href="{{ manage_staff }}" class="nav-link {% if request.path == manage_staff %} active {% endif %} {% if request.path == edit_staff %} active {% endif %}">
+              {% url 'manage_sku' as manage_sku %}
+              {% url 'edit_sku' sku_id=id as edit_sku %}
+              <a href="{{ manage_sku }}" class="nav-link {% if request.path == manage_sku %} active {% endif %} {% if request.path == edit_sku %} active {% endif %}">
                 <i class="nav-icon fas fa-info-circle"></i>
                 <p>
                   Manage SKU
@@ -44,8 +44,8 @@
             </li>
             
             <li class="nav-item">
-              {% url 'add_staff' as add_staff %}
-              <a href="{{ add_staff }}" class="nav-link {% if request.path == add_staff %} active {% endif %}">
+              {% url 'add_sku' as add_sku %}
+              <a href="{{ add_sku }}" class="nav-link {% if request.path == add_sku %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Add SKU
@@ -54,9 +54,9 @@
             </li>
 
             <li class="nav-item">
-              {% url 'manage_student' as manage_student %}
-              {% url 'edit_student' student_id=id as edit_student %}
-              <a href="{{ manage_student }}" class="nav-link {% if request.path == manage_student %} active {% endif %} {% if request.path == edit_student %} active {% endif %}">
+              {% url 'manage_cells' as manage_cells %}
+              {% url 'edit_cells' cells_id=id as edit_cells %}
+              <a href="{{ manage_cells }}" class="nav-link {% if request.path == manage_cells %} active {% endif %} {% if request.path == edit_student %} active {% endif %}">
                 <i class="nav-icon fas fa-desktop"></i>
                 <p>
                   Manage Test Cells
@@ -65,8 +65,8 @@
             </li>
 
             <li class="nav-item">
-              {% url 'add_student' as add_student %}
-              <a href="{{ add_student }}" class="nav-link {% if request.path == add_student %} active {% endif %}">
+              {% url 'add_cells' as add_cells %}
+              <a href="{{ add_cells }}" class="nav-link {% if request.path == add_cells %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Add Test Cells
@@ -101,7 +101,7 @@
               <a href="{{ manage_subject }}" class="nav-link {% if request.path == manage_subject %} active {% endif %} {% if request.path == edit_subject %} active {% endif %}">
                 <i class="nav-icon far fa-lightbulb"></i>
                 <p>
-                  Manage Product Status
+                  Manage Progress Status
                 </p>
               </a>
             </li>
@@ -111,16 +111,16 @@
               <a href="{{ add_subject }}" class="nav-link {% if request.path == add_subject %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
-                  Add Product Status
+                  Add Progress Status
                 </p>
               </a>
             </li>
 
 
             <li class="nav-item">
-              {% url 'manage_session' as manage_session %}
-              {% url 'edit_session' session_id=id as edit_session %}
-              <a href="{{ manage_session }}" class="nav-link {% if request.path == manage_session %} active {% endif %} {% if request.path == edit_session %} active {% endif %}">
+              {% url 'manage_station' as manage_station %}
+              {% url 'edit_station' station_id=id as edit_station %}
+              <a href="{{ manage_station }}" class="nav-link {% if request.path == manage_sstation%} active {% endif %} {% if request.path == edit_station %} active {% endif %}">
                 <i class="nav-icon 	fas fa-archive"></i>
                 <p>
                   Manage Stations 
@@ -129,8 +129,8 @@
             </li>
 
             <li class="nav-item">
-              {% url 'add_session' as add_session %}
-              <a href="{{ add_session }}" class="nav-link {% if request.path == add_session %} active {% endif %}">
+              {% url 'add_station' as add_station %}
+              <a href="{{ add_station }}" class="nav-link {% if request.path == add_station %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Add Stations

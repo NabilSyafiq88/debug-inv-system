@@ -1,7 +1,7 @@
 {% extends 'admin_template/base_template.html' %}
 
 {% block page_title %}
-    Manage SKU
+    Manage Stations
 {% endblock page_title %}
 
 {% block main_content %}
@@ -11,7 +11,7 @@
 <section class="content">
         <div class="container-fluid">
 
-            <a class="btn btn-primary" href="{% url 'add_sku' %}" role="button">+ Add SKU</a> <br/>&nbsp;
+            <a class="btn btn-primary" href="{% url 'add_station' %}" role="button">+ Add Test Station</a> <br/>&nbsp;
 
             {% if messages %}
                                 <div class="form-group">
@@ -42,7 +42,7 @@
                     <!-- general form elements -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">SKU Details</h3>
+                            <h3 class="card-title">Test station Details</h3>
 
                             <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -60,27 +60,21 @@
                             <thead>
                                 <tr>
                                 <th>ID</th>
-                                <th>Cells Name</th>
-                                <th>Product Family</th>
-                                <th>FG Part Number</th>
-                                <th>FG Model</th>
-                                <th>PCA Part Number</th>
-                                <th>Product status</th>
+                                <th>Stations Name</th>
+                                <th>Registered on</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for sku in sku_info %}
+                                {% for station in station_name %}
                                 <tr>
-                                <td>{{ sku.id }}</td>
-                                <td>{{ sku.test_Cells }}</td>
-                                <td>{{ sku.product_Model }}</td>
-                                <td>{{ sku.FG_PartNo }}</td>
-                                <td>{{ sku.FG_Model }}</td>
-                                <td>{{ sku.PCA_SN_Number }}</td>
-                                <td>{{ sku.product_Status }}</td>
+                                <td>{{ station.id }}</td>
+                                <td>{{ station.station_Name }}</td>
+                                <td>{{ station.date_registered }}</td>
                                 <td>
-                                    <a href="{% url 'edit_sku' sku.id %}" class="btn btn-success">Edit</a> 
-                                    <a href="{% url 'delete_sku' sku.id %}" class="btn btn-danger">Delete</a>
+                                  <!-- edit & delete -->
+                                <a href="{% url 'edit_station' station.id %}" class="btn btn-success">Edit</a>
+                                <a href="{% url 'delete_station' station.id %}" class="btn btn-danger">Delete</a>
+                        
                                 </td>
                                 </tr>
                                 {% endfor %}

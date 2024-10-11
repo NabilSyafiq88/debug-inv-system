@@ -47,13 +47,23 @@ TEST_STATION = (
 # User and adding One More Field (user_type)
 
 class cells_Name(models.Model):
+    id = models.AutoField(primary_key=True)
     cell_Name = models.CharField(max_length=100, null=True)
+    date_registered = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.cell_Name
+      
+class station_Name(models.Model):
+    id = models.AutoField(primary_key=True)
+    station_Name = models.CharField(max_length=100, null=True)
     date_registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.cell_Name
 
 class Sku_Info(models.Model):
+    id = models.AutoField(primary_key=True)
     product_Status = models.CharField(max_length=20, choices=PRODUCT_STATUS, null=True)
     #test_Cells = models.CharField(max_length=20, choices=TEST_STATION, null=True)
     test_Cells = models.ForeignKey(cells_Name, on_delete=models.CASCADE, null=True)
@@ -74,6 +84,7 @@ class Sku_Info(models.Model):
   #date = forms.DateTimeField()
 
 class Failure_Mode(models.Model):
+    id = models.AutoField(primary_key=True)
     test_Cells = models.ForeignKey(cells_Name, on_delete=models.CASCADE, null=True)
     test_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
     failure_Mode = models.CharField(max_length=100, null=True)
@@ -85,6 +96,7 @@ class Failure_Mode(models.Model):
         #return f"{self.info} ordered quantity {self.order_quantity}"
       
 class Failure_Data(models.Model):
+    id = models.AutoField(primary_key=True)
     test_Cells = models.ForeignKey(cells_Name, on_delete=models.CASCADE, null=True)
     test_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
     failure_Mode = models.ForeignKey(Failure_Mode, on_delete=models.CASCADE, null=True)
