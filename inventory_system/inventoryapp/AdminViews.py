@@ -100,7 +100,7 @@ def delete_cells(request, cells_id):
         return redirect('manage_cells')    
 
 
-#SKU portion
+#SKU portion #############################################################################
 def manage_sku(request):
     sku_info = Sku_Info.objects.all()
     context = {
@@ -160,14 +160,91 @@ def add_sku_save(request):
             messages.error(request, "Failed to Add SKU!")
             return redirect('add_sku')
 
-#for Failure mode
+#Failure mode #################################################################
 
 def manage_failuremode(request):
     failure_mode = Failure_Mode.objects.all()
+  
     context = {
         "failure_mode": failure_mode
     }
     return render(request, "admin_template/manage_failuremode_template.html", context)  
+
+def add_failuremode(request):
+  
+    cells_name = cells_Name.objects.all()
+    test_station = station_Name.objects.all()
+    print(test_station)
+    context ={
+      "cells_name": cells_name,
+      "station_name":test_station
+    }
+  
+    return render(request, "admin_template/add_failuremode_template.html",context)
+  
+def add_failuremode_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method!")
+        return redirect('add_failuremode')
+    else:
+        cells_name = request.POST.get('cells')
+        test_station = request.POST.get('test_station')
+        failure_mode = request.POST.get('failure_mode')
+        
+        print (cells_name)
+        print(test_station)
+        try:
+            failure_mode = Failure_Mode(test_Cells=cells_name,test_Station=test_station,failure_Mode=failure_mode)
+            failure_mode.save()
+            messages.success(request, "Failure Mode Added Successfully!")
+            return redirect('add_failuremode')
+        except:
+            messages.error(request, "Failed to Add Failure Mode!")
+            return redirect('add_failuremode')
+                                  
+def edit_failuremode(request, failuremode_id):
+    failure_mode = Failure_Mode.objects.get(id=failuremode_id)
+    context = {
+        "id": failuremode_id,
+        "failure_mode": failure_mode
+    }
+    print (failuremode_id)
+    #print (cells)
+    return render(request, 'admin_template/edit_failuremode_template.html', context)
+  
+def edit_failuremode_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method")
+    else:
+        failuremode_id = request.POST.get('failuremode_id')
+        failuremode_name = request.POST.get('failure_mode')
+        
+        print(failuremode_id)
+        print(failuremode_name)
+
+        try:
+            failuremode = Failure_Mode.objects.get(id=failuremode_id)
+            failuremode.failure_Mode = failuremode_name
+            failuremode.save()
+
+            messages.success(request, "Failure Mode Updated Successfully.")
+            return redirect('/edit_failuremode/'+failuremode_id)
+
+        except:
+            messages.error(request, "Failed to Update Failure Mode.")
+            return redirect('/edit_failuremode/'+failuremode_id)
+          
+def delete_failuremode(request, failuremode_id):
+    failure_mode = Failure_Mode.objects.get(id=failuremode_id)
+    try:
+        failure_mode.delete()
+        messages.success(request, "Failure Mode Deleted Successfully.")
+        return redirect('manage_failuremode')
+    except:
+        messages.error(request, "Failed to Delete Failure Mode.")
+        return redirect('manage_failuremode')    
+  
+#Failure Data ###################################################################
   
 def manage_failuredata(request):
     failure_data = Failure_Data.objects.all()
@@ -176,17 +253,10 @@ def manage_failuredata(request):
     }
     return render(request, "admin_template/manage_failuredata_template.html", context) 
 
-    
-
-
-  
-def add_failuremode(request):
-    return render(request, "admin_template/add_failuremode_template.html")
-  
 def add_failuredata(request):
     return render(request, "admin_template/add_failuredata_template.html")
   
-#for stations portion
+#stations portion ##############################################################
 def manage_station(request):
     station_name = station_Name.objects.all()
     context = {
@@ -211,8 +281,7 @@ def add_station_save(request):
         except:
             messages.error(request, "Failed to Add Station!")
             return redirect('add_station')
-                         
-          
+                                  
 def edit_station(request, station_id):
     station = station_Name.objects.get(id=station_id)
 
@@ -233,7 +302,6 @@ def edit_station_save(request):
         
         print(station_id)
         print(station_name)
-  
 
         try:
             station = station_Name.objects.get(id=station_id)

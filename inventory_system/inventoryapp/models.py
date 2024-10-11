@@ -60,7 +60,7 @@ class station_Name(models.Model):
     date_registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.cell_Name
+        return self.station_Name
 
 class Sku_Info(models.Model):
     id = models.AutoField(primary_key=True)
@@ -85,7 +85,7 @@ class Sku_Info(models.Model):
 
 class Failure_Mode(models.Model):
     id = models.AutoField(primary_key=True)
-    test_Cells = models.ForeignKey(cells_Name, on_delete=models.CASCADE, null=True)
+    test_Cells = models.CharField(max_length=100, null=True)
     test_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
     failure_Mode = models.CharField(max_length=100, null=True)
     #order_quantity = models.PositiveIntegerField(null=True)
