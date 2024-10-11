@@ -109,7 +109,12 @@ def manage_sku(request):
     return render(request, "admin_template/manage_sku_template.html", context) 
   
 def add_sku(request):
-    return render(request, "admin_template/add_sku_template.html")
+    cells_name = cells_Name.objects.all()
+    context ={
+      "cells_name": cells_name
+    }
+  
+    return render(request, "admin_template/add_sku_template.html", context)
   
 def edit_sku(request, sku_id):
     sku = cells_Name.objects.get(id=sku_id)
