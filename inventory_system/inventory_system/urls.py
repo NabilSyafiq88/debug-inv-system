@@ -49,6 +49,7 @@ urlpatterns = [
 
     #failuredata
     path('manage_failuredata/', AdminViews.manage_failuredata, name="manage_failuredata"),
+    
     #cells
     path('manage_cells/', AdminViews.manage_cells, name="manage_cells"),
     path('add_cells/', AdminViews.add_cells, name="add_cells"),
@@ -56,12 +57,14 @@ urlpatterns = [
     path('edit_cells/<cells_id>', AdminViews.edit_cells, name="edit_cells"),
     path('edit_cells_save/', AdminViews.edit_cells_save, name="edit_cells_save"),
     path('delete_cells/<cells_id>/', AdminViews.delete_cells, name="delete_cells"),
+    
     #sku
     path('manage_sku/', AdminViews.manage_sku, name="manage_sku"),
     path('add_sku/', AdminViews.add_sku, name="add_sku"),
     path('add_sku_save/', AdminViews.add_sku_save, name="add_sku_save"),
     path('add_failuremode/', AdminViews.add_failuremode, name="add_failuremode"),
     path('add_failuredata/', AdminViews.add_failuredata, name="add_failuredata"),
+    
     #station
     path('manage_station/', AdminViews.manage_station, name="manage_station"),
     path('add_station/', AdminViews.add_station, name="add_station"),
@@ -77,6 +80,6 @@ urlpatterns = [
     path('edit_failuremode/<failuremode_id>', AdminViews.edit_failuremode, name="edit_failuremode"),
     path('edit_failuremode_save/', AdminViews.edit_failuremode_save, name="edit_failuremode_save"),
     path('delete_failuremode/<failuremode_id>/', AdminViews.delete_failuremode, name="delete_failuremode"),
-    
+
         
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
