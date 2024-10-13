@@ -204,11 +204,15 @@ def add_failuremode_save(request):
                                   
 def edit_failuremode(request, failuremode_id):
     failure_mode = Failure_Mode.objects.get(id=failuremode_id)
+    failuremode_cells = Failure_Mode.objects.get(id=failuremode_id)
+    failuremode_station = Failure_Mode.objects.get(id=failuremode_id)
     context = {
-        "id": failuremode_id,
+        "failuremode_id": failuremode_id,
+        "failuremode_cells": failuremode_cells,
+        "failuremode_station": failuremode_station,
         "failure_mode": failure_mode
     }
-    print (failuremode_id)
+    #print (failure_mode)
     #print (cells)
     return render(request, 'admin_template/edit_failuremode_template.html', context)
   
