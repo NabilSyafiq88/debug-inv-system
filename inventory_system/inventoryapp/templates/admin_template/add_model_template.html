@@ -1,7 +1,7 @@
 {% extends 'admin_template/base_template.html' %}
 
 {% block page_title %}
-    Add SKU
+    Add Family Model
 {% endblock page_title %}
 
 {% block main_content %}
@@ -16,11 +16,11 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Add SKU</h3>
+                        <h3 class="card-title">Add Family Model</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" method="POST" action="{% url 'add_sku_save' %}">
+                    <form role="form" method="POST" action="{% url 'add_model_save' %}">
                         {% csrf_token %}
 
                         
@@ -48,60 +48,19 @@
                                 </div>
                                 </div>
                                 {% endif %}
-   
-                            <div class="card-body">
+                            
 
-
-                                <div class="form-group">
-                                  <label>Product Status </label>
-                                  <select class="form-control" name="product_status">
-              
-                                      <option>{{ "INACTIVE" }}</option>
-                                      <option>{{ "ACTIVE" }}</option>
-                          
-                                  </select>
-                                </div>
-
-                                <div class="form-group">
-                                  <label>Test Cells </label>
-                                  <select class="form-control" name="cells">
-                                    {% for cells in cells_name %}
-                                      <option>{{ cells.cell_Name }}</option>
-                                    {% endfor %}
-                                  </select>
-                                </div>
-
-                                <div class="form-group">
-                                  <label>Product Family </label>
-                                  <select class="form-control" name="model">
-                                    {% for model in model_name %}
-                                      <option>{{ model.model_Name }}</option>
-                                    {% endfor %}
-                                  </select>
-                                </div>
-
-                                <div class="form-group">
-                                  <label>FG Part Number </label>
-                                  <input type="text" class="form-control" name="FGpartno" placeholder="Insert FG Part Number">
-                                </div>
-
-                                <div class="form-group">
-                                  <label>FG Model </label>
-                                  <input type="text" class="form-control" name="FGmodel" placeholder="Insert FG Model">
-                                </div>
-
-                                <div class="form-group">
-                                  <label>PCA PN </label>
-                                  <input type="text" class="form-control" name="PCA_PN" placeholder="Insert PCA PN">
-                              </div>
-
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Family Model Name </label>
+                                <input type="text" class="form-control" name="model_name" placeholder="Enter Model Name">
                             </div>
 
                         </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Add SKU</button>
+                        <button type="submit" class="btn btn-primary">Add Family Model</button>
                         </div>
                     </form>
                     </div>

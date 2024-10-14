@@ -35,3 +35,4 @@ class FailureData(forms.ModelForm):
     class Meta:
         model = Failure_Data
         fields = ["test_Cells", "test_Station","failure_Mode"]
+        

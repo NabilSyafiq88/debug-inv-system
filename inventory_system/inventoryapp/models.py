@@ -61,12 +61,20 @@ class station_Name(models.Model):
 
     def __str__(self) -> str:
         return self.station_Name
+      
+class model_Name(models.Model):
+    id = models.AutoField(primary_key=True)
+    model_Name = models.CharField(max_length=100, null=True)
+    date_registered = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.model_Name
 
 class Sku_Info(models.Model):
     id = models.AutoField(primary_key=True)
     product_Status = models.CharField(max_length=20, choices=PRODUCT_STATUS, null=True)
     #test_Cells = models.CharField(max_length=20, choices=TEST_STATION, null=True)
-    test_Cells = models.ForeignKey(cells_Name, on_delete=models.CASCADE, null=True)
+    test_Cells = models.CharField(max_length=100, null=True)
     product_Model = models.CharField(max_length=100, null=True)
     FG_PartNo = models.CharField(max_length=100, null=True)
     FG_Model = models.CharField(max_length=100, null=True)

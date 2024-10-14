@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 from .forms import SkuForm, FailureForm, FailureData
-from .models import CustomUser, Admin, engTech, Operator, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name
+from .models import CustomUser, Admin, engTech, Operator, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name
 
 def admin_home(request):
   
@@ -82,11 +82,11 @@ def edit_cells_save(request):
             cells.cell_Name = cells_name
             cells.save()
 
-            messages.success(request, "Course Updated Successfully.")
+            messages.success(request, "Cells Updated Successfully.")
             return redirect('/edit_cells/'+cells_id)
 
         except:
-            messages.error(request, "Failed to Update Course.")
+            messages.error(request, "Failed to Update Cells.")
             return redirect('/edit_cells/'+cells_id)
           
 def delete_cells(request, cells_id):
@@ -110,8 +110,10 @@ def manage_sku(request):
   
 def add_sku(request):
     cells_name = cells_Name.objects.all()
+    model_name = model_Name.objects.all()
     context ={
-      "cells_name": cells_name
+      "cells_name": cells_name,
+      "model_name": model_name
     }
   
     return render(request, "admin_template/add_sku_template.html", context)
@@ -133,8 +135,8 @@ def add_sku_save(request):
         return redirect('add_sku')
     else:
         product_status = request.POST.get('product_status')
-        test_cells = request.POST.get('test_cells')
-        product_family = request.POST.get('product_family')
+        test_cells = request.POST.get('cells')
+        product_family = request.POST.get('model')
         FG_partno = request.POST.get('FGpartno')
         FG_model = request.POST.get('FGmodel')
         PCA_Partno = request.POST.get('PCA_PN')
@@ -146,7 +148,7 @@ def add_sku_save(request):
         print(FG_model)
         print(PCA_Partno)
         try:
-            sku = Sku_Info(test_Cells_id=test_cells,
+            sku = Sku_Info(test_Cells=test_cells,
                             product_Model=product_family,
                             FG_PartNo=FG_partno,
                             FG_Model=FG_model,
@@ -159,6 +161,64 @@ def add_sku_save(request):
         except:
             messages.error(request, "Failed to Add SKU!")
             return redirect('add_sku')
+
+def edit_sku(request, sku_id):
+    sku = Sku_Info.objects.get(id=sku_id)
+
+    context = {
+        "id": sku_id,
+        "sku": sku
+    }
+    print (sku_id)
+    #print (cells)
+    return render(request, 'admin_template/edit_sku_template.html', context)
+  
+def edit_sku_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method")
+    else:
+        sku_id = request.POST.get('sku_id')
+        sku_name = request.POST.get('sku_cells')
+        sku_model = request.POST.get('sku_model')
+        sku_FGpartno = request.POST.get('sku_FGpartno')
+        sku_FGmodel = request.POST.get('sku_FGmodel')
+        sku_PCApartno = request.POST.get('sku_PCApartno')
+        sku_status = request.POST.get('sku_status')
+        
+        print(sku_id)
+        print(sku_name)
+        print(sku_model)
+        print(sku_FGpartno)
+        print(sku_FGmodel)
+        print(sku_PCApartno)
+        print(sku_status)
+        
+        try:
+            sku = Sku_Info.objects.get(id=sku_id)
+            sku.FG_PartNo = sku_FGpartno
+            sku.FG_Model = sku_FGmodel
+            sku.PCA_SN_Number = sku_PCApartno
+            sku.product_Status = sku_status
+            sku.save()
+          
+
+            messages.success(request, "Sku Updated Successfully.")
+            return redirect('/edit_sku/'+sku_id)
+
+        except:
+            messages.error(request, "Failed to Update Sku.")
+            return redirect('/edit_sku/'+sku_id)
+          
+def delete_sku(request, sku_id):
+    sku = Sku_Info.objects.get(id=sku_id)
+    try:
+        sku.delete()
+        messages.success(request, "Sku Deleted Successfully.")
+        return redirect('manage_sku')
+    except:
+        messages.error(request, "Failed to Delete sku.")
+        return redirect('manage_sku')    
+
 
 #Failure mode #################################################################
 
@@ -312,11 +372,11 @@ def edit_station_save(request):
             station.station_Name = station_name
             station.save()
 
-            messages.success(request, "Course Updated Successfully.")
+            messages.success(request, "Station Name Updated Successfully.")
             return redirect('/edit_station/'+station_id)
 
         except:
-            messages.error(request, "Failed to Update Course.")
+            messages.error(request, "Failed to Update Station Name.")
             return redirect('/edit_station/'+station_id)
           
 def delete_station(request, station_id):
@@ -328,3 +388,72 @@ def delete_station(request, station_id):
     except:
         messages.error(request, "Failed to Delete Station.")
         return redirect('manage_station')    
+
+#model portion ##############################################################
+def manage_model(request):
+    model_name = model_Name.objects.all()
+    context = {
+        "model_name": model_name
+    }
+    return render(request, "admin_template/manage_model_template.html", context) 
+ 
+def add_model(request):
+    return render(request, "admin_template/add_model_template.html")
+  
+def add_model_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method!")
+        return redirect('add_model')
+    else:
+        model = request.POST.get('model_name')
+        try:
+            model_model = model_Name(model_Name=model)
+            model_model.save()
+            messages.success(request, "Family Model Added Successfully!")
+            return redirect('add_model')
+        except:
+            messages.error(request, "Failed to Add Family Model!")
+            return redirect('add_model')
+                                  
+def edit_model(request, model_id):
+    model = model_Name.objects.get(id=model_id)
+
+    context = {
+        "id": model_id,
+        "model": model
+    }
+    print (model_id)
+    #print (cells)
+    return render(request, 'admin_template/edit_model_template.html', context)
+  
+def edit_model_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method")
+    else:
+        model_id = request.POST.get('model_id')
+        model_name = request.POST.get('model_name')
+        
+        print(model_id)
+        print(model_name)
+
+        try:
+            model = model_Name.objects.get(id=model_id)
+            model.model_Name = model_name
+            model.save()
+
+            messages.success(request, "Product Model Updated Successfully.")
+            return redirect('/edit_model/'+model_id)
+
+        except:
+            messages.error(request, "Failed to Update Product Model.")
+            return redirect('/edit_model/'+model_id)
+          
+def delete_model(request, model_id):
+    model = model_Name.objects.get(id=model_id)
+    try:
+        model.delete()
+        messages.success(request, "Product Model Deleted Successfully.")
+        return redirect('manage_model')
+    except:
+        messages.error(request, "Failed to Delete Product Model.")
+        return redirect('manage_model')   

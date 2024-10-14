@@ -62,8 +62,10 @@ urlpatterns = [
     path('manage_sku/', AdminViews.manage_sku, name="manage_sku"),
     path('add_sku/', AdminViews.add_sku, name="add_sku"),
     path('add_sku_save/', AdminViews.add_sku_save, name="add_sku_save"),
-    path('add_failuremode/', AdminViews.add_failuremode, name="add_failuremode"),
-    path('add_failuredata/', AdminViews.add_failuredata, name="add_failuredata"),
+    path('edit_sku/<sku_id>', AdminViews.edit_sku, name="edit_sku"),
+    path('edit_sku_save/', AdminViews.edit_sku_save, name="edit_sku_save"),
+    path('delete_sku/<sku_id>/', AdminViews.delete_sku, name="delete_sku"),
+
     
     #station
     path('manage_station/', AdminViews.manage_station, name="manage_station"),
@@ -80,6 +82,14 @@ urlpatterns = [
     path('edit_failuremode/<failuremode_id>', AdminViews.edit_failuremode, name="edit_failuremode"),
     path('edit_failuremode_save/', AdminViews.edit_failuremode_save, name="edit_failuremode_save"),
     path('delete_failuremode/<failuremode_id>/', AdminViews.delete_failuremode, name="delete_failuremode"),
+    
+    #model
+    path('manage_model/', AdminViews.manage_model, name="manage_model"),   
+    path('add_model/', AdminViews.add_model, name="add_model"),
+    path('add_model_save/', AdminViews.add_model_save, name="add_model_save"),    
+    path('edit_model/<model_id>', AdminViews.edit_model, name="edit_model"),
+    path('edit_model_save/', AdminViews.edit_model_save, name="edit_model_save"),
+    path('delete_model/<model_id>/', AdminViews.delete_model, name="delete_model"),
 
         
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
