@@ -14,8 +14,25 @@ def admin_home(request):
   all_cells_count = cells_Name.objects.all().count()
   all_sku_count = Sku_Info.objects.all().count()
   all_failure_mode = Failure_Mode.objects.all().count()
-  all_failed_data = Failure_Data.objects.all().count()
+  all_failed_data = Failure_Info.objects.all().count()
+  all_station_name = station_Name.objects.all().count()
+  model_name = model_Name.objects.all().count()
+  
+  new_failure = Failure_Info.objects.filter(failure_status = "NEW").count()
+  inprogress_failure = Failure_Info.objects.filter(failure_status = "IN PROGRESS").count()
+  completed_failure = Failure_Info.objects.filter(failure_status = "COMPLETED").count()
+  
+  #total failure in each cells
+  cells_all = cells_Name.objects.all()
   cells_name_list =[]
+  failure_count_list = []
+  
+  for cells in cells_all:
+    failures = Failure_Info.objects.filter(failure_status = "NEW").count()
+    cells_name_list.append(cells.cell_Name)
+    failure_count_list.append(failures)
+
+  
   sku_info_list = []
   failure_info_list = []
   
@@ -24,6 +41,12 @@ def admin_home(request):
     "all_sku_count": all_sku_count,
     "all_failure_mode":all_failure_mode,
     "all_failed_data":all_failed_data,
+    "new_failure":new_failure,
+    "inprogress_failure":inprogress_failure,
+    "completed_failure":completed_failure,
+    "failures":failures,
+    "cells_name_list":cells_name_list,
+    "failure_count_list":failure_count_list,
   }
   
   return render(request,"admin_template/home_content.html",context)
@@ -526,14 +549,14 @@ def add_failure_save(request):
             messages.error(request, "Failed to Add Failure Info!")
             return redirect('add_failure')
 
-def edit_failure(request, sku_id):
-    sku = Failure_Info.objects.get(id=sku_id)
+def edit_failure(request, failure_id):
+    failure = Failure_Info.objects.get(id=failure_id)
 
     context = {
-        "id": sku_id,
-        "sku": sku
+        "id": failure_id,
+        "sku": failure
     }
-    print (sku_id)
+    print (failure_id)
     #print (cells)
     return render(request, 'admin_template/edit_failure_template.html', context)
   
@@ -547,7 +570,10 @@ def edit_failure_save(request):
         sku_FGpartno = request.POST.get('sku_FGpartno')
         sku_FGmodel = request.POST.get('sku_FGmodel')
         sku_PCApartno = request.POST.get('sku_PCApartno')
-        sku_status = request.POST.get('sku_status')
+        sku_status = request.POST.get('status')
+        test_station = request.POST.get('station')
+        failure_mode = request.POST.get('failure_mode')
+        failure_action = request.POST.get('failure_action')
         
         print(sku_id)
         print(sku_name)
@@ -556,12 +582,13 @@ def edit_failure_save(request):
         print(sku_FGmodel)
         print(sku_PCApartno)
         print(sku_status)
+        print(test_station)
+        print(failure_mode)
+        print(failure_action)
         
         try:
             sku = Failure_Info.objects.get(id=sku_id)
-            sku.FG_PartNo = sku_FGpartno
-            sku.FG_Model = sku_FGmodel
-            sku.PCA_SN_Number = sku_PCApartno
+            sku.failure_action = failure_action
             sku.failure_status = sku_status
             sku.save()
           
@@ -573,8 +600,8 @@ def edit_failure_save(request):
             messages.error(request, "Failed to Update Failure Info.")
             return redirect('/edit_failure/'+sku_id)
           
-def delete_failure(request, sku_id):
-    sku = Failure_Info.objects.get(id=sku_id)
+def delete_failure(request, failure_id):
+    sku = Failure_Info.objects.get(id=failure_id)
     try:
         sku.delete()
         messages.success(request, "Failure Info Deleted Successfully.")

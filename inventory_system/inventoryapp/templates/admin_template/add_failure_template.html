@@ -68,15 +68,6 @@
                               </div>
 
                               <div class="form-group">
-                                <label>Test Cells : </label>
-                                <select class="form-control" name="cells" readonly>
-                                {% for SN in PCA_SN %}
-                                <option> {{ SN.test_Cells }}</option>
-                                {% endfor %}
-                              </select>
-                              </div>
-
-                              <div class="form-group">
                                 <label>Product Model : </label>
                                 <select class="form-control" name="model" readonly>
                                 {% for SN in PCA_SN %}
@@ -103,6 +94,15 @@
                                 {% endfor %}
                               </select>
 
+                              </div>
+
+                              <div class="form-group">
+                                <label>Test Cells : </label>
+                                <select class="form-control" name="cells" readonly>
+                                {% for SN in PCA_SN %}
+                                <option> {{ SN.test_Cells }}</option>
+                                {% endfor %}
+                              </select>
                               </div>
 
                                 <div class="form-group">

@@ -1,7 +1,7 @@
 {% extends 'admin_template/base_template.html' %}
 
 {% block page_title %}
-    Edit Failure | #ID : {{ sku.id }}
+    Update Failure | #ID : {{ sku.id }}
 {% endblock page_title %}
 
 {% block main_content %}
@@ -16,7 +16,7 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Edit Failure Info</h3>
+                        <h3 class="card-title">Update Failure Info</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -51,11 +51,11 @@
                             
 
                         <div class="card-body">
-                            <div class="form-group">
-                                <label>Cells Name </label>
-                                <input type="text" class="form-control" name="sku_cells" value="{{ sku.test_Cells }}" readonly>
-                                <input type="hidden" name="sku_id" value="{{ sku.id }}" />
-                            </div>
+
+                          <div class="form-group">
+                            <label>PCA Part Number</label>
+                            <input type="text" class="form-control" name="sku_PCApartno" value="{{ sku.PCA_SN_Number }}" readonly>
+                          </div>
 
                           <div class="form-group">
                               <label>Product Family </label>
@@ -63,18 +63,29 @@
                           </div>
 
                           <div class="form-group">
-                            <label>FG Part Number (*) </label>
-                            <input type="text" class="form-control" name="sku_FGpartno" value="{{ sku.FG_PartNo }}">
+                            <label>FG Part Number</label>
+                            <input type="text" class="form-control" name="sku_FGpartno" value="{{ sku.FG_PartNo }}"readonly>
                           </div>
 
                           <div class="form-group">
-                            <label>FG Model (*) </label>
-                            <input type="text" class="form-control" name="sku_FGmodel" value="{{ sku.FG_Model }}">
+                            <label>FG Model</label>
+                            <input type="text" class="form-control" name="sku_FGmodel" value="{{ sku.FG_Model }}"readonly>
                           </div>
 
                           <div class="form-group">
-                            <label>PCA Part Number (*) </label>
-                            <input type="text" class="form-control" name="sku_PCApartno" value="{{ sku.PCA_SN_Number }}">
+                            <label>Cells Name </label>
+                            <input type="text" class="form-control" name="sku_cells" value="{{ sku.test_Cells }}" readonly>
+                            <input type="hidden" name="sku_id" value="{{ sku.id }}" />
+                          </div>
+
+                          <div class="form-group">
+                            <label>Test Station</label>
+                            <input type="text" class="form-control" name="station" value="{{ sku.test_Station }}"readonly>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Failure Mode</label>
+                            <input type="text" class="form-control" name="failure_mode" value="{{ sku.failure_mode }}"readonly>
                           </div>
 
                           <div class="form-group">
@@ -85,7 +96,6 @@
                           <div class="form-group">
                             <label>The Status</label>
                             <select class="form-control" name="status">
-                                <option>{{ "NEW ITEM" }}</option>
                                 <option>{{ "IN PROGRESS" }}</option>
                                 <option>{{ "COMPLETED" }}</option>
                             </select>
