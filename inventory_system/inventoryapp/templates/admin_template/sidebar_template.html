@@ -33,6 +33,28 @@
             </li>
 
             <li class="nav-item">
+              {% url 'manage_failure' as manage_failure %}
+              {% url 'edit_failure' failure_id=id as edit_failure %}
+              <a href="{{ manage_failure }}" class="nav-link {% if request.path == manage_failure %} active {% endif %} {% if request.path == edit_failure %} active {% endif %}">
+                <i class="nav-icon fas fa-info-circle"></i>
+                <p>
+                  Manage Failure
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_failure' as add_failure %}
+              <a href="{{ add_failure }}" class="nav-link {% if request.path == add_failure %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Failure
+                </p>
+              </a>
+            </li>
+
+
+            <li class="nav-item">
               {% url 'manage_sku' as manage_sku %}
               {% url 'edit_sku' sku_id=id as edit_sku %}
               <a href="{{ manage_sku }}" class="nav-link {% if request.path == manage_sku %} active {% endif %} {% if request.path == edit_sku %} active {% endif %}">

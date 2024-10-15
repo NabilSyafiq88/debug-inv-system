@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 from .forms import SkuForm, FailureForm, FailureData
-from .models import CustomUser, Admin, engTech, Operator, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name
+from .models import CustomUser, Admin, engTech, Operator, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name, Failure_Info, Search_PCA
 
 def admin_home(request):
   
@@ -457,3 +457,145 @@ def delete_model(request, model_id):
     except:
         messages.error(request, "Failed to Delete Product Model.")
         return redirect('manage_model')   
+      
+      
+#Failure portion #############################################################################
+def manage_failure(request):
+    failure_info = Failure_Info.objects.all()
+    context = {
+        "failure_info":failure_info
+    }
+    return render(request, "admin_template/manage_failure_template.html", context) 
+  
+def add_failure(request):
+    cells_name = cells_Name.objects.all()
+    test_station = station_Name.objects.all()
+    failure_mode = Failure_Mode.objects.all()
+    context ={
+      "cells_name": cells_name,
+      "station_name":test_station,
+      "failure_mode":failure_mode
+    }
+  
+    return render(request, "admin_template/add_failure_template.html", context)
+  
+def edit_failure(request, sku_id):
+    sku = cells_Name.objects.get(id=sku_id)
+
+    context = {
+        "id": sku_id,
+        "sku": sku
+    }
+    print (sku_id)
+    #print (cells)
+    return render(request, 'admin_template/edit_failure_template.html', context)
+  
+def add_failure_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method!")
+        return redirect('add_failure')
+    else:
+        test_cells = request.POST.get('cells')
+        product_family = request.POST.get('model')
+        FG_partno = request.POST.get('FGpartno')
+        FG_model = request.POST.get('FGmodel')
+        PCA_Partno = request.POST.get('PCA_PN')
+        test_station = request.POST.get('station')
+        failure_Mode = request.POST.get('failure_mode')
+        
+        print(test_cells)
+        print(product_family)
+        print(FG_partno)
+        print(FG_model)
+        print(PCA_Partno)
+        try:
+            sku = Failure_Info(test_Cells=test_cells,
+                            product_Model=product_family,
+                            FG_PartNo=FG_partno,
+                            FG_Model=FG_model,
+                            PCA_SN_Number=PCA_Partno,
+                            test_Station=test_station,
+                            failure_mode=failure_Mode,
+                            failure_status="NEW"
+                            )
+            sku.save()
+        
+            messages.success(request, "Failure Info Added Successfully!")
+            return redirect('add_failure')
+        except:
+            messages.error(request, "Failed to Add Failure Info!")
+            return redirect('add_failure')
+
+def edit_failure(request, sku_id):
+    sku = Failure_Info.objects.get(id=sku_id)
+
+    context = {
+        "id": sku_id,
+        "sku": sku
+    }
+    print (sku_id)
+    #print (cells)
+    return render(request, 'admin_template/edit_failure_template.html', context)
+  
+def edit_failure_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method")
+    else:
+        sku_id = request.POST.get('sku_id')
+        sku_name = request.POST.get('sku_cells')
+        sku_model = request.POST.get('sku_model')
+        sku_FGpartno = request.POST.get('sku_FGpartno')
+        sku_FGmodel = request.POST.get('sku_FGmodel')
+        sku_PCApartno = request.POST.get('sku_PCApartno')
+        sku_status = request.POST.get('sku_status')
+        
+        print(sku_id)
+        print(sku_name)
+        print(sku_model)
+        print(sku_FGpartno)
+        print(sku_FGmodel)
+        print(sku_PCApartno)
+        print(sku_status)
+        
+        try:
+            sku = Failure_Info.objects.get(id=sku_id)
+            sku.FG_PartNo = sku_FGpartno
+            sku.FG_Model = sku_FGmodel
+            sku.PCA_SN_Number = sku_PCApartno
+            sku.failure_status = sku_status
+            sku.save()
+          
+
+            messages.success(request, "Failure Info Updated Successfully.")
+            return redirect('/edit_failure/'+sku_id)
+
+        except:
+            messages.error(request, "Failed to Update Failure Info.")
+            return redirect('/edit_failure/'+sku_id)
+          
+def delete_failure(request, sku_id):
+    sku = Failure_Info.objects.get(id=sku_id)
+    try:
+        sku.delete()
+        messages.success(request, "Failure Info Deleted Successfully.")
+        return redirect('manage_failure')
+    except:
+        messages.error(request, "Failed to Delete Failure Info.")
+        return redirect('manage_failure')    
+
+#search PCA
+def search_PCA(request):
+  
+  cells_name = cells_Name.objects.all()
+  test_station = station_Name.objects.all()
+  failure_mode = Failure_Mode.objects.all()
+  
+  if 'query' in request.GET:
+    query = request.GET['query']
+    PCA_SN = Sku_Info.objects.filter(PCA_SN_Number__iexact=query)
+  
+
+  else:
+      PCA_SN = Sku_Info.objects.none()
+      
+  return render (request, 'admin_template/add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode})

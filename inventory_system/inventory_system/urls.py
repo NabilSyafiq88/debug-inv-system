@@ -47,8 +47,13 @@ urlpatterns = [
     path('admin_home/', AdminViews.admin_home, name="admin_home"),
     
 
-    #failuredata
-    path('manage_failuredata/', AdminViews.manage_failuredata, name="manage_failuredata"),
+    #failure
+    path('manage_failure/', AdminViews.manage_failure, name="manage_failure"),
+    path('add_failure/', AdminViews.add_failure, name="add_failure"),
+    path('add_failure_save/', AdminViews.add_failure_save, name="add_failure_save"),
+    path('edit_failure/<failure_id>', AdminViews.edit_failure, name="edit_failure"),
+    path('edit_failure_save/', AdminViews.edit_failure_save, name="edit_failure_save"),
+    path('delete_failure/<failure_id>/', AdminViews.delete_failure, name="delete_failure"),
     
     #cells
     path('manage_cells/', AdminViews.manage_cells, name="manage_cells"),
@@ -90,6 +95,8 @@ urlpatterns = [
     path('edit_model/<model_id>', AdminViews.edit_model, name="edit_model"),
     path('edit_model_save/', AdminViews.edit_model_save, name="edit_model_save"),
     path('delete_model/<model_id>/', AdminViews.delete_model, name="delete_model"),
-
+    
+    #search PCA
+    path('search_PCA/', AdminViews.search_PCA, name="search_PCA"),  
         
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

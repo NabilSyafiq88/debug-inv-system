@@ -85,6 +85,26 @@ class Sku_Info(models.Model):
 
     def __str__(self) -> str:
         return self.product_Model
+      
+class Failure_Info(models.Model):
+    id = models.AutoField(primary_key=True)
+    #product_Status = models.CharField(max_length=20, choices=PRODUCT_STATUS, null=True)
+    #test_Cells = models.CharField(max_length=20, choices=TEST_STATION, null=True)
+    test_Cells = models.CharField(max_length=100, null=True)
+    product_Model = models.CharField(max_length=100, null=True)
+    FG_PartNo = models.CharField(max_length=100, null=True)
+    FG_Model = models.CharField(max_length=100, null=True)
+    #failure_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
+    PCA_SN_Number = models.CharField(max_length=100, null=True)
+    test_Station = models.CharField(max_length=100, null=True)
+    failure_mode = models.CharField(max_length=100, null=True)
+    failure_action = models.CharField(max_length=100, null=True)
+    failure_status = models.CharField(max_length=100, null=True)
+    #failure_Description = models.CharField(max_length=200, null=True)
+    failure_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.PCA_SN_Number
 
 #class getDebugData(forms.Form):
   #info = forms.CharField(max_length=100)
@@ -114,6 +134,14 @@ class Failure_Data(models.Model):
 
     def __str__(self) -> str:
         return self.test_Station
+      
+      
+class Search_PCA(models.Model):
+  id = models.AutoField(primary_key=True)
+  PCA_SN_Number = models.CharField(max_length=100, null=True)
+  product_Model = models.CharField(max_length=100, null=True)
+  FG_PartNo = models.CharField(max_length=100, null=True)
+  FG_Model = models.CharField(max_length=100, null=True)
 
 class CustomUser(AbstractUser):
     ADMIN = '1'
