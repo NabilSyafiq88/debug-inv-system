@@ -102,6 +102,8 @@ class Failure_Info(models.Model):
     failure_status = models.CharField(max_length=100, null=True)
     #failure_Description = models.CharField(max_length=200, null=True)
     failure_date = models.DateTimeField(auto_now_add=True)
+    reject_bin = models.CharField(max_length=100, null=True)
+    PCA_serial = models.CharField(max_length=100, null=True)
 
     def __str__(self) -> str:
         return self.PCA_SN_Number

@@ -23,9 +23,17 @@
                     <!-- form start -->
 
                     <form method="GET">
-                      <input type="text" name="query" placeholder="Search by PCA PN Number" value="{{ request.GET.query }}">
-                      <button type="submit">Search</button>
+                      <div>
                       <a href="{% url 'search_PCA' %}" class="btn btn-dark">Refresh</a>
+                      </div>
+                      <!--<input type="text" name="query" placeholder="Search by product model" value="{{ request.GET.query }}">-->
+                      <label>Select Product Model : </label>
+                      <select class="form-control" name="query" value="{{ request.GET.query }}" >
+                        {% for model in productmodel_list %}
+                          <option> {{ model }}</option>
+                        {% endfor %}
+                      </select> <button type="submit">Search</button>
+                        
                     </form>
 
                     <form role="form" method="POST" action="{% url 'add_failure_save' %}">
@@ -59,68 +67,71 @@
                             <div class="card-body">
 
                               <div class="form-group">
-                                <label>PCA Part No : </label>
-                                <select class="form-control" name="PCA_PN" readonly>
-                                {% for SN in PCA_SN %}
-                                <option> {{ SN.PCA_SN_Number }}</option>
-                                {% endfor %}
-                              </select>
-                              </div>
-
-                              <div class="form-group">
                                 <label>Product Model : </label>
                                 <select class="form-control" name="model" readonly>
-                                {% for SN in PCA_SN %}
+                                      {% for model in PCA_SN %}
+                                  <option> {{ model.product_Model }}</option>
+                                      {% endfor %}
+                                <!--{% for SN in PCA_SN %}
                                 <option> {{ SN.product_Model }}</option>
-                                {% endfor %}
-                              </select>
+                                {% endfor %}-->
+                              </select> 
                               </div>
 
-                              <div class="form-group">
-                                <label>FG Model: </label>
-                                <select class="form-control" name="FGmodel" readonly>
-                                {% for SN in PCA_SN %}
-                                <option> {{ SN.FG_Model }}</option>
-                                {% endfor %}
-                              </select>
-                              </div>
-
-                              <div class="form-group">
-                
-                                <label>FG Part No: </label>
-                                <select class="form-control" name="FGpartno" readonly>
-                                {% for SN in PCA_SN %}
-                                <option> {{ SN.FG_PartNo }}</option>
-                                {% endfor %}
-                              </select>
-
-                              </div>
-
+                              
                               <div class="form-group">
                                 <label>Test Cells : </label>
-                                <select class="form-control" name="cells" readonly>
+                                <select class="form-control" name="cells" readonly >
                                 {% for SN in PCA_SN %}
                                 <option> {{ SN.test_Cells }}</option>
                                 {% endfor %}
                               </select>
                               </div>
 
-                                <div class="form-group">
-                                  <label>Test Station </label>
-                                  <select class="form-control" name="station">
-                                    {% for station in station_name %}
-                                      <option>{{ station.station_Name }}</option>
-                                    {% endfor %}
-                                  </select>
-                                </div>
+                              <div class="form-group">
+                                <label>Select PCA Part No : </label>
+                                <select class="form-control" name="PCA_PN">
+                                  {% for PCA in PCAnumber_list %}
+                                  <option> {{ PCA }}</option>
+                                      {% endfor %}
+                                <!--{% for SN in PCA_SN %}
+                                <option> {{ SN.PCA_SN_Number }}</option>
+                                {% endfor %}-->
+                              </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label>Select Test Station : </label>
+                                <select class="form-control" name="station">
+                                  {% for station in station_name %}
+                                    <option>{{ station.station_Name }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label>Reject Bin No : </label>
+                                <input type="text" class="form-control" name="reject_bin" placeholder="Enter Reject Bin No.">
+                                <!--<select class="form-control" name="FGmodel" readonly>
+                                {% for SN in PCA_SN %}
+                                <option> {{ SN.FG_Model }}</option>
+                                {% endfor %}
+                              </select>-->
+                              </div>
 
                                 <div class="form-group">
-                                  <label>Failure Mode </label>
+                                  <label>Select Failure Mode : </label>
                                   <select class="form-control" name="failure_mode">
                                     {% for failure in failure_mode %}
                                       <option>{{ failure.failure_Mode }}</option>
                                     {% endfor %}
                                   </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>PCA Serial No : </label>
+                                  <input type="text" class="form-control" name="PCA_Serial" placeholder="Enter PCA SN.">
+
                                 </div>
 
                             </div>

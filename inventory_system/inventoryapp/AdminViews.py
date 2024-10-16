@@ -5,9 +5,11 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
+import pandas as pd
 
 from .forms import SkuForm, FailureForm, FailureData
 from .models import CustomUser, Admin, engTech, Operator, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name, Failure_Info, Search_PCA
+from collections import OrderedDict
 
 def admin_home(request):
   
@@ -494,10 +496,30 @@ def add_failure(request):
     cells_name = cells_Name.objects.all()
     test_station = station_Name.objects.all()
     failure_mode = Failure_Mode.objects.all()
+    model_name = model_Name.objects.all()
+    product_model = Sku_Info.objects.values_list('product_Model',flat=True)
+    PCA_no = Sku_Info.objects.values_list('PCA_SN_Number',flat=True)
+    #test = sku_info.values()
+    #sku_list = []
+    #[sku_list.append(x) for x in sku_info if x not in sku_list]
+    #sku_list = set(sku_info)
+    
+    productmodel_list = list(set(product_model))
+    productmodel_list.sort()
+    
+    PCAnumber_list = list(set(PCA_no))
+    #PCAnumber_list.sort()
+    
+    #print(sku_info)
+    #print(sort_list)
+    #print(model_name)
+  
     context ={
       "cells_name": cells_name,
       "station_name":test_station,
-      "failure_mode":failure_mode
+      "failure_mode":failure_mode,
+      "productmodel_list":productmodel_list,
+      "PCAnumber_list":PCAnumber_list,
     }
   
     return render(request, "admin_template/add_failure_template.html", context)
@@ -518,24 +540,24 @@ def add_failure_save(request):
         messages.error(request, "Invalid Method!")
         return redirect('add_failure')
     else:
-        test_cells = request.POST.get('cells')
         product_family = request.POST.get('model')
-        FG_partno = request.POST.get('FGpartno')
-        FG_model = request.POST.get('FGmodel')
+        test_cells = request.POST.get('cells')
         PCA_Partno = request.POST.get('PCA_PN')
         test_station = request.POST.get('station')
-        failure_Mode = request.POST.get('failure_mode')
+        reject_Bin = request.POST.get('reject_bin')
+        failure_Mode = request.POST.get('failure_mode') 
+        PCA_Serial = request.POST.get('PCA_Serial')
         
         print(test_cells)
         print(product_family)
-        print(FG_partno)
-        print(FG_model)
+        print(reject_Bin)
+        print(PCA_Serial)
         print(PCA_Partno)
         try:
             sku = Failure_Info(test_Cells=test_cells,
                             product_Model=product_family,
-                            FG_PartNo=FG_partno,
-                            FG_Model=FG_model,
+                            reject_bin=reject_Bin,
+                            PCA_serial=PCA_Serial,
                             PCA_SN_Number=PCA_Partno,
                             test_Station=test_station,
                             failure_mode=failure_Mode,
@@ -616,13 +638,19 @@ def search_PCA(request):
   cells_name = cells_Name.objects.all()
   test_station = station_Name.objects.all()
   failure_mode = Failure_Mode.objects.all()
+  product_model = Sku_Info.objects.values_list('product_Model',flat=True)
+  PCA_no = Sku_Info.objects.values_list('PCA_SN_Number',flat=True)
+  
+  productmodel_list = list(set(product_model))
+  productmodel_list.sort()
+    
+  PCAnumber_list = list(set(PCA_no))
   
   if 'query' in request.GET:
     query = request.GET['query']
-    PCA_SN = Sku_Info.objects.filter(PCA_SN_Number__iexact=query)
-  
+    PCA_SN = Sku_Info.objects.filter(product_Model__iexact=query)
 
   else:
       PCA_SN = Sku_Info.objects.none()
       
-  return render (request, 'admin_template/add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode})
+  return render (request, 'admin_template/add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'productmodel_list':productmodel_list,'PCAnumber_list':PCAnumber_list})
