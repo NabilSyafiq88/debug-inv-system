@@ -14,7 +14,7 @@
                 <div class="inner">
                   <h3>{{ all_failed_data }}</h3>
 
-                  <p>TOTAL FAILURE REGISTERED</p>
+                  <p>TOTAL REJECT REGISTERED</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -29,7 +29,7 @@
                 <div class="inner">
                   <h3>{{ new_failure }}</h3>
 
-                  <p>NEW ITEM REGISTERED</p>
+                  <p>NEW REJECT REGISTERED</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -45,7 +45,7 @@
                 <div class="inner">
                   <h3>{{ inprogress_failure}}</h3>
 
-                  <p>IN PROGRESS TASK</p>
+                  <p>IN PROGRESS</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -60,7 +60,7 @@
                 <div class="inner">
                   <h3>{{ completed_failure }}</h3>
 
-                  <p>COMPLETED TASK</p>
+                  <p>COMPLETED</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -100,7 +100,7 @@
             <!-- DONUT CHART -->
             <div class="card card-dark">
               <div class="card-header">
-                <h3 class="card-title">Failure Count in Each Test Cells</h3>
+                <h3 class="card-title">Reject Count from Each Test Cells</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -197,6 +197,17 @@
         }
       ]
     }
+    var donutOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var donutChart = new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: donutData,
+      options: donutOptions      
+    })
 
   })
 </script>

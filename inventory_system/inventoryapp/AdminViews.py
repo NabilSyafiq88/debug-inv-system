@@ -23,13 +23,13 @@ def admin_home(request):
   completed_failure = Failure_Info.objects.filter(failure_status = "COMPLETED").count()
   
   #total failure in each cells
-  cells_all = cells_Name.objects.all()
+  failure_all = Failure_Info.objects.all()
   cells_name_list =[]
   failure_count_list = []
   
-  for cells in cells_all:
-    failures = Failure_Info.objects.filter(failure_status = "NEW").count()
-    cells_name_list.append(cells.cell_Name)
+  for failure in failure_all:
+    failures = Failure_Info.objects.filter(id = failure.id).count()
+    cells_name_list.append(failure.test_Cells)
     failure_count_list.append(failures)
 
   
