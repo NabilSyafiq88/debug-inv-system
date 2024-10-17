@@ -10,6 +10,7 @@ import pandas as pd
 from .forms import SkuForm, FailureForm, FailureData
 from .models import CustomUser, Admin, engTech, Operator, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name, Failure_Info, Search_PCA
 from collections import OrderedDict
+from django.db.models import Count
 
 def admin_home(request):
   
@@ -21,19 +22,38 @@ def admin_home(request):
   model_name = model_Name.objects.all().count()
   
   new_failure = Failure_Info.objects.filter(failure_status = "NEW").count()
-  inprogress_failure = Failure_Info.objects.filter(failure_status = "IN PROGRESS").count()
-  completed_failure = Failure_Info.objects.filter(failure_status = "COMPLETED").count()
+  open_item = Failure_Info.objects.filter(failure_status = "OPEN").count()
+  close_item= Failure_Info.objects.filter(failure_status = "CLOSED").count()
   
   #total failure in each cells
   failure_all = Failure_Info.objects.all()
+  failure_list = Failure_Info.objects.values_list('test_Cells',flat=True)
+  
+  failure_cell_list = list(set(failure_list))
+  
+  print(failure_cell_list)
+  
+  cell_list =[]
+  failure_list =[]
+  
+  for cell in failure_cell_list:
+    cell_list.append(cell)
+ 
   cells_name_list =[]
   failure_count_list = []
   
   for failure in failure_all:
-    failures = Failure_Info.objects.filter(id = failure.id).count()
+    failures = Failure_Info.objects.filter(test_Cells = failure.test_Cells).count()
     cells_name_list.append(failure.test_Cells)
     failure_count_list.append(failures)
+    
+    #print (failure)
+    #print (cells_name_list)
+    #print (failure_count_list)
 
+  the_list = cells_name_list.append(failure.test_Cells)
+  
+ # print (the_list)
   
   sku_info_list = []
   failure_info_list = []
@@ -44,8 +64,8 @@ def admin_home(request):
     "all_failure_mode":all_failure_mode,
     "all_failed_data":all_failed_data,
     "new_failure":new_failure,
-    "inprogress_failure":inprogress_failure,
-    "completed_failure":completed_failure,
+    "open_item":open_item,
+    "close_item":close_item,
     "failures":failures,
     "cells_name_list":cells_name_list,
     "failure_count_list":failure_count_list,
@@ -487,10 +507,12 @@ def delete_model(request, model_id):
 #Failure portion #############################################################################
 def manage_failure(request):
     failure_info = Failure_Info.objects.all()
+    
     context = {
         "failure_info":failure_info
     }
     return render(request, "admin_template/manage_failure_template.html", context) 
+  
   
 def add_failure(request):
     cells_name = cells_Name.objects.all()
@@ -553,6 +575,8 @@ def add_failure_save(request):
         print(reject_Bin)
         print(PCA_Serial)
         print(PCA_Partno)
+     
+        
         try:
             sku = Failure_Info(test_Cells=test_cells,
                             product_Model=product_family,
@@ -561,7 +585,7 @@ def add_failure_save(request):
                             PCA_SN_Number=PCA_Partno,
                             test_Station=test_station,
                             failure_mode=failure_Mode,
-                            failure_status="NEW"
+                            failure_status="OPEN"
                             )
             sku.save()
         
@@ -576,7 +600,7 @@ def edit_failure(request, failure_id):
 
     context = {
         "id": failure_id,
-        "sku": failure
+        "failure": failure
     }
     print (failure_id)
     #print (cells)
@@ -586,41 +610,51 @@ def edit_failure_save(request):
     if request.method != "POST":
         HttpResponse("Invalid Method")
     else:
-        sku_id = request.POST.get('sku_id')
-        sku_name = request.POST.get('sku_cells')
-        sku_model = request.POST.get('sku_model')
-        sku_FGpartno = request.POST.get('sku_FGpartno')
-        sku_FGmodel = request.POST.get('sku_FGmodel')
-        sku_PCApartno = request.POST.get('sku_PCApartno')
-        sku_status = request.POST.get('status')
-        test_station = request.POST.get('station')
+        failure_id = request.POST.get('failure_id')
+        failure_cells = request.POST.get('failure_cells')
+        failure_model = request.POST.get('failure_model')
+        failure_PCApartno = request.POST.get('failure_PCApartno')
+        failure_station = request.POST.get('station')
+        failure_PCASN = request.POST.get('failure_SN')
         failure_mode = request.POST.get('failure_mode')
+        failure_rootcause = request.POST.get('failure_rootcause')
+        failure_findings = request.POST.get('failure_findings')
         failure_action = request.POST.get('failure_action')
+        failure_status = request.POST.get('status')
         
-        print(sku_id)
-        print(sku_name)
-        print(sku_model)
-        print(sku_FGpartno)
-        print(sku_FGmodel)
-        print(sku_PCApartno)
-        print(sku_status)
-        print(test_station)
+        print(failure_id)
+        print(failure_cells)
+        print(failure_model)
+        print(failure_PCApartno)
+        print(failure_station)
+        print(failure_PCASN)
         print(failure_mode)
+        print(failure_findings)
+        print(failure_findings)
         print(failure_action)
+        print(failure_status)
         
         try:
-            sku = Failure_Info.objects.get(id=sku_id)
-            sku.failure_action = failure_action
-            sku.failure_status = sku_status
-            sku.save()
+            failure = Failure_Info.objects.get(id=failure_id)
+            failure.PCA_serial = failure_PCASN
+            failure.root_cause = failure_rootcause
+            failure.Findings = failure_findings
+            failure.failure_action = failure_action
+            
+            if failure_action == "Need help":
+              failure.failure_status = "OPEN"
+            else:
+              failure.failure_status = "CLOSED"
+            
+            failure.save()
           
 
-            messages.success(request, "Failure Info Updated Successfully.")
-            return redirect('/edit_failure/'+sku_id)
+            messages.success(request, "Reject Info Updated Successfully.")
+            return redirect('/edit_failure/'+failure_id)
 
         except:
-            messages.error(request, "Failed to Update Failure Info.")
-            return redirect('/edit_failure/'+sku_id)
+            messages.error(request, "Failed to Update Reject Info.")
+            return redirect('/edit_failure/'+failure_id)
           
 def delete_failure(request, failure_id):
     sku = Failure_Info.objects.get(id=failure_id)

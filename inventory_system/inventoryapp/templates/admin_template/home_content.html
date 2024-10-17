@@ -8,7 +8,7 @@
         <div class="container-fluid">
           <!-- Small boxes (Stat box) -->
           <div class="row">
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-4 col-6">
               <!-- small box -->
               <div class="small-box bg-dark text-white">
                 <div class="inner">
@@ -23,29 +23,29 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
+           <!-- <div class="col-lg-3 col-6">-->
               <!-- small box -->
-              <div class="small-box bg-secondary text-white">
+             <!-- <div class="small-box bg-secondary text-white">
                 <div class="inner">
                   <h3>{{ new_failure }}</h3>
 
-                  <p>NEW REJECT REGISTERED</p>
+                  <p>NEW ITEM REGISTERED</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
                 </div>
                 
               </div>
-            </div>
+            </div> -->
             <!-- ./col -->
             
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-4 col-6">
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>{{ inprogress_failure}}</h3>
+                  <h3>{{ open_item}}</h3>
 
-                  <p>IN PROGRESS</p>
+                  <p>OPEN ITEM</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -54,13 +54,13 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-4 col-6">
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>{{ completed_failure }}</h3>
+                  <h3>{{ close_item }}</h3>
 
-                  <p>COMPLETED</p>
+                  <p>CLOSED ITEM</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -151,15 +151,14 @@
   $(document).ready(function(){
     var donutChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieData        = {
-      labels: [
-          'New Item', 
-          'In Progress',
-          'Completed',
+      labels: [ 
+          'Open',
+          'Closed',
       ],
       datasets: [
         {
-          data: [{{ new_failure }},{{ inprogress_failure }},{{ completed_failure }}],
-          backgroundColor : ['#f56954', '#f39c12', '#00a65a'],
+          data: [{{ open_item }},{{ close_item }}],
+          backgroundColor : ['#f39c12', '#00a65a'],
         }
       ]
     }
@@ -184,30 +183,30 @@
 
 
     // Get context with jQuery - using jQuery's .get() method.
-    var cells_name_list = {{ cells_name_list|safe }}
-    var failure_count_list = {{ failure_count_list}}
-    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-    var donutData        = {
-      labels: cells_name_list,
-      datasets: [
-        {
-          data: failure_count_list,
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#000000', '#00FF00', '#FF00FF', '	#0000FF', '	#FF0000', '#cea9bc' , '#59bd99', '#a11624' ,
-          '#4b6a81' , '#fdf6ad', '#2b1820', '#9d813b' , '#bb6567' ,'#ef5d3e', '#8f8297'],
-        }
-      ]
-    }
-    var donutOptions     = {
-      maintainAspectRatio : false,
-      responsive : true,
-    }
+    //var cells_name_list = {{ cells_name_list|safe }}
+    //var failure_count_list = {{ failure_count_list}}
+    //var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    //var donutData        = {
+      //labels: cells_name_list,
+      //datasets: [
+        //{
+         // data: failure_count_list,
+          //backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#000000', '#00FF00', '#FF00FF', '	#0000FF', '	#FF0000', '#cea9bc' , '#59bd99', '#a11624' ,
+          //'#4b6a81' , '#fdf6ad', '#2b1820', '#9d813b' , '#bb6567' ,'#ef5d3e', '#8f8297'],
+        //}
+      //]
+    //}
+    //var donutOptions     = {
+      //maintainAspectRatio : false,
+      //responsive : true,
+    //}
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
-    var donutChart = new Chart(donutChartCanvas, {
-      type: 'doughnut',
-      data: donutData,
-      options: donutOptions      
-    })
+    //var donutChart = new Chart(donutChartCanvas, {
+      //type: 'doughnut',
+      //data: donutData,
+      //options: donutOptions      
+    //})
 
   })
 </script>
