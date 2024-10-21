@@ -24,10 +24,10 @@ AUTH_USER_MODEL = 'inventoryapp.CustomUser'
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hzf*2_8$xc$z0v%d@%$y=pqk_zwhmb^rl+ct+@m$i@q_-)wei)'
+SECRET_KEY = 'debug-inventory-system-hzf*2_8$xc$z0v%d@%$y=pqk_zwhmb^rl+ct+@m$i@q_-)wei)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
