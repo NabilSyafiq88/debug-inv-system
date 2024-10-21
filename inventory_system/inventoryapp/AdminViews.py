@@ -25,38 +25,47 @@ def admin_home(request):
   open_item = Failure_Info.objects.filter(failure_status = "OPEN").count()
   close_item= Failure_Info.objects.filter(failure_status = "CLOSED").count()
   
+  complete_percentage = (close_item/all_failed_data)*100
+  open_percentage = 100 - complete_percentage
+  
+  #print(complete_percentage)
+  #print(open_percentage)
+  
   #total failure in each cells
   failure_all = Failure_Info.objects.all()
-  failure_list = Failure_Info.objects.values_list('test_Cells',flat=True)
-  
-  failure_cell_list = list(set(failure_list))
-  
-  print(failure_cell_list)
-  
-  cell_list =[]
-  failure_list =[]
-  
-  for cell in failure_cell_list:
-    cell_list.append(cell)
+  #failure_mode_all = Failure_Mode.objects.all()
  
   cells_name_list =[]
   failure_count_list = []
+  failure_mode_list = []
+  failuremode_count_list = []
   
   for failure in failure_all:
     failures = Failure_Info.objects.filter(test_Cells = failure.test_Cells).count()
     cells_name_list.append(failure.test_Cells)
     failure_count_list.append(failures)
-    
-    #print (failure)
-    #print (cells_name_list)
-    #print (failure_count_list)
 
-  the_list = cells_name_list.append(failure.test_Cells)
+  res = dict(map(lambda i,j : (i,j) , cells_name_list,failure_count_list))
+
+  cells_list = []
+  count_list = []
+  items = res.items()
+  for item in items:
+        cells_list.append(item[0]), count_list.append(item[1])
   
- # print (the_list)
+  #print (cells_name_list)
+  #print (failure_count_list)  
+  #print (cells_list)
+  #print (count_list)
   
-  sku_info_list = []
-  failure_info_list = []
+  for failuremode in failure_all:
+    failure_Mode = Failure_Info.objects.filter(failure_mode = failuremode.failure_mode).count()
+    failure_mode_list.append(failuremode.failure_mode)
+    failuremode_count_list.append(failure_Mode)
+  
+  print(failure_mode_list)
+  print(failuremode_count_list)
+
   
   context={
     "all_cells_count": all_cells_count,
@@ -66,9 +75,11 @@ def admin_home(request):
     "new_failure":new_failure,
     "open_item":open_item,
     "close_item":close_item,
-    "failures":failures,
-    "cells_name_list":cells_name_list,
-    "failure_count_list":failure_count_list,
+    #"failures":failures,
+    "cells_list":cells_list,
+    "count_list":count_list,
+    "complete_percentage":complete_percentage,
+    "open_percentage":open_percentage,
   }
   
   return render(request,"admin_template/home_content.html",context)

@@ -21,7 +21,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth
 from django.urls import include, path
 from inventoryapp.views import search_PCA_SN, home, contact, loginUser, doLogin, registration, doRegistration
-from inventoryapp import AdminViews
+from inventoryapp import AdminViews, OperatorViews
 
 urlpatterns = [
     path("/", include("inventoryapp.urls")),
@@ -45,8 +45,6 @@ urlpatterns = [
     
     #Admin page
     path('admin_home/', AdminViews.admin_home, name="admin_home"),
-    
-
     #failure
     path('manage_failure/', AdminViews.manage_failure, name="manage_failure"),
     path('add_failure/', AdminViews.add_failure, name="add_failure"),
@@ -54,7 +52,6 @@ urlpatterns = [
     path('edit_failure/<failure_id>', AdminViews.edit_failure, name="edit_failure"),
     path('edit_failure_save/', AdminViews.edit_failure_save, name="edit_failure_save"),
     path('delete_failure/<failure_id>/', AdminViews.delete_failure, name="delete_failure"),
-    
     #cells
     path('manage_cells/', AdminViews.manage_cells, name="manage_cells"),
     path('add_cells/', AdminViews.add_cells, name="add_cells"),
@@ -62,7 +59,6 @@ urlpatterns = [
     path('edit_cells/<cells_id>', AdminViews.edit_cells, name="edit_cells"),
     path('edit_cells_save/', AdminViews.edit_cells_save, name="edit_cells_save"),
     path('delete_cells/<cells_id>/', AdminViews.delete_cells, name="delete_cells"),
-    
     #sku
     path('manage_sku/', AdminViews.manage_sku, name="manage_sku"),
     path('add_sku/', AdminViews.add_sku, name="add_sku"),
@@ -70,8 +66,6 @@ urlpatterns = [
     path('edit_sku/<sku_id>', AdminViews.edit_sku, name="edit_sku"),
     path('edit_sku_save/', AdminViews.edit_sku_save, name="edit_sku_save"),
     path('delete_sku/<sku_id>/', AdminViews.delete_sku, name="delete_sku"),
-
-    
     #station
     path('manage_station/', AdminViews.manage_station, name="manage_station"),
     path('add_station/', AdminViews.add_station, name="add_station"),
@@ -79,7 +73,6 @@ urlpatterns = [
     path('edit_station/<station_id>', AdminViews.edit_station, name="edit_station"),
     path('edit_station_save/', AdminViews.edit_station_save, name="edit_station_save"),
     path('delete_station/<station_id>/', AdminViews.delete_station, name="delete_station"),
-    
     #failuremode
     path('manage_failuremode/', AdminViews.manage_failuremode, name="manage_failuremode"),   
     path('add_failuremode/', AdminViews.add_failuremode, name="add_failuremode"),
@@ -87,7 +80,6 @@ urlpatterns = [
     path('edit_failuremode/<failuremode_id>', AdminViews.edit_failuremode, name="edit_failuremode"),
     path('edit_failuremode_save/', AdminViews.edit_failuremode_save, name="edit_failuremode_save"),
     path('delete_failuremode/<failuremode_id>/', AdminViews.delete_failuremode, name="delete_failuremode"),
-    
     #model
     path('manage_model/', AdminViews.manage_model, name="manage_model"),   
     path('add_model/', AdminViews.add_model, name="add_model"),
@@ -95,8 +87,21 @@ urlpatterns = [
     path('edit_model/<model_id>', AdminViews.edit_model, name="edit_model"),
     path('edit_model_save/', AdminViews.edit_model_save, name="edit_model_save"),
     path('delete_model/<model_id>/', AdminViews.delete_model, name="delete_model"),
-    
     #search PCA
     path('search_PCA/', AdminViews.search_PCA, name="search_PCA"),  
+    
+ #Operator page
+    path('operator_home/', OperatorViews.operator_home, name="operator_home"),
+    #failure
+    path('opt_manage_failure/', OperatorViews.opt_manage_failure, name="opt_manage_failure"),
+    path('opt_add_failure/', OperatorViews.opt_add_failure, name="opt_add_failure"),
+    path('opt_add_failure_save/', OperatorViews.opt_add_failure_save, name="opt_add_failure_save"),
+    path('opt_edit_failure/<failure_id>', OperatorViews.opt_edit_failure, name="opt_edit_failure"),
+    path('opt_edit_failure_save/', OperatorViews.opt_edit_failure_save, name="opt_edit_failure_save"),
+    path('opt_delete_failure/<failure_id>/', OperatorViews.opt_delete_failure, name="opt_delete_failure"),
+    #search PCA
+    path('opt_search_PCA/', OperatorViews.opt_search_PCA, name="opt_search_PCA"),     
+    
+    
         
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

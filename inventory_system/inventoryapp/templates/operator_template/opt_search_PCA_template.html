@@ -1,0 +1,28 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <form method="GET">
+        <input type="text" name="query" placeholder="Search by PCA PN Number" value="{{ request.GET.query }}">
+        <button type="submit">Search</button>
+    </form>
+    {% if PCA_SN %}
+        <ul>
+            {% for SN in PCA_SN %}
+                <li>{{ SN.test_Cells }}</li>
+                <li>{{ SN.product_Model }}</li>
+                <li>{{ SN.FG_Model }}</li>
+                <li>{{ SN.FG_PartNo }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>

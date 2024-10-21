@@ -150,7 +150,7 @@ def doRegistration(request):
     user_type = get_user_type_from_username(user_name)
     
     if user_type is None:
-        messages.error(request, "Please use valid format for the username: '<username>.<engtech|operator>'")
+        messages.error(request, "Please use valid format for the username: '<username>.operator'")
         return render(request, 'registration.html')
 
     #username = user_name.split('.')[0]
