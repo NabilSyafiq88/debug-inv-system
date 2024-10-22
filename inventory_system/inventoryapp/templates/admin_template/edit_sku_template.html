@@ -1,0 +1,108 @@
+{% extends 'admin_template/base_template.html' %}
+
+{% block page_title %}
+    Edit SKU | #ID : {{ sku.id }}
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Cells</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" method="POST" action="{% url 'edit_sku_save' %}">
+                        {% csrf_token %}
+
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Cells Name </label>
+                                <input type="text" class="form-control" name="sku_cells" value="{{ sku.test_Cells }}" readonly>
+                                <input type="hidden" name="sku_id" value="{{ sku.id }}" />
+                            </div>
+
+                          <div class="form-group">
+                              <label>Product Family </label>
+                              <input type="text" class="form-control" name="sku_model" value="{{ sku.product_Model }}" readonly>
+                          </div>
+
+                          <div class="form-group">
+                            <label>FG Part Number (*) </label>
+                            <input type="text" class="form-control" name="sku_FGpartno" value="{{ sku.FG_PartNo }}">
+                          </div>
+
+                          <div class="form-group">
+                            <label>FG Model (*) </label>
+                            <input type="text" class="form-control" name="sku_FGmodel" value="{{ sku.FG_Model }}">
+                          </div>
+
+                          <div class="form-group">
+                            <label>PCA Part Number (*) </label>
+                            <input type="text" class="form-control" name="sku_PCApartno" value="{{ sku.PCA_SN_Number }}">
+                          </div>
+
+                          <div class="form-group">
+                            <label>Product Status (*) </label>
+                            <select class="form-control" name="sku_status" value="{{ sku.product_Status }}" >
+        
+                                <option>{{ "INACTIVE" }}</option>
+                                <option>{{ "ACTIVE" }}</option>
+                                <option>{{ "NPI/RFQ" }}</option>
+                    
+                            </select>
+                          </div>
+
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Update SKU</button>
+                        </div>
+                    </form>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}

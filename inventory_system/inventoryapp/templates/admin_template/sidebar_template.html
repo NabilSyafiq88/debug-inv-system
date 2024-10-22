@@ -1,0 +1,168 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+  <a href="{% url 'admin_home' %}" class="brand-link">
+    <img src="{% static 'dist/img/Fluke Image.jpg' %}" alt="AdminLTE Logo" class="brand-image img-square elevation-3 ml-5"
+        style="opacity: .8">
+      <span class="brand-text font-weight-light">Venture</span>
+  </a>
+
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="info">
+            <a href="{% url 'admin_home' %}" class="d-block"></a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              {% url 'admin_home' as admin_home %}
+              <a href="{{ admin_home }}" class="nav-link {% if request.path == admin_home %} active {% endif %}">
+                <i class="nav-icon fas fa-home"></i>
+                <p>
+                  Home
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'manage_failure' as manage_failure %}
+              {% url 'edit_failure' failure_id=id as edit_failure %}
+              <a href="{{ manage_failure }}" class="nav-link {% if request.path == manage_failure %} active {% endif %} {% if request.path == edit_failure %} active {% endif %}">
+                <i class="nav-icon fas fa-times"></i>
+                <p>
+                  Manage Reject
+                </p>
+              </a>
+            </li>
+            
+            <!--<li class="nav-item">
+              {% url 'add_failure' as add_failure %}
+              <a href="{{ add_failure }}" class="nav-link {% if request.path == add_failure %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Reject
+                </p>
+              </a>
+            </li>-->
+
+
+            <li class="nav-item">
+              {% url 'manage_sku' as manage_sku %}
+              {% url 'edit_sku' sku_id=id as edit_sku %}
+              <a href="{{ manage_sku }}" class="nav-link {% if request.path == manage_sku %} active {% endif %} {% if request.path == edit_sku %} active {% endif %}">
+                <i class="nav-icon fas fa-folder-plus"></i>
+                <p>
+                  Manage SKU
+                </p>
+              </a>
+            </li>
+            
+            <!--<li class="nav-item">
+              {% url 'add_sku' as add_sku %}
+              <a href="{{ add_sku }}" class="nav-link {% if request.path == add_sku %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add SKU
+                </p>
+              </a>
+            </li>-->
+
+            <li class="nav-item">
+              {% url 'manage_cells' as manage_cells %}
+              {% url 'edit_cells' cells_id=id as edit_cells %}
+              <a href="{{ manage_cells }}" class="nav-link {% if request.path == manage_cells %} active {% endif %} {% if request.path == edit_student %} active {% endif %}">
+                <i class="nav-icon fas fa-desktop"></i>
+                <p>
+                  Manage Test Cells
+                </p>
+              </a>
+            </li>
+
+            <!--<li class="nav-item">
+              {% url 'add_cells' as add_cells %}
+              <a href="{{ add_cells }}" class="nav-link {% if request.path == add_cells %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Test Cells
+                </p>
+              </a>
+            </li>-->
+
+            <li class="nav-item">
+              {% url 'manage_failuremode' as manage_failuremode %}
+              {% url 'edit_failuremode' failuremode_id=id as edit_failuremode %}
+              <a href="{{ manage_failuremode }}" class="nav-link {% if request.path == manage_failuremode%} active {% endif %} {% if request.path == edit_failuremode %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard"></i>
+                <p>
+                  Manage Failure Mode
+                </p>
+              </a>
+            </li>
+
+            <!--<li class="nav-item">
+            {% url 'add_failuremode' as add_failuremode %}
+              <a href="{{ add_failuremode }}" class="nav-link {% if request.path == add_failuremode %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Failure Mode
+                </p>
+              </a>
+            </li>-->
+
+            <li class="nav-item">
+              {% url 'manage_model' as manage_model %}
+              {% url 'edit_model' model_id=id as edit_model %}
+              <a href="{{ manage_model }}" class="nav-link {% if request.path == manage_model%} active {% endif %} {% if request.path == edit_model %} active {% endif %}">
+                <i class="nav-icon far fa-lightbulb"></i>
+                <p>
+                  Manage Family Model
+                </p>
+              </a>
+            </li>
+
+            <!--<li class="nav-item">
+              {% url 'add_model' as add_model %}
+              <a href="{{ add_model }}" class="nav-link {% if request.path == add_model %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Family Model
+                </p>
+              </a>
+            </li>-->
+
+
+            <li class="nav-item">
+              {% url 'manage_station' as manage_station %}
+              {% url 'edit_station' station_id=id as edit_station %}
+              <a href="{{ manage_station }}" class="nav-link {% if request.path == manage_sstation%} active {% endif %} {% if request.path == edit_station %} active {% endif %}">
+                <i class="nav-icon 	fas fa-archive"></i>
+                <p>
+                  Manage Stations 
+                </p>
+              </a>
+            </li>
+
+            <!--<li class="nav-item">
+              {% url 'add_station' as add_station %}
+              <a href="{{ add_station }}" class="nav-link {% if request.path == add_station %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Stations
+                </p>
+              </a>
+            </li>-->
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>

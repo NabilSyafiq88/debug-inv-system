@@ -1,0 +1,143 @@
+{% extends 'operator_template/opt_base_template.html' %}
+
+{% block page_title %}
+    Update Reject Info | #ID : {{ failure.id }}
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Update Reject Info</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" method="POST" action="{% url 'opt_dit_failure_save' %}">
+                        {% csrf_token %}
+
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+
+                          <div class="form-group">
+                            <label>Reject Bin No : </label>
+                            <input type="text" class="form-control" name="failure_rejectbin" value="{{ failure.reject_bin }}" readonly>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Cells Name : </label>
+                            <input type="text" class="form-control" name="failure_cells" value="{{ failure.test_Cells }}" readonly>
+                            <input type="hidden" name="failure_id" value="{{ failure.id }}" />
+                          </div>
+
+                          <div class="form-group">
+                            <label>Product Family : </label>
+                            <input type="text" class="form-control" name="failure_model" value="{{ failure.product_Model }}" readonly>
+                          </div>
+
+                          <div class="form-group">
+                            <label>PCA Part Number :</label>
+                            <input type="text" class="form-control" name="failure_PCApartno" value="{{ failure.PCA_SN_Number }}" readonly>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Test Station :</label>
+                            <input type="text" class="form-control" name="station" value="{{ failure.test_Station }}"readonly>
+                          </div>
+
+                          <div class="form-group">
+                            <label>PCA SN :</label>
+                            <input type="text" class="form-control" name="failure_SN" value="{{ failure.PCA_serial }}">
+                          </div>
+
+                          <div class="form-group">
+                            <label>Failure Mode :</label>
+                            <input type="text" class="form-control" name="failure_mode" value="{{ failure.failure_mode }}"readonly>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Root Cause Category :</label>
+                            <select class="form-control" name="failure_rootcause" >
+                                <option>{{ failure.root_cause }}</option>
+                                <option>{{ "Assembly Issue" }}</option>
+                                <option>{{ "PCA Material Issue" }}</option>
+                                <option>{{ "PCA Cleanliness Issue" }}</option>
+                                <option>{{ "Calibration Error Issue" }}</option>
+                            </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Findings </label>
+                            <input type ="text" class="form-control" id="Findings" rows="3" name = "failure_findings" value="{{ failure.Findings }}">
+                          </div>
+
+                          <div class="form-group">
+                            <label>Action Taken :</label>
+                            <select class="form-control" name="failure_action">
+                                <option>{{ failure.failure_action }}</option>
+                                <option>{{ "Rework" }}</option>
+                                <option>{{ "Clean" }}</option>
+                                <option>{{ "RMA" }}</option>
+                                <option>{{ "Need help" }}</option>
+                                <option>{{ "Recalibrate" }}</option>
+                            </select>
+                          </div>
+
+                          <!--<div class="form-group">
+                            <label>The Status</label>
+                            <select class="form-control" name="status">
+                                <option>{{ "OPEN" }}</option>
+                                <option>{{ "CLOSE" }}</option>
+                            </select>
+                          </div>-->
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Update Failure Info</button>
+                        </div>
+                    </form>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
