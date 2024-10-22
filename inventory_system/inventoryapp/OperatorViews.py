@@ -27,8 +27,15 @@ def operator_home(request):
   open_item = Failure_Info.objects.filter(failure_status = "OPEN").count()
   close_item= Failure_Info.objects.filter(failure_status = "CLOSED").count()
   
-  complete_percentage = round((close_item/all_failed_data)*100,2)
-  open_percentage = round(100 - complete_percentage,2)
+  try:
+    complete_percentage = round((close_item/all_failed_data)*100,2)
+  except ZeroDivisionError:
+    complete_percentage = 0
+  
+  if new_failure == 0:
+    open_percentage = 0
+  else:
+    open_percentage = round(100 - complete_percentage,2)
   
 #total failure in each cells
   failure_all = Failure_Info.objects.all()
