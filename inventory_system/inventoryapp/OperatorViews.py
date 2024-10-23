@@ -79,7 +79,7 @@ def operator_home(request):
     "new_failure":new_failure,
     "open_item":open_item,
     "close_item":close_item,
-    "failures":failures,
+    #"failures":failures,
     "cells_list":cells_list,
     "count_list":count_list,
     "complete_percentage":complete_percentage,
