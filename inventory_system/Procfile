@@ -1,1 +1,1 @@
-web: gunicorn debug-inventory-system.wsgi --log-file -
+web: gunicorn inventory_system.wsgi --log-file -
