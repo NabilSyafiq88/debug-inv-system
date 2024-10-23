@@ -30,7 +30,7 @@ SECRET_KEY = 'debug-inventory-system-hzf*2_8$xc$z0v%d@%$y=pqk_zwhmb^rl+ct+@m$i@q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'debug-inventory-system.herokuapp.com']
+ALLOWED_HOSTS = ['debug-inventory-system.herokuapp.com']
 
 
 # Application definition
