@@ -12,9 +12,9 @@ from .models import CustomUser, cells_Name, Failure_Info, station_Name, Failure_
 def operator_home(request):
   print("Operator Home")
   print(request.user.id)
-  operator_obj = Operator.objects.get(admin=request.user.id)
+  #operator_obj = Operator.objects.get(admin=request.user.id)
   print("yiha")
-  print(operator_obj)
+  #print(operator_obj)
     
   all_cells_count = cells_Name.objects.all().count()
   all_sku_count = Sku_Info.objects.all().count()
@@ -27,12 +27,14 @@ def operator_home(request):
   open_item = Failure_Info.objects.filter(failure_status = "OPEN").count()
   close_item= Failure_Info.objects.filter(failure_status = "CLOSED").count()
   
+  print(new_failure)
+  
   try:
     complete_percentage = round((close_item/all_failed_data)*100,2)
   except ZeroDivisionError:
     complete_percentage = 0
   
-  if new_failure == 0:
+  if open_item == 0:
     open_percentage = 0
   else:
     open_percentage = round(100 - complete_percentage,2)
@@ -104,14 +106,15 @@ def opt_add_failure(request):
     failure_mode = Failure_Mode.objects.all()
     model_name = model_Name.objects.all()
     product_model = Sku_Info.objects.values_list('product_Model',flat=True)
+    FG_model = Sku_Info.objects.values_list('FG_Model',flat=True)
     PCA_no = Sku_Info.objects.values_list('PCA_SN_Number',flat=True)
     #test = sku_info.values()
     #sku_list = []
     #[sku_list.append(x) for x in sku_info if x not in sku_list]
     #sku_list = set(sku_info)
     
-    productmodel_list = list(set(product_model))
-    productmodel_list.sort()
+    FGmodel_list = list(set(FG_model))
+    FGmodel_list.sort()
     
     PCAnumber_list = list(set(PCA_no))
     #PCAnumber_list.sort()
@@ -124,7 +127,7 @@ def opt_add_failure(request):
       "cells_name": cells_name,
       "station_name":test_station,
       "failure_mode":failure_mode,
-      "productmodel_list":productmodel_list,
+      "FGmodel_list":FGmodel_list,
       "PCAnumber_list":PCAnumber_list,
     }
   
@@ -159,8 +162,16 @@ def opt_add_failure_save(request):
         print(reject_Bin)
         print(PCA_Serial)
         print(PCA_Partno)
-     
+        print(failure_Mode)
         
+        x = failure_Mode.split(" > ")
+        print (x)
+        print (x[1])
+        print (x[2])
+        #print (x[2])
+
+        test_station = x[1]
+        failure_Mode = x[2]
         try:
             sku = Failure_Info(test_Cells=test_cells,
                             product_Model=product_family,
@@ -255,22 +266,22 @@ def opt_search_PCA(request):
   cells_name = cells_Name.objects.all()
   test_station = station_Name.objects.all()
   failure_mode = Failure_Mode.objects.all()
-  product_model = Sku_Info.objects.values_list('product_Model',flat=True)
+  FG_model = Sku_Info.objects.values_list('FG_Model',flat=True)
   PCA_no = Sku_Info.objects.values_list('PCA_SN_Number',flat=True)
   
-  productmodel_list = list(set(product_model))
-  productmodel_list.sort()
+  FGmodel_list = list(set(FG_model))
+  FGmodel_list.sort()
     
   PCAnumber_list = list(set(PCA_no))
   
   if 'query' in request.GET:
     query = request.GET['query']
-    PCA_SN = Sku_Info.objects.filter(product_Model__iexact=query)
+    PCA_SN = Sku_Info.objects.filter(FG_Model__iexact=query)
 
   else:
       PCA_SN = Sku_Info.objects.none()
       
-  return render (request, 'operator_template/opt_add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'productmodel_list':productmodel_list,'PCAnumber_list':PCAnumber_list})
+  return render (request, 'operator_template/opt_add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list})
 
 
 
