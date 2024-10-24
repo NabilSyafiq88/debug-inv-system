@@ -29,7 +29,7 @@
                       <!--<input type="text" name="query" placeholder="Search by product model" value="{{ request.GET.query }}">-->
                       <label>Select Product Model : </label>
                       <select class="form-control" name="query" value="{{ request.GET.query }}" >
-                        {% for model in productmodel_list %}
+                        {% for model in FGmodel_list %}
                           <option> {{ model }}</option>
                         {% endfor %}
                       </select> <button type="submit">Search</button>
@@ -101,14 +101,14 @@
                               </select>
                               </div>
 
-                              <div class="form-group">
+                              <!--<div class="form-group">
                                 <label>Select Test Station : </label>
                                 <select class="form-control" name="station">
                                   {% for station in station_name %}
                                     <option>{{ station.station_Name }}</option>
                                   {% endfor %}
                                 </select>
-                              </div>
+                              </div>-->
 
                               <div class="form-group">
                                 <label>Reject Bin No : </label>
@@ -121,10 +121,10 @@
                               </div>
 
                                 <div class="form-group">
-                                  <label>Select Failure Mode : </label>
+                                  <label>Select Cells_Test Station_Failure Mode : </label>
                                   <select class="form-control" name="failure_mode">
                                     {% for failure in failure_mode %}
-                                      <option>{{ failure.failure_Mode }}</option>
+                                      <option>{{ failure.test_Cells }}{{' > '}}{{ failure.test_Station }}{{' > '}}{{ failure.failure_Mode }}</option>
                                     {% endfor %}
                                   </select>
                                 </div>
