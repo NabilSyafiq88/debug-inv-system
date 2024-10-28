@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-import psycopg2
 import dj_database_url
+import psycopg2
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +32,7 @@ SECRET_KEY = 'debug-inventory-system-hzf*2_8$xc$z0v%d@%$y=pqk_zwhmb^rl+ct+@m$i@q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['debug-inventory-system-57b97c115148.herokuapp.com']
+ALLOWED_HOSTS = ['*','debug-inventory-system-57b97c115148.herokuapp.com']
 #ALLOWED_HOSTS = ['*']
 
 
@@ -83,26 +84,54 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-  
-      #default': dj_database_url.config(
-        #default='postgres://user:password@hostname:port/dbname'
-    #)
-    
-    'default': {
-      dj_database_url.config(conn_max_age=600,ssl_require=True)
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-        
-        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #'NAME': 'debuginventorydb',
-        #'USER': 'FlukeAdmin',
-        #'PASSWORD': 'Fluke!8888',
-        #'HOST': 'debug-inventory-database.czuu22wwu4pt.ap-southeast-1.rds.amazonaws.com',
-        #'PORT': '5432'
-    }
-}
+##DATABASES = {
+    ##"default": {
+        ##"ENGINE": "django.db.backends.postgresql",
+        ##"NAME": "d6c55e4t4me37j",
+        ##"USER": "u536u1hmtptckr",
+        ##"PASSWORD": "pa87a1850e63fcc4f68a4216bf1e5e5aaf103d15f92536d540cc1dcb1faef1fc8",
+        ##"HOST": "localhost",
+        ##"PORT": "5432",
+    ##}
+##}
 
+#DATABASE_URL = os.getenv('DATABASE_URL')
+#conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+#print(DATABASE_URL)
+
+#DATABASES['default'] = dj_database_url.config(default='postgres://u536u1hmtptckr:pa87a1850e63fcc4f68a4216bf1e5e5aaf103d15f92536d540cc1dcb1faef1fc8@ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d6c55e4t4me37j', test_options={'NAME': 'mytestdatabase'})
+
+#DATABASES = {}
+#DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
+#DATABASES = {}
+#DATABASES['default'] = dj_database_url.config(default=os.getenv('DATABASE_URL'))
+
+###DATABASES = {
+    ###"default": {
+        ###"ENGINE": "django.db.backends.postgresql",
+        ###"USER": "u536u1hmtptckr",
+        ###"NAME": "d6c55e4t4me37j",
+        ###"TEST": {
+            ###"NAME": "mytestdatabase",
+        ###},
+    ###},
+###}
+
+###DATABASES['default'] = dj_database_url.config('postgres://u536u1hmtptckr:pa87a1850e63fcc4f68a4216bf1e5e5aaf103d15f92536d540cc1dcb1faef1fc8@ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d6c55e4t4me37j')
+
+
+DATABASES = { 
+    'default': { 
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'NAME': 'd6c55e4t4me37j', 
+        'USER': 'u536u1hmtptckr', 
+        'PASSWORD': 'pa87a1850e63fcc4f68a4216bf1e5e5aaf103d15f92536d540cc1dcb1faef1fc8', 
+        'HOST': 'ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com', 
+        'PORT': '5432', 
+    } 
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -143,12 +172,11 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
+django_heroku.settings(locals())
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
-DATABASE_URL = os.environ['DATABASE_URL']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
