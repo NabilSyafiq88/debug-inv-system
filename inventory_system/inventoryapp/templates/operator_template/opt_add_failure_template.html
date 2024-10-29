@@ -27,7 +27,7 @@
                       <a href="{% url 'opt_search_PCA' %}" class="btn btn-dark">Refresh</a>
                       </div>
                       <!--<input type="text" name="query" placeholder="Search by product model" value="{{ request.GET.query }}">-->
-                      <label>Select Product Model : </label>
+                      <label>Select Product FG Model : </label>
                       <select class="form-control" name="query" value="{{ request.GET.query }}" >
                         {% for model in FGmodel_list %}
                           <option> {{ model }}</option>
@@ -68,7 +68,7 @@
                             <div class="card-body">
 
                               <div class="form-group">
-                                <label>Product Model : </label>
+                                <label>Product Family Model : </label>
                                 <select class="form-control" name="model" readonly>
                                       {% for model in PCA_SN %}
                                   <option> {{ model.product_Model }}</option>
@@ -141,7 +141,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Add Failure Info</button>
+                        <button type="submit" class="btn btn-primary">Add Reject Info</button>
                         </div>
                     </form>
                     </div>
