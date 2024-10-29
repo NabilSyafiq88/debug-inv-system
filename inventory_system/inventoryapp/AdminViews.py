@@ -579,7 +579,7 @@ def add_failure_save(request):
         messages.error(request, "Invalid Method!")
         return redirect('add_failure')
     else:
-        product_family = request.POST.get('model')
+        product_family = request.POST.get('FG_model')
         test_cells = request.POST.get('cells')
         PCA_Partno = request.POST.get('PCA_PN')
         test_station = request.POST.get('station')
