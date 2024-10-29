@@ -313,12 +313,10 @@ def add_failuremode_save(request):
     else:
         cells_name = request.POST.get('cells')
         test_station = request.POST.get('test_station')
-        failure_mode = request.POST.get('failure_mode')
+        Failure_mode = request.POST.get('failure_mode')
         
-        print (cells_name)
-        print(test_station)
         try:
-            failure_mode = Failure_Mode(test_Cells=cells_name,test_Station=test_station,failure_Mode=failure_mode)
+            failure_mode = Failure_Mode(test_Cells=cells_name,test_Station=test_station,failure_Mode = Failure_mode)
             failure_mode.save()
             messages.success(request, "Failure Mode Added Successfully!")
             return redirect('add_failuremode')

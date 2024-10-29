@@ -84,16 +84,20 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-##DATABASES = {
-    ##"default": {
+DATABASES = {
+    "default": {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
         ##"ENGINE": "django.db.backends.postgresql",
         ##"NAME": "d6c55e4t4me37j",
         ##"USER": "u536u1hmtptckr",
         ##"PASSWORD": "pa87a1850e63fcc4f68a4216bf1e5e5aaf103d15f92536d540cc1dcb1faef1fc8",
         ##"HOST": "localhost",
         ##"PORT": "5432",
-    ##}
-##}
+    }
+}
+
+
 
 #DATABASE_URL = os.getenv('DATABASE_URL')
 #conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -121,6 +125,7 @@ WSGI_APPLICATION = 'inventory_system.wsgi.application'
 
 ###DATABASES['default'] = dj_database_url.config('postgres://u536u1hmtptckr:pa87a1850e63fcc4f68a4216bf1e5e5aaf103d15f92536d540cc1dcb1faef1fc8@ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d6c55e4t4me37j')
 
+##*FOR MASTER
 
 DATABASES = { 
     'default': { 
@@ -172,6 +177,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
+##*MASTER
 django_heroku.settings(locals())
 
 # Default primary key field type

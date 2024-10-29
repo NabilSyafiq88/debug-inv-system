@@ -72,7 +72,7 @@ class model_Name(models.Model):
 
 class Sku_Info(models.Model):
     id = models.AutoField(primary_key=True)
-    product_Status = models.CharField(max_length=20, choices=PRODUCT_STATUS, null=True)
+    product_Status = models.CharField(max_length=20, null=True)
     #test_Cells = models.CharField(max_length=20, choices=TEST_STATION, null=True)
     test_Cells = models.CharField(max_length=100, null=True)
     product_Model = models.CharField(max_length=100, null=True)
@@ -119,7 +119,7 @@ class Failure_Info(models.Model):
 class Failure_Mode(models.Model):
     id = models.AutoField(primary_key=True)
     test_Cells = models.CharField(max_length=100, null=True)
-    test_Station = models.CharField(max_length=20, choices=FAILURE_STATION, null=True)
+    test_Station = models.CharField(max_length=100, null=True)
     failure_Mode = models.CharField(max_length=100, null=True)
     #order_quantity = models.PositiveIntegerField(null=True)
     date = models.DateTimeField(auto_now_add=True)
