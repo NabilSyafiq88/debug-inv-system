@@ -21,7 +21,7 @@ class FailureAdmin(admin.ModelAdmin):
     
 class CellAdmin(admin.ModelAdmin):
     model = cells_Name
-    list_display = ("cell_Name", "date_registered")
+    list_display = ("id","cell_Name")
     #list_filter = ["date"]
     search_fields = ["cell_Name"]
     

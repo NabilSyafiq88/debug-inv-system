@@ -49,7 +49,7 @@ TEST_STATION = (
 class cells_Name(models.Model):
     id = models.AutoField(primary_key=True)
     cell_Name = models.CharField(max_length=100, null=True)
-    date_registered = models.DateTimeField(auto_now_add=True)
+    #date_registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.cell_Name
@@ -57,7 +57,7 @@ class cells_Name(models.Model):
 class station_Name(models.Model):
     id = models.AutoField(primary_key=True)
     station_Name = models.CharField(max_length=100, null=True)
-    date_registered = models.DateTimeField(auto_now_add=True)
+    #date_registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.station_Name
@@ -65,7 +65,7 @@ class station_Name(models.Model):
 class action_Taken(models.Model):
     id = models.AutoField(primary_key=True)
     action_Taken = models.CharField(max_length=100, null=True)
-    date_registered = models.DateTimeField(auto_now_add=True)
+    #date_registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.action_Taken
@@ -73,7 +73,7 @@ class action_Taken(models.Model):
 class root_Cause(models.Model):
     id = models.AutoField(primary_key=True)
     root_Cause = models.CharField(max_length=100, null=True)
-    date_registered = models.DateTimeField(auto_now_add=True)
+    #date_registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.action_Taken
@@ -81,7 +81,7 @@ class root_Cause(models.Model):
 class model_Name(models.Model):
     id = models.AutoField(primary_key=True)
     model_Name = models.CharField(max_length=100, null=True)
-    date_registered = models.DateTimeField(auto_now_add=True)
+    #date_registered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.model_Name
@@ -138,7 +138,7 @@ class Failure_Mode(models.Model):
     test_Station = models.CharField(max_length=100, null=True)
     failure_Mode = models.CharField(max_length=100, null=True)
     #order_quantity = models.PositiveIntegerField(null=True)
-    date = models.DateTimeField(auto_now_add=True)
+    #date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.test_Station
