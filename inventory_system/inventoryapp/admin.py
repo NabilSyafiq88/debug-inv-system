@@ -1,7 +1,7 @@
 # inventory/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from inventoryapp.models import Sku_Info, Failure_Mode, cells_Name, Failure_Data, CustomUser, Admin, engTech, Operator
+from inventoryapp.models import Sku_Info, Failure_Mode, cells_Name, Failure_Data, CustomUser, Admin, TroubleShooter, Operator
 
 admin.site.site_header = "Inventory Management System"
 
@@ -40,5 +40,5 @@ admin.site.register(Failure_Mode, FailureAdmin)
 admin.site.register(cells_Name, CellAdmin)
 admin.site.register(Failure_Data, FailureDataAdmin)
 admin.site.register(Admin)
-admin.site.register(engTech)
+admin.site.register(TroubleShooter)
 admin.site.register(Operator)

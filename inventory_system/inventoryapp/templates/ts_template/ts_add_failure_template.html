@@ -1,0 +1,167 @@
+{% extends 'ts_template/ts_base_template.html' %}
+
+{% block page_title %}
+    Add Reject
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                  <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Reject Details</h3>
+                    </div>
+                  </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+
+                    <form method="GET">
+                      <div>
+                      <a href="{% url 'opt_search_PCA' %}" class="btn btn-dark">Refresh</a>
+                      </div>
+                      <!--<input type="text" name="query" placeholder="Search by product model" value="{{ request.GET.query }}">-->
+                      <label>Select Product FG Model : </label>
+                      <select class="form-control" name="query" value="{{ request.GET.query }}" >
+                        {% for model in FGmodel_list %}
+                          <option> {{ model }}</option>
+                        {% endfor %}
+                      </select> <button type="submit">Search</button>
+                        
+                    </form>
+
+                    <form role="form" method="POST" action="{% url 'ts_add_failure_save' %}">
+                        {% csrf_token %}
+
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                                <div> ---------------------------------------------------------------------------------------</div>
+                                
+                            <div class="card-body">
+
+                              <div class="form-group">
+                                <label>Product Family Model : </label>
+                                <select class="form-control" name="model" readonly>
+                                      {% for model in PCA_SN %}
+                                  <option> {{ model.product_Model }}</option>
+                                      {% endfor %}
+                                <!--{% for SN in PCA_SN %}
+                                <option> {{ SN.product_Model }}</option>
+                                {% endfor %}-->
+                              </select> 
+                              </div>
+
+                              <div class="form-group">
+                                <label>Product FG Model : </label>
+                                <select class="form-control" name="FG_model" readonly>
+                                      {% for model in PCA_SN %}
+                                  <option> {{ model.FG_Model }}</option>
+                                      {% endfor %}
+                                <!--{% for SN in PCA_SN %}
+                                <option> {{ SN.product_Model }}</option>
+                                {% endfor %}-->
+                              </select> 
+                              </div>
+
+                              <div class="form-group">
+                                <label>Test Cells : </label>
+                                <select class="form-control" name="cells" readonly >
+                                {% for SN in PCA_SN %}
+                                <option> {{ SN.test_Cells }}</option>
+                                {% endfor %}
+                              </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label>Select PCA Part No : </label>
+                                <select class="form-control" name="PCA_PN">
+                                  {% for PCA in PCAnumber_list %}
+                                  <option> {{ PCA }}</option>
+                                      {% endfor %}
+                                <!--{% for SN in PCA_SN %}
+                                <option> {{ SN.PCA_SN_Number }}</option>
+                                {% endfor %}-->
+                              </select>
+                              </div>
+
+                              <!--<div class="form-group">
+                                <label>Select Test Station : </label>
+                                <select class="form-control" name="station">
+                                  {% for station in station_name %}
+                                    <option>{{ station.station_Name }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>-->
+
+                              <div class="form-group">
+                                <label>Reject Bin No : </label>
+                                <input type="text" class="form-control" name="reject_bin" placeholder="Enter Reject Bin No.">
+                                <!--<select class="form-control" name="FGmodel" readonly>
+                                {% for SN in PCA_SN %}
+                                <option> {{ SN.FG_Model }}</option>
+                                {% endfor %}
+                              </select>-->
+                              </div>
+
+                                <div class="form-group">
+                                  <label>Select Cells_Test Station_Failure Mode : </label>
+                                  <select class="form-control" name="failure_mode">
+                                    {% for failure in failure_mode %}
+                                      <option>{{ failure.test_Cells }}{{' > '}}{{ failure.test_Station }}{{' > '}}{{ failure.failure_Mode }}</option>
+                                    {% endfor %}
+                                  </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label>PCA Serial No : </label>
+                                  <input type="text" class="form-control" name="PCA_Serial" placeholder="Enter PCA SN.">
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Add Reject Info</button>
+                        </div>
+                    </form>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}

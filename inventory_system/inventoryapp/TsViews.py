@@ -6,11 +6,11 @@ from django.core.files.storage import FileSystemStorage #To upload Profile Pictu
 from django.urls import reverse
 import datetime # To Parse input DateTime into Python Date Time Object
 
-from .models import CustomUser, cells_Name, Failure_Info, station_Name, Failure_Mode, model_Name, Sku_Info, Operator
+from .models import CustomUser,action_Taken, cells_Name, Failure_Info, station_Name, Failure_Mode, model_Name, Sku_Info, Operator
 
 
-def operator_home(request):
-  print("Operator Home")
+def ts_home(request):
+  print("Troubleshooter Home")
   print(request.user.id)
   #operator_obj = Operator.objects.get(admin=request.user.id)
   print("yiha")
@@ -88,19 +88,19 @@ def operator_home(request):
     "open_percentage":open_percentage,
   }
 
-  return render(request, "operator_template/operator_home_template.html",context)
+  return render(request, "ts_template/ts_home_template.html",context)
 
 #Failure portion #############################################################################
-def opt_manage_failure(request):
+def ts_manage_failure(request):
     failure_info = Failure_Info.objects.all()
     
     context = {
         "failure_info":failure_info
     }
-    return render(request, "operator_template/opt_manage_failure_template.html", context) 
+    return render(request, "ts_template/ts_manage_failure_template.html", context) 
   
   
-def opt_add_failure(request):
+def ts_add_failure(request):
     cells_name = cells_Name.objects.all()
     test_station = station_Name.objects.all()
     failure_mode = Failure_Mode.objects.all()
@@ -131,12 +131,23 @@ def opt_add_failure(request):
       "PCAnumber_list":PCAnumber_list,
     }
   
-    return render(request, "operator_template/opt_add_failure_template.html", context)
+    return render(request, "ts_template/ts_add_failure_template.html", context)
   
-def opt_add_failure_save(request):
+def ts_edit_failure(request, sku_id):
+    sku = cells_Name.objects.get(id=sku_id)
+
+    context = {
+        "id": sku_id,
+        "sku": sku
+    }
+    print (sku_id)
+    #print (cells)
+    return render(request, 'ts_template/ts_edit_failure_template.html', context)
+  
+def ts_add_failure_save(request):
     if request.method != "POST":
         messages.error(request, "Invalid Method!")
-        return redirect('opt_manage_failure')
+        return redirect('ts_manage_failure')
     else:
         product_family = request.POST.get('FG_model')
         test_cells = request.POST.get('cells')
@@ -174,23 +185,25 @@ def opt_add_failure_save(request):
             sku.save()
         
             messages.success(request, "Failure Info Added Successfully!")
-            return redirect('opt_manage_failure')
+            return redirect('ts_manage_failure')
         except:
             messages.error(request, "Failed to Add Failure Info!")
-            return redirect('opt_manage_failure')
+            return redirect('ts_manage_failure')
 
-def opt_edit_failure(request, failure_id):
+def ts_edit_failure(request, failure_id):
     failure = Failure_Info.objects.get(id=failure_id)
+    action_taken = action_Taken.objects.all()
 
     context = {
         "id": failure_id,
-        "failure": failure
+        "failure": failure,
+        "action_taken":action_taken
     }
     print (failure_id)
     #print (cells)
-    return render(request, 'operator_template/opt_edit_failure_template.html', context)
+    return render(request, 'ts_template/ts_edit_failure_template.html', context)
   
-def opt_edit_failure_save(request):
+def ts_edit_failure_save(request):
     if request.method != "POST":
         HttpResponse("Invalid Method")
     else:
@@ -234,25 +247,23 @@ def opt_edit_failure_save(request):
           
 
             messages.success(request, "Reject Info Updated Successfully.")
-            #return redirect('/opt_edit_failure/'+failure_id)
-            return redirect('opt_manage_failure')
+            return redirect('ts_manage_failure')
 
         except:
             messages.error(request, "Failed to Update Reject Info.")
-            #return redirect('/opt_edit_failure/'+failure_id)
-            return redirect('opt_manage_failure')
+            return redirect('ts_manage_failure')
           
-def opt_delete_failure(request, failure_id):
+def ts_delete_failure(request, failure_id):
     sku = Failure_Info.objects.get(id=failure_id)
     try:
         sku.delete()
         messages.success(request, "Failure Info Deleted Successfully.")
-        return redirect('opt_manage_failure')
+        return redirect('ts_manage_failure')
     except:
         messages.error(request, "Failed to Delete Failure Info.")
-        return redirect('opt_manage_failure')    
+        return redirect('ts_manage_failure')    
 
-def opt_search_PCA(request):
+def ts_search_PCA(request):
   
   cells_name = cells_Name.objects.all()
   test_station = station_Name.objects.all()
@@ -272,7 +283,7 @@ def opt_search_PCA(request):
   else:
       PCA_SN = Sku_Info.objects.none()
       
-  return render (request, 'operator_template/opt_add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list})
+  return render (request, 'ts_template/ts_add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list})
 
 
 

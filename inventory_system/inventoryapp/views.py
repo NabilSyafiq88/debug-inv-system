@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from inventoryapp.forms import UserRegistry, SkuForm, FailureForm
-from inventoryapp.models import Sku_Info, Failure_Mode, CustomUser, engTech, Operator, Admin
+from inventoryapp.models import Sku_Info, Failure_Mode, CustomUser, TroubleShooter, Operator, Admin
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 #@login_required
@@ -115,8 +115,8 @@ def doLogin(request):
     
     if user.user_type == CustomUser.OPERATOR:
         return redirect('operator_home/')
-    elif user.user_type == CustomUser.ENGTECH:
-        return redirect('engtech_home/')
+    elif user.user_type == CustomUser.TROUBLESHOOTER:
+        return redirect('ts_home/')
     elif user.user_type == CustomUser.ADMIN:
         return redirect('admin_home/')
 
@@ -150,7 +150,7 @@ def doRegistration(request):
     user_type = get_user_type_from_username(user_name)
     
     if user_type is None:
-        messages.error(request, "Please use valid format for the username: '<username>.operator'")
+        messages.error(request, "Please use valid format for the username: '<username>.< operator|TS >'")
         return render(request, 'registration.html')
 
     #username = user_name.split('.')[0]
@@ -168,8 +168,8 @@ def doRegistration(request):
     #user.last_name = last_name
     user.save()
     
-    if user_type == CustomUser.ENGTECH:
-        engTech.objects.create(admin=user)
+    if user_type == CustomUser.TROUBLESHOOTER:
+        TroubleShooter.objects.create(admin=user)
     elif user_type == CustomUser.OPERATOR:
         Operator.objects.create(admin=user)
     elif user_type == CustomUser.ADMIN:

@@ -62,6 +62,14 @@ class station_Name(models.Model):
     def __str__(self) -> str:
         return self.station_Name
       
+class action_Taken(models.Model):
+    id = models.AutoField(primary_key=True)
+    action_Taken = models.CharField(max_length=100, null=True)
+    date_registered = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.action_Taken
+      
 class model_Name(models.Model):
     id = models.AutoField(primary_key=True)
     model_Name = models.CharField(max_length=100, null=True)
@@ -150,16 +158,16 @@ class Search_PCA(models.Model):
 
 class CustomUser(AbstractUser):
     ADMIN = '1'
-    ENGTECH = '2'
+    TROUBLESHOOTER = '2'
     OPERATOR = '3'
     
     EMAIL_TO_USER_TYPE_MAP = {
         'admin': ADMIN,
-        'engtech': ENGTECH,
+        'TS': TROUBLESHOOTER,
         'operator': OPERATOR
     }
 
-    user_type_data = ((ADMIN, "ADMIN"), (ENGTECH, "ENGTECH"), (OPERATOR, "OPERATOR"))
+    user_type_data = ((ADMIN, "ADMIN"), (TROUBLESHOOTER, "TS"), (OPERATOR, "OPERATOR"))
     user_type = models.CharField(default=1, choices=user_type_data, max_length=10)
     
     
@@ -171,7 +179,7 @@ class Admin(models.Model):
     objects = models.Manager()
 
 
-class engTech(models.Model):
+class TroubleShooter(models.Model):
     id = models.AutoField(primary_key=True)
     admin = models.OneToOneField(CustomUser, on_delete = models.CASCADE)
     address = models.TextField()
@@ -197,7 +205,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         if instance.user_type == 1:
             Admin.objects.create(admin=instance)
         if instance.user_type == 2:
-            engTech.objects.create(admin=instance)
+            TroubleShooter.objects.create(admin=instance)
         if instance.user_type == 3:
             Operator.objects.create(admin=instance)
     
@@ -205,8 +213,8 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=CustomUser)
 def save_user_profile(sender, instance, **kwargs):
     if instance.user_type == 1:
-        instance.adminhod.save()
+        instance.Admin.save()
     if instance.user_type == 2:
-        instance.engineer.save()
+        instance.TroubleShooter.save()
     if instance.user_type == 3:
-        instance.operator.save()
+        instance.Operator.save()

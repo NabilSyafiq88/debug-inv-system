@@ -21,8 +21,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth
 from django.urls import include, path
 from inventoryapp.views import search_PCA_SN, home, contact, loginUser, doLogin, registration, doRegistration
-from inventoryapp import AdminViews, OperatorViews
-
+from inventoryapp import AdminViews, OperatorViews, TsViews
 urlpatterns = [
     path("/", include("inventoryapp.urls")),
     path("admin/", admin.site.urls),
@@ -101,7 +100,26 @@ urlpatterns = [
     path('opt_delete_failure/<failure_id>/', OperatorViews.opt_delete_failure, name="opt_delete_failure"),
     #search PCA
     path('opt_search_PCA/', OperatorViews.opt_search_PCA, name="opt_search_PCA"),     
+
+ #TS page
+    path('ts_home/', TsViews.ts_home, name="ts_home"),
+    #failure
+    path('ts_manage_failure/', TsViews.ts_manage_failure, name="ts_manage_failure"),
+    path('ts_add_failure/', TsViews.ts_add_failure, name="ts_add_failure"),
+    path('ts_add_failure_save/', TsViews.ts_add_failure_save, name="ts_add_failure_save"),
+    path('ts_edit_failure/<failure_id>', TsViews.ts_edit_failure, name="ts_edit_failure"),
+    path('ts_edit_failure_save/', TsViews.ts_edit_failure_save, name="ts_edit_failure_save"),
+    path('ts_delete_failure/<failure_id>/', TsViews.ts_delete_failure, name="ts_delete_failure"),
+    #search PCA
+    path('ts_search_PCA/', TsViews.ts_search_PCA, name="ts_search_PCA"),
     
+    #action taken
+    path('manage_action/', AdminViews.manage_action, name="manage_action"),
+    path('add_action/', AdminViews.add_action, name="add_action"),
+    path('add_action_save/', AdminViews.add_action_save, name="add_action_save"),    
+    path('edit_action/<action_id>', AdminViews.edit_action, name="edit_action"),
+    path('edit_action_save/', AdminViews.edit_action_save, name="edit_action_save"),
+    path('delete_saction/<action_id>/', AdminViews.delete_action, name="delete_action"),
     
         
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

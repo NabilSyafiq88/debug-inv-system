@@ -8,7 +8,7 @@ import json
 import pandas as pd
 
 from .forms import SkuForm, FailureForm, FailureData
-from .models import CustomUser, Admin, engTech, Operator, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name, Failure_Info, Search_PCA
+from .models import CustomUser, Admin, Operator,action_Taken, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name, Failure_Info, Search_PCA
 from collections import OrderedDict
 from django.db.models import Count
 
@@ -106,7 +106,7 @@ def add_cells(request):
 def add_cells_save(request):
     if request.method != "POST":
         messages.error(request, "Invalid Method!")
-        return redirect('add_cells')
+        return redirect('manage_cells')
     else:
         cells = request.POST.get('cells_name')
         print (cells)
@@ -114,10 +114,10 @@ def add_cells_save(request):
             cells_model = cells_Name(cell_Name=cells)
             cells_model.save()
             messages.success(request, "Cells Added Successfully!")
-            return redirect('add_cells')
+            return redirect('manage_cells')
         except:
             messages.error(request, "Failed to Add Cells!")
-            return redirect('add_cells')
+            return redirect('manage_cells')
           
 def edit_cells(request, cells_id):
     cells = cells_Name.objects.get(id=cells_id)
@@ -147,11 +147,12 @@ def edit_cells_save(request):
             cells.save()
 
             messages.success(request, "Cells Updated Successfully.")
-            return redirect('/edit_cells/'+cells_id)
+            return redirect('manage_cells')
 
         except:
             messages.error(request, "Failed to Update Cells.")
-            return redirect('/edit_cells/'+cells_id)
+            #return redirect('/edit_cells/'+cells_id)
+            return redirect('manage_cells')
           
 def delete_cells(request, cells_id):
     cells = cells_Name.objects.get(id=cells_id)
@@ -196,7 +197,7 @@ def edit_sku(request, sku_id):
 def add_sku_save(request):
     if request.method != "POST":
         messages.error(request, "Invalid Method!")
-        return redirect('add_sku')
+        return redirect('manage_sku')
     else:
         product_status = request.POST.get('product_status')
         test_cells = request.POST.get('cells')
@@ -221,10 +222,10 @@ def add_sku_save(request):
             sku.save()
         
             messages.success(request, "SKU Added Successfully!")
-            return redirect('add_sku')
+            return redirect('manage_sku')
         except:
             messages.error(request, "Failed to Add SKU!")
-            return redirect('add_sku')
+            return redirect('manage_sku')
 
 def edit_sku(request, sku_id):
     sku = Sku_Info.objects.get(id=sku_id)
@@ -267,11 +268,11 @@ def edit_sku_save(request):
           
 
             messages.success(request, "Sku Updated Successfully.")
-            return redirect('/edit_sku/'+sku_id)
+            return redirect('manage_sku')
 
         except:
             messages.error(request, "Failed to Update Sku.")
-            return redirect('/edit_sku/'+sku_id)
+            return redirect('manage_sku')
           
 def delete_sku(request, sku_id):
     sku = Sku_Info.objects.get(id=sku_id)
@@ -309,7 +310,7 @@ def add_failuremode(request):
 def add_failuremode_save(request):
     if request.method != "POST":
         messages.error(request, "Invalid Method!")
-        return redirect('add_failuremode')
+        return redirect('manage_failuremode')
     else:
         cells_name = request.POST.get('cells')
         test_station = request.POST.get('test_station')
@@ -319,10 +320,10 @@ def add_failuremode_save(request):
             failure_mode = Failure_Mode(test_Cells=cells_name,test_Station=test_station,failure_Mode = Failure_mode)
             failure_mode.save()
             messages.success(request, "Failure Mode Added Successfully!")
-            return redirect('add_failuremode')
+            return redirect('manage_failuremode')
         except:
             messages.error(request, "Failed to Add Failure Mode!")
-            return redirect('add_failuremode')
+            return redirect('manage_failuremode')
                                   
 def edit_failuremode(request, failuremode_id):
     failure_mode = Failure_Mode.objects.get(id=failuremode_id)
@@ -354,11 +355,11 @@ def edit_failuremode_save(request):
             failuremode.save()
 
             messages.success(request, "Failure Mode Updated Successfully.")
-            return redirect('/edit_failuremode/'+failuremode_id)
+            return redirect('manage_failuremode')
 
         except:
             messages.error(request, "Failed to Update Failure Mode.")
-            return redirect('/edit_failuremode/'+failuremode_id)
+            return redirect('manage_failuremode')
           
 def delete_failuremode(request, failuremode_id):
     failure_mode = Failure_Mode.objects.get(id=failuremode_id)
@@ -396,7 +397,7 @@ def add_station(request):
 def add_station_save(request):
     if request.method != "POST":
         messages.error(request, "Invalid Method!")
-        return redirect('add_station')
+        return redirect('manage_station')
     else:
         station = request.POST.get('station_name')
         try:
@@ -406,7 +407,7 @@ def add_station_save(request):
             return redirect('add_station')
         except:
             messages.error(request, "Failed to Add Station!")
-            return redirect('add_station')
+            return redirect('manage_station')
                                   
 def edit_station(request, station_id):
     station = station_Name.objects.get(id=station_id)
@@ -435,11 +436,11 @@ def edit_station_save(request):
             station.save()
 
             messages.success(request, "Station Name Updated Successfully.")
-            return redirect('/edit_station/'+station_id)
+            return redirect('manage_station')
 
         except:
             messages.error(request, "Failed to Update Station Name.")
-            return redirect('/edit_station/'+station_id)
+            return redirect('manage_station')
           
 def delete_station(request, station_id):
     station = station_Name.objects.get(id=station_id)
@@ -465,17 +466,17 @@ def add_model(request):
 def add_model_save(request):
     if request.method != "POST":
         messages.error(request, "Invalid Method!")
-        return redirect('add_model')
+        return redirect('manage_model')
     else:
         model = request.POST.get('model_name')
         try:
             model_model = model_Name(model_Name=model)
             model_model.save()
             messages.success(request, "Family Model Added Successfully!")
-            return redirect('add_model')
+            return redirect('manage_model')
         except:
             messages.error(request, "Failed to Add Family Model!")
-            return redirect('add_model')
+            return redirect('manage_model')
                                   
 def edit_model(request, model_id):
     model = model_Name.objects.get(id=model_id)
@@ -504,11 +505,11 @@ def edit_model_save(request):
             model.save()
 
             messages.success(request, "Product Model Updated Successfully.")
-            return redirect('/edit_model/'+model_id)
+            return redirect('manage_model')
 
         except:
             messages.error(request, "Failed to Update Product Model.")
-            return redirect('/edit_model/'+model_id)
+            return redirect('manage_model')
           
 def delete_model(request, model_id):
     model = model_Name.objects.get(id=model_id)
@@ -562,18 +563,7 @@ def add_failure(request):
     }
   
     return render(request, "admin_template/add_failure_template.html", context)
-  
-def edit_failure(request, sku_id):
-    sku = cells_Name.objects.get(id=sku_id)
-
-    context = {
-        "id": sku_id,
-        "sku": sku
-    }
-    print (sku_id)
-    #print (cells)
-    return render(request, 'admin_template/edit_failure_template.html', context)
-  
+   
 def add_failure_save(request):
     if request.method != "POST":
         messages.error(request, "Invalid Method!")
@@ -606,21 +596,23 @@ def add_failure_save(request):
                             )
             sku.save()
         
-            messages.success(request, "Failure Info Added Successfully!")
-            return redirect('add_failure')
+            messages.success(request, "Reject Info Added Successfully!")
+            return redirect('manage_failure')
         except:
-            messages.error(request, "Failed to Add Failure Info!")
-            return redirect('add_failure')
+            messages.error(request, "Failed to Add Reject Info!")
+            return redirect('manage_failure')
 
 def edit_failure(request, failure_id):
     failure = Failure_Info.objects.get(id=failure_id)
+    action_taken = action_Taken.objects.all()
 
     context = {
         "id": failure_id,
-        "failure": failure
+        "failure": failure,
+        "action_taken":action_taken
     }
     print (failure_id)
-    #print (cells)
+    print (action_taken)
     return render(request, 'admin_template/edit_failure_template.html', context)
   
 def edit_failure_save(request):
@@ -658,7 +650,7 @@ def edit_failure_save(request):
             failure.Findings = failure_findings
             failure.failure_action = failure_action
             
-            if failure_action == "Need help":
+            if failure_action == "Need help" or "None":
               failure.failure_status = "OPEN"
             else:
               failure.failure_status = "CLOSED"
@@ -667,11 +659,11 @@ def edit_failure_save(request):
           
 
             messages.success(request, "Reject Info Updated Successfully.")
-            return redirect('/edit_failure/'+failure_id)
+            return redirect('manage_failure')
 
         except:
             messages.error(request, "Failed to Update Reject Info.")
-            return redirect('/edit_failure/'+failure_id)
+            return redirect('manage_failure')
           
 def delete_failure(request, failure_id):
     sku = Failure_Info.objects.get(id=failure_id)
@@ -705,3 +697,74 @@ def search_PCA(request):
       PCA_SN = Sku_Info.objects.none()
       
   return render (request, 'admin_template/add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list})
+
+#Actions portion ##############################################################
+def manage_action(request):
+    action_taken = action_Taken.objects.all()
+    context = {
+        "action_taken": action_taken
+    }
+    return render(request, "admin_template/manage_action_template.html", context) 
+ 
+def add_action(request):
+    return render(request, "admin_template/add_action_template.html")
+  
+def add_action_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method!")
+        return redirect('manage_action')
+    else:
+        action = request.POST.get('action_taken')
+        try:
+            action_taken = action_Taken(action_Taken=action)
+            action_taken.save()
+            messages.success(request, "Action Taken Added Successfully!")
+            return redirect('manage_action')
+        except:
+            messages.error(request, "Failed to Add Action Taken!")
+            return redirect('manage_action')
+                                  
+def edit_action(request, action_id):
+    action = action_Taken.objects.get(id=action_id)
+
+    context = {
+        "action_id": action_id,
+        "action": action
+    }
+    print (action_id)
+    #print (cells)
+    return render(request, 'admin_template/edit_action_template.html', context)
+  
+def edit_action_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method")
+    else:
+        action_id = request.POST.get('action_id')
+        action_taken = request.POST.get('action_taken')
+        
+        print(action_id)
+        print(action_taken)
+
+        try:
+            action = action_Taken.objects.get(id=action_id)
+            action.action_Taken = action_taken
+            action.save()
+
+            messages.success(request, "Action Taken Updated Successfully.")
+            #return redirect('/edit_action/'+action_id)
+            return redirect('manage_action')
+
+        except:
+            messages.error(request, "Failed to Update Action Taken.")
+            #return redirect('/edit_action/'+action_id)
+            return redirect('manage_action')
+          
+def delete_action(request, action_id):
+    action = action_Taken.objects.get(id=action_id)
+    try:
+        action.delete()
+        messages.success(request, "Action Taken Deleted Successfully.")
+        return redirect('manage_action')
+    except:
+        messages.error(request, "Failed to Delete Action Taken.")
+        return redirect('manage_action')  

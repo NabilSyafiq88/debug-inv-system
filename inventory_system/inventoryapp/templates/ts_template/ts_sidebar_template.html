@@ -2,7 +2,7 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-  <a href="{% url 'admin_home' %}" class="brand-link">
+  <a href="{% url 'ts_home' %}" class="brand-link">
     <img src="{% static 'dist/img/Fluke Image.jpg' %}" alt="AdminLTE Logo" class="brand-image img-square elevation-3 ml-5"
         style="opacity: .8">
       <span class="brand-text font-weight-light">Venture</span>
@@ -12,7 +12,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="info">
-            <a href="{% url 'admin_home' %}" class="d-block"></a>
+            <a href="{% url 'ts_home' %}" class="d-block"></a>
           </div>
         </div>
 
@@ -23,8 +23,8 @@
                 with font-awesome or any other icon font library -->
 
             <li class="nav-item">
-              {% url 'admin_home' as admin_home %}
-              <a href="{{ admin_home }}" class="nav-link {% if request.path == admin_home %} active {% endif %}">
+              {% url 'ts_home' as ts_home %}
+              <a href="{{ ts_home }}" class="nav-link {% if request.path == ts_home %} active {% endif %}">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                   Home
@@ -33,9 +33,9 @@
             </li>
 
             <li class="nav-item">
-              {% url 'manage_failure' as manage_failure %}
-              {% url 'edit_failure' failure_id=id as edit_failure %}
-              <a href="{{ manage_failure }}" class="nav-link {% if request.path == manage_failure %} active {% endif %} {% if request.path == edit_failure %} active {% endif %}">
+              {% url 'ts_manage_failure' as ts_manage_failure %}
+              {% url 'ts_edit_failure' failure_id=id as ts_edit_failure %}
+              <a href="{{ ts_manage_failure }}" class="nav-link {% if request.path == ts_manage_failure %} active {% endif %} {% if request.path == ts_edit_failure %} active {% endif %}">
                 <i class="nav-icon fas fa-times"></i>
                 <p>
                   Manage Reject
@@ -44,8 +44,8 @@
             </li>
             
             <!--<li class="nav-item">
-              {% url 'add_failure' as add_failure %}
-              <a href="{{ add_failure }}" class="nav-link {% if request.path == add_failure %} active {% endif %}">
+              {% url 'opt_add_failure' as opt_add_failure %}
+              <a href="{{ opt_add_failure }}" class="nav-link {% if request.path == opt_add_failure %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Add Reject
@@ -54,7 +54,7 @@
             </li>-->
 
 
-            <li class="nav-item">
+            <!--<li class="nav-item">
               {% url 'manage_sku' as manage_sku %}
               {% url 'edit_sku' sku_id=id as edit_sku %}
               <a href="{{ manage_sku }}" class="nav-link {% if request.path == manage_sku %} active {% endif %} {% if request.path == edit_sku %} active {% endif %}">
@@ -63,7 +63,7 @@
                   Manage SKU
                 </p>
               </a>
-            </li>
+            </li>-->
             
             <!--<li class="nav-item">
               {% url 'add_sku' as add_sku %}
@@ -75,7 +75,7 @@
               </a>
             </li>-->
 
-            <li class="nav-item">
+           <!-- <li class="nav-item">
               {% url 'manage_cells' as manage_cells %}
               {% url 'edit_cells' cells_id=id as edit_cells %}
               <a href="{{ manage_cells }}" class="nav-link {% if request.path == manage_cells %} active {% endif %} {% if request.path == edit_student %} active {% endif %}">
@@ -84,7 +84,7 @@
                   Manage Test Cells
                 </p>
               </a>
-            </li>
+            </li>-->
 
             <!--<li class="nav-item">
               {% url 'add_cells' as add_cells %}
@@ -96,7 +96,7 @@
               </a>
             </li>-->
 
-            <li class="nav-item">
+            <!--<li class="nav-item">
               {% url 'manage_failuremode' as manage_failuremode %}
               {% url 'edit_failuremode' failuremode_id=id as edit_failuremode %}
               <a href="{{ manage_failuremode }}" class="nav-link {% if request.path == manage_failuremode%} active {% endif %} {% if request.path == edit_failuremode %} active {% endif %}">
@@ -105,7 +105,7 @@
                   Manage Failure Mode
                 </p>
               </a>
-            </li>
+            </li>-->
 
             <!--<li class="nav-item">
             {% url 'add_failuremode' as add_failuremode %}
@@ -117,7 +117,7 @@
               </a>
             </li>-->
 
-            <li class="nav-item">
+            <!--<li class="nav-item">
               {% url 'manage_model' as manage_model %}
               {% url 'edit_model' model_id=id as edit_model %}
               <a href="{{ manage_model }}" class="nav-link {% if request.path == manage_model%} active {% endif %} {% if request.path == edit_model %} active {% endif %}">
@@ -126,51 +126,29 @@
                   Manage Product Family
                 </p>
               </a>
-            </li>
+            </li>-->
 
             <!--<li class="nav-item">
               {% url 'add_model' as add_model %}
               <a href="{{ add_model }}" class="nav-link {% if request.path == add_model %} active {% endif %}">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
-                  Add Family Model
+                  Add Product Family
                 </p>
               </a>
             </li>-->
 
 
-            <li class="nav-item">
+            <!--<li class="nav-item">
               {% url 'manage_station' as manage_station %}
               {% url 'edit_station' station_id=id as edit_station %}
-              <a href="{{ manage_station }}" class="nav-link {% if request.path == manage_station%} active {% endif %} {% if request.path == edit_station %} active {% endif %}">
+              <a href="{{ manage_station }}" class="nav-link {% if request.path == manage_sstation%} active {% endif %} {% if request.path == edit_station %} active {% endif %}">
                 <i class="nav-icon 	fas fa-archive"></i>
                 <p>
                   Manage Stations 
                 </p>
               </a>
-            </li>
-
-            <li class="nav-item">
-              {% url 'manage_action' as manage_action %}
-              {% url 'edit_action' action_id=id as edit_action%}
-              <a href="{{ manage_action }}" class="nav-link {% if request.path == manage_action%} active {% endif %} {% if request.path == edit_action%} active {% endif %}">
-                <i class="nav-icon 	fas fa-tools"></i>
-                <p>
-                  Manage Actions Taken 
-                </p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              {% url 'manage_station' as manage_station %}
-              {% url 'edit_station' station_id=id as edit_station %}
-              <a href="{{ manage_station }}" class="nav-link {% if request.path == manage_sstation%} active {% endif %} {% if request.path == edit_station %} active {% endif %}">
-                <i class="nav-icon 	fa fa-gavel"></i>
-                <p>
-                  Manage Root Cause 
-                </p>
-              </a>
-            </li>
+            </li>-->
 
             <!--<li class="nav-item">
               {% url 'add_station' as add_station %}
