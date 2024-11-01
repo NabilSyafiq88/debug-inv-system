@@ -70,6 +70,14 @@ class action_Taken(models.Model):
     def __str__(self) -> str:
         return self.action_Taken
       
+class root_Cause(models.Model):
+    id = models.AutoField(primary_key=True)
+    root_Cause = models.CharField(max_length=100, null=True)
+    date_registered = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.action_Taken
+      
 class model_Name(models.Model):
     id = models.AutoField(primary_key=True)
     model_Name = models.CharField(max_length=100, null=True)

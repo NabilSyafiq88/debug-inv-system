@@ -91,14 +91,23 @@
                           <div class="form-group">
                             <label>Root Cause Category :</label>
 
-                          <select class="form-control" name="failure_rootcause" >
+                            <select class="form-control" name="failure_rootcause">
+
+                              <option>{{ failure.root_cause }}</option>
+                              
+                              {% for rootcause in root_cause %}
+                                <option>{{ rootcause.root_Cause }}</option>
+                              {% endfor %}
+                            </select>
+
+                          <!--<select class="form-control" name="failure_rootcause" >
                                 <option>{{ failure.root_cause }}</option>
                                 <option>{{ "Assembly Issue" }}</option>
                                 <option>{{ "PCA Material Issue" }}</option>
                                 <option>{{ "PCA Cleanliness Issue" }}</option>
                                 <option>{{ "Calibration Error Issue" }}</option>
                             </select>
-                          </div>
+                          </div>-->
 
                           <div class="form-group">
                             <label>Findings </label>
@@ -106,9 +115,12 @@
                           </div>
 
                           <div class="form-group">
-                            <label>Action Taken :</label>
+                            <label>Action Taken *Status automatically CLOSED if select other than NEED HELP and NONE* :</label>
 
                             <select class="form-control" name="failure_action">
+
+                              <option>{{ failure.failure_action }}</option>
+
                               {% for action in action_taken %}
                                 <option>{{ action.action_Taken }}</option>
                               {% endfor %}

@@ -6,7 +6,7 @@ from django.core.files.storage import FileSystemStorage #To upload Profile Pictu
 from django.urls import reverse
 import datetime # To Parse input DateTime into Python Date Time Object
 
-from .models import CustomUser,action_Taken, cells_Name, Failure_Info, station_Name, Failure_Mode, model_Name, Sku_Info, Operator
+from .models import CustomUser,action_Taken, root_Cause, cells_Name, Failure_Info, station_Name, Failure_Mode, model_Name, Sku_Info, Operator
 
 
 def ts_home(request):
@@ -193,11 +193,13 @@ def ts_add_failure_save(request):
 def ts_edit_failure(request, failure_id):
     failure = Failure_Info.objects.get(id=failure_id)
     action_taken = action_Taken.objects.all()
+    root_cause = root_Cause.objects.all()
 
     context = {
         "id": failure_id,
         "failure": failure,
-        "action_taken":action_taken
+        "action_taken":action_taken,
+        "root_cause":root_cause
     }
     print (failure_id)
     #print (cells)
@@ -217,7 +219,7 @@ def ts_edit_failure_save(request):
         failure_rootcause = request.POST.get('failure_rootcause')
         failure_findings = request.POST.get('failure_findings')
         failure_action = request.POST.get('failure_action')
-        failure_status = request.POST.get('status')
+        #failure_status = request.POST.get('status')
         
         print(failure_id)
         print(failure_cells)
@@ -227,9 +229,7 @@ def ts_edit_failure_save(request):
         print(failure_PCASN)
         print(failure_mode)
         print(failure_findings)
-        print(failure_findings)
         print(failure_action)
-        print(failure_status)
         
         try:
             failure = Failure_Info.objects.get(id=failure_id)
@@ -238,10 +238,10 @@ def ts_edit_failure_save(request):
             failure.Findings = failure_findings
             failure.failure_action = failure_action
             
-            if failure_action == "Need help" or "None":
-              failure.failure_status = "OPEN"
+            if failure_action == "Need Help" or failure_action == "None":
+                failure.failure_status = "OPEN"
             else:
-              failure.failure_status = "CLOSED"
+                failure.failure_status = "CLOSED"
             
             failure.save()
           

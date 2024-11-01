@@ -103,10 +103,10 @@
                               </div>
 
                               <div class="form-group">
-                                <label>Select PCA Part No : </label>
-                                <select class="form-control" name="PCA_PN">
-                                  {% for PCA in PCAnumber_list %}
-                                  <option> {{ PCA }}</option>
+                                <label>PCA Part No : </label>
+                                <select class="form-control" name="PCA_PN" readonly>
+                                  {% for SN in PCA_SN %}
+                                  <option> {{ SN.PCA_SN_Number }}</option>
                                       {% endfor %}
                                 <!--{% for SN in PCA_SN %}
                                 <option> {{ SN.PCA_SN_Number }}</option>

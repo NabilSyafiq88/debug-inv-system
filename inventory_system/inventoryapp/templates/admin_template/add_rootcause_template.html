@@ -1,7 +1,7 @@
 {% extends 'admin_template/base_template.html' %}
 
 {% block page_title %}
-    Manage Product Family
+    Add Root Cause
 {% endblock page_title %}
 
 {% block main_content %}
@@ -11,9 +11,21 @@
 <section class="content">
         <div class="container-fluid">
 
-            <a class="btn btn-primary" href="{% url 'add_model' %}" role="button">+ Add Product Family</a> <br/>&nbsp;
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Root Cause</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" method="POST" action="{% url 'add_rootcause_save' %}">
+                        {% csrf_token %}
 
-            {% if messages %}
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
                                 <div class="form-group">
                                 <div class="col-12">
                                     {% for message in messages %}
@@ -36,44 +48,22 @@
                                 </div>
                                 </div>
                                 {% endif %}
+                            
 
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Product Family Details</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                <!--<th>ID</th>-->
-                                <th>Family Model Name</th>
-                                <th>Registered on</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for model in model_name %}
-                                <tr>
-                                <!--<td>{{ model.id }}</td>-->
-                                <td>{{ model.model_Name }}</td>
-                                <td>{{ model.date_registered }}</td>
-                                <td>
-                                  <!-- edit & delete -->
-                                <a href="{% url 'edit_model' model.id %}" class="btn btn-success">Edit</a>
-                                <a href="{% url 'delete_model' model.id %}" class="btn btn-danger">Delete</a>
-                        
-                                </td>
-                                </tr>
-                                {% endfor %}
-                                
-                            </tbody>
-                            </table>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Root Cause </label>
+                                <input type="text" class="form-control" name="root_cause" placeholder="Enter Root Cause">
+                            </div>
+
                         </div>
                         <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Add Root Cause</button>
                         </div>
+                    </form>
+                    </div>
                     <!-- /.card -->
 
                 </div>

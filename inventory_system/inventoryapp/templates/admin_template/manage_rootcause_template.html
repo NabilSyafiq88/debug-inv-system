@@ -1,7 +1,7 @@
 {% extends 'admin_template/base_template.html' %}
 
 {% block page_title %}
-    Manage Stations
+    Manage Root Cause
 {% endblock page_title %}
 
 {% block main_content %}
@@ -11,7 +11,7 @@
 <section class="content">
         <div class="container-fluid">
 
-            <a class="btn btn-primary" href="{% url 'add_station' %}" role="button">+ Add Test Station</a> <br/>&nbsp;
+            <a class="btn btn-primary" href="{% url 'add_rootcause' %}" role="button">+ Add Root Cause</a> <br/>&nbsp;
 
             {% if messages %}
                                 <div class="form-group">
@@ -42,28 +42,28 @@
                     <!-- general form elements -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Test station Details</h3>
+                            <h3 class="card-title">Root Cause Details</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                <th>ID</th>
-                                <th>Stations Name</th>
+                                <!--<th>ID</th>-->
+                                <th>Root Cause</th>
                                 <th>Registered on</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for station in station_name %}
+                                {% for rootcause in root_cause %}
                                 <tr>
-                                <td>{{ station.id }}</td>
-                                <td>{{ station.station_Name }}</td>
-                                <td>{{ station.date_registered }}</td>
+                                <!--<td>{{ station.id }}</td>-->
+                                <td>{{ rootcause.root_Cause}}</td>
+                                <td>{{ rootcause.date_registered }}</td>
                                 <td>
                                   <!-- edit & delete -->
-                                <a href="{% url 'edit_station' station.id %}" class="btn btn-success">Edit</a>
-                                <a href="{% url 'delete_station' station.id %}" class="btn btn-danger">Delete</a>
+                                <a href="{% url 'edit_rootcause' rootcause.id %}" class="btn btn-success">Edit</a>
+                                <a href="{% url 'delete_rootcause' rootcause.id %}" class="btn btn-danger">Delete</a>
                         
                                 </td>
                                 </tr>

@@ -162,9 +162,9 @@
             </li>
 
             <li class="nav-item">
-              {% url 'manage_station' as manage_station %}
-              {% url 'edit_station' station_id=id as edit_station %}
-              <a href="{{ manage_station }}" class="nav-link {% if request.path == manage_sstation%} active {% endif %} {% if request.path == edit_station %} active {% endif %}">
+              {% url 'manage_rootcause' as manage_rootcause %}
+              {% url 'edit_rootcause' rootcause_id=id as edit_rootcause %}
+              <a href="{{ manage_rootcause }}" class="nav-link {% if request.path == manage_rootcause%} active {% endif %} {% if request.path == edit_rootcause %} active {% endif %}">
                 <i class="nav-icon 	fa fa-gavel"></i>
                 <p>
                   Manage Root Cause 

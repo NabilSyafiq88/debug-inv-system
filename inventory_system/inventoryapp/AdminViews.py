@@ -8,7 +8,7 @@ import json
 import pandas as pd
 
 from .forms import SkuForm, FailureForm, FailureData
-from .models import CustomUser, Admin, Operator,action_Taken, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name, Failure_Info, Search_PCA
+from .models import CustomUser, Admin, Operator, root_Cause, action_Taken, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name, Failure_Info, Search_PCA
 from collections import OrderedDict
 from django.db.models import Count
 
@@ -582,6 +582,16 @@ def add_failure_save(request):
         print(reject_Bin)
         print(PCA_Serial)
         print(PCA_Partno)
+        print(failure_Mode)
+        
+        x = failure_Mode.split(" > ")
+        print (x)
+        print (x[1])
+        print (x[2])
+        #print (x[2])
+
+        test_station = x[1]
+        failure_Mode = x[2]
      
         
         try:
@@ -605,14 +615,16 @@ def add_failure_save(request):
 def edit_failure(request, failure_id):
     failure = Failure_Info.objects.get(id=failure_id)
     action_taken = action_Taken.objects.all()
+    root_cause = root_Cause.objects.all()
 
     context = {
         "id": failure_id,
         "failure": failure,
-        "action_taken":action_taken
+        "action_taken":action_taken,
+        "root_cause":root_cause
     }
     print (failure_id)
-    print (action_taken)
+    #print (action_taken)
     return render(request, 'admin_template/edit_failure_template.html', context)
   
 def edit_failure_save(request):
@@ -650,7 +662,7 @@ def edit_failure_save(request):
             failure.Findings = failure_findings
             failure.failure_action = failure_action
             
-            if failure_action == "Need help" or "None":
+            if failure_action == "Need Help" or failure_action == "None":
               failure.failure_status = "OPEN"
             else:
               failure.failure_status = "CLOSED"
@@ -768,3 +780,74 @@ def delete_action(request, action_id):
     except:
         messages.error(request, "Failed to Delete Action Taken.")
         return redirect('manage_action')  
+      
+#Actions portion ##############################################################
+def manage_rootcause(request):
+    root_cause = root_Cause.objects.all()
+    context = {
+        "root_cause": root_cause
+    }
+    return render(request, "admin_template/manage_rootcause_template.html", context) 
+ 
+def add_rootcause(request):
+    return render(request, "admin_template/add_rootcause_template.html")
+  
+def add_rootcause_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method!")
+        return redirect('manage_rootcause')
+    else:
+        rootcause = request.POST.get('root_cause')
+        try:
+            root_cause = root_Cause(root_Cause=rootcause)
+            root_cause.save()
+            messages.success(request, "Root Cause Added Successfully!")
+            return redirect('manage_rootcause')
+        except:
+            messages.error(request, "Failed to Add Root Cause!")
+            return redirect('manage_rootcause')
+                                  
+def edit_rootcause(request, rootcause_id):
+    rootcause = root_Cause.objects.get(id=rootcause_id)
+
+    context = {
+        "rootcause_id": rootcause_id,
+        "rootcause": rootcause
+    }
+    print (rootcause_id)
+    #print (cells)
+    return render(request, 'admin_template/edit_rootcause_template.html', context)
+  
+def edit_rootcause_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method")
+    else:
+        rootcause_id = request.POST.get('rootcause_id')
+        rootcause = request.POST.get('root_cause')
+        
+        print(rootcause_id)
+        #print(rootcause)
+
+        try:
+            root_cause = root_Cause.objects.get(id=rootcause_id)
+            root_cause.root_Cause = rootcause
+            root_cause.save()
+
+            messages.success(request, "Root Cause Updated Successfully.")
+            #return redirect('/edit_action/'+action_id)
+            return redirect('manage_rootcause')
+
+        except:
+            messages.error(request, "Failed to Update Root Cause.")
+            #return redirect('/edit_action/'+action_id)
+            return redirect('manage_rootcause')
+          
+def delete_rootcause(request, rootcause_id):
+    root_cause = root_Cause.objects.get(id=rootcause_id)
+    try:
+        root_cause.delete()
+        messages.success(request, "Root Cause Deleted Successfully.")
+        return redirect('manage_rootcause')
+    except:
+        messages.error(request, "Failed to Delete Root Cause.")
+        return redirect('manage_rootcause')  

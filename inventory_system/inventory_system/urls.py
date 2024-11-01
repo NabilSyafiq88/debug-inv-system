@@ -119,7 +119,15 @@ urlpatterns = [
     path('add_action_save/', AdminViews.add_action_save, name="add_action_save"),    
     path('edit_action/<action_id>', AdminViews.edit_action, name="edit_action"),
     path('edit_action_save/', AdminViews.edit_action_save, name="edit_action_save"),
-    path('delete_saction/<action_id>/', AdminViews.delete_action, name="delete_action"),
+    path('delete_action/<action_id>/', AdminViews.delete_action, name="delete_action"),
+    
+    #rootcause
+    path('manage_rootcause/', AdminViews.manage_rootcause, name="manage_rootcause"),
+    path('add_rootcause/', AdminViews.add_rootcause, name="add_rootcause"),
+    path('add_rootcause_save/', AdminViews.add_rootcause_save, name="add_rootcause_save"),    
+    path('edit_rootcause/<rootcause_id>', AdminViews.edit_rootcause, name="edit_rootcause"),
+    path('edit_rootcause_save/', AdminViews.edit_rootcause_save, name="edit_rootcause_save"),
+    path('delete_rootcause/<rootcause_id>/', AdminViews.delete_rootcause, name="delete_rootcause"),
     
         
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
