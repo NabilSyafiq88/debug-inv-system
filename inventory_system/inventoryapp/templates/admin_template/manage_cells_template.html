@@ -64,8 +64,15 @@
                                 <td>
                                   <!-- edit & delete -->
                                 <a href="{% url 'edit_cells' cells.id %}" class="btn btn-success">Edit</a>
-                                <a href="{% url 'delete_cells' cells.id %}" class="btn btn-danger">Delete</a>
+                                <!--<a href="{% url 'delete_cells' cells.id %}" class="btn btn-danger">Delete</a>-->
                         
+                                <div class="btn-group dropright">
+                                  <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
+                                  <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">No, Abort</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'delete_cells' cells.id %}">Yes, Proceed</a></li>
+                                  </ul>
+                                </div>
                                 </td>
                                 </tr>
                                 {% endfor %}
