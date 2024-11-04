@@ -41,6 +41,7 @@ def admin_home(request):
   
   #total failure in each cells
   failure_all = Failure_Info.objects.all()
+  all_action_count = Failure_Info.objects.all()
   #failure_mode_all = Failure_Mode.objects.all()
  
   cells_name_list =[]

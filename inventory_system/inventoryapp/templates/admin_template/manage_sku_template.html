@@ -42,7 +42,9 @@
                     <!-- general form elements -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">SKU Details</h3>
+                            <h3 class="card-title">Search SKU Details</h3>
+                            <input class="form-control" id="myInput" type="text" placeholder="Type anything here to search">
+                            <br>
 
                             <!--<div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -56,8 +58,8 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap">
-                            <thead>
+                            <table class="table table-sm table-hover text-nowrap">
+                            <thead class="table-dark">
                                 <tr>
                                 <!--<th>ID</th>-->
                                 <th>Cells Name</th>
@@ -68,7 +70,7 @@
                                 <th>Product status</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="myTable">
                                 {% for sku in sku_info %}
                                 <tr>
                                 <!--<td>{{ sku.id }}</td>-->
@@ -89,6 +91,18 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
+
+                        <script>
+                          $(document).ready(function(){
+                          $("#myInput").on("keyup", function() {
+                          var value = $(this).val().toLowerCase();
+                          $("#myTable tr").filter(function() {
+                          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                            });
+                          });
+                        });
+                        </script>
+                        
                         </div>
                     <!-- /.card -->
 
