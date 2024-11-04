@@ -42,7 +42,9 @@
                     <!-- general form elements -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Failure Info</h3>
+                            <h3 class="card-title">Search Reject Info</h3>
+                            <input class="form-control" id="myInput" type="text" placeholder="Type anything here to search">
+                            <br>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
@@ -63,7 +65,7 @@
 
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="myTable">
                                 {% for failure in failure_info %}
                             
                                     <tr>
@@ -79,8 +81,15 @@
                                     
                                   {%if failure.failure_status == "OPEN"%}
                                     <td> 
-                                      <a href="{% url 'ts_edit_failure' failure.id %}" class="btn btn-success">Update</a>
-                                      <a href="{% url 'ts_delete_failure' failure.id %}" class="btn btn-danger">Delete</a>
+                                      <a href="{% url 'ts_edit_failure' failure.id %}" class="btn btn-success">Update Reject</a>
+                                      <!--<a href="{% url 'ts_delete_failure' failure.id %}" class="btn btn-danger">Delete</a>-->
+                                      <!--<div class="btn-group dropright">
+                                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
+                                        <ul class="dropdown-menu">
+                                          <li><a class="dropdown-item" href="#">No, Abort</a></li>
+                                          <li><a class="dropdown-item" href="{% url 'ts_delete_failure' failure.id %}">Yes, Proceed</a></li>
+                                        </ul>
+                                      </div>-->
                                     </td>
                                   {% endif %}
                                     </tr>
@@ -91,6 +100,18 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
+
+                        <script>
+                          $(document).ready(function(){
+                          $("#myInput").on("keyup", function() {
+                          var value = $(this).val().toLowerCase();
+                          $("#myTable tr").filter(function() {
+                          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                            });
+                          });
+                        });
+                        </script>
+
                         </div>
                     <!-- /.card -->
 

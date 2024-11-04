@@ -50,7 +50,7 @@
                         <!-- /.card-header -->
                 <div class="card-body table-responsive p-0" >
                     <table class="table table-sm table-hover text-nowrap">
-                      <thead class="table-dark" >
+                      <thead class="table-dark">
                           <tr>
                             <!--<th>ID</th>-->
                             <th>Reject Bin No</th>
@@ -81,8 +81,20 @@
                                     
                               {%if failure.failure_status == "OPEN"%}
                                   <td> 
-                                    <a href="{% url 'edit_failure' failure.id %}" class="btn btn-success">Update</a> 
-                                    <a href="{% url 'delete_failure' failure.id %}" class="btn btn-danger">Delete</a>
+                                    <a href="{% url 'edit_failure' failure.id %}" class="btn btn-success">Update Reject</a>
+                                    <!--<a href="{% url 'delete_failure' failure.id %}" class="btn btn-danger">Delete</a>-->
+
+                                    <div class="btn-group dropright">
+                                      <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
+                                      <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">No, Abort</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'delete_failure' failure.id %}">Yes, Proceed</a></li>
+                                      </ul>
+                                    </div>
+
+                                    <!--<ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{% url 'delete_failure' failure.id %}">Proceed to Delete?</a></li>
+                                      </ul>-->
                                   </td>
                               {% endif %}
                           </tr>

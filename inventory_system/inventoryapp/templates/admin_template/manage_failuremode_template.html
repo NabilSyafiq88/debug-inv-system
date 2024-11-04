@@ -42,12 +42,15 @@
                     <!-- general form elements -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Failure Mode Details</h3>
+                            <h3 class="card-title">Search Failure Mode Details</h3>
+                            <input class="form-control" id="myInput" type="text" placeholder="Type anything here to search">
+                            <br>
                         </div>
+
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
-                            <table class="table table-sm table-hover text-nowrap" >
-                            <thead class="table-dark" style="position: sticky;top: 0">
+                            <table class="table table-sm table-hover text-nowrap" > 
+                            <thead class="thead-dark" style="position: sticky;top: 0">
                                 <tr>
                                 <!--<th>ID</th>-->
                                 <th>Cells Name</th>
@@ -55,7 +58,7 @@
                                 <th>Failure Mode</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="myTable">
                                 {% for failuremode in failure_mode %}
                                 <tr>
                                 <!--<td>{{ failuremode.id }}</td>-->
@@ -73,6 +76,19 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
+                         
+                        <script>
+                          $(document).ready(function(){
+                          $("#myInput").on("keyup", function() {
+                          var value = $(this).val().toLowerCase();
+                          $("#myTable tr").filter(function() {
+                          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                            });
+                          });
+                        });
+                        </script>
+
+
                         </div>
                     <!-- /.card -->
 

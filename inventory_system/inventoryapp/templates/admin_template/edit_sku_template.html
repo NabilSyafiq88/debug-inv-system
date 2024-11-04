@@ -79,8 +79,9 @@
 
                           <div class="form-group">
                             <label>Product Status (*) </label>
-                            <select class="form-control" name="sku_status" value="{{ sku.product_Status }}" >
-        
+                            <select class="form-control" name="sku_status" >
+
+                              <option>{{ sku.product_Status }}</option>
                                 <option>{{ "INACTIVE" }}</option>
                                 <option>{{ "ACTIVE" }}</option>
                                 <option>{{ "NPI/RFQ" }}</option>
