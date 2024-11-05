@@ -11,7 +11,7 @@ from .models import CustomUser,action_Taken, root_Cause, cells_Name, Failure_Inf
 
 def ts_home(request):
   print("Troubleshooter Home")
-  print(request.user.id)
+  print(request.user.username)
   #operator_obj = Operator.objects.get(admin=request.user.id)
   print("yiha")
   #print(operator_obj)

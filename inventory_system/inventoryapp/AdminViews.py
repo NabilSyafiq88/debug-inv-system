@@ -14,6 +14,9 @@ from django.db.models import Count
 
 def admin_home(request):
   
+  print("Admin Home")
+  print(request.user.username)
+  
   all_cells_count = cells_Name.objects.all().count()
   all_sku_count = Sku_Info.objects.all().count()
   all_failure_mode = Failure_Mode.objects.all().count()

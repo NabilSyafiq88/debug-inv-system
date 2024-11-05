@@ -57,9 +57,9 @@
                             </div>-->
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body table-responsive p-0" style="height: 600px; overflow-y: auto;">
                             <table class="table table-sm table-hover text-nowrap">
-                            <thead class="table-dark">
+                            <thead class="table-dark" style="position: sticky;top: 0">
                                 <tr>
                                 <!--<th>ID</th>-->
                                 <th>Cells Name</th>
@@ -68,6 +68,7 @@
                                 <th>FG Model</th>
                                 <th>PCA Part Number</th>
                                 <th>Product status</th>
+                                <th>Edit/Delete</th>
                                 </tr>
                             </thead>
                             <tbody id="myTable">
@@ -84,13 +85,13 @@
                                     <a href="{% url 'edit_sku' sku.id %}" class="btn btn-success">Edit</a> 
                                     <!--<a href="{% url 'delete_sku' sku.id %}" class="btn btn-danger">Delete</a>-->
                                 
-                                    <div class="btn-group dropright">
+                                    <!--<div class="btn-group dropright">-->
                                       <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
                                       <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="#">No, Abort</a></li>
                                         <li><a class="dropdown-item" href="{% url 'delete_sku' sku.id %}">Yes, Proceed</a></li>
                                       </ul>
-                                    </div>
+                                    <!--</div>-->
                                 
                                   </td>
                                 </tr>

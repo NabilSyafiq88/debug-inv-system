@@ -11,7 +11,7 @@ from .models import CustomUser, cells_Name, Failure_Info, station_Name, Failure_
 
 def operator_home(request):
   print("Operator Home")
-  print(request.user.id)
+  print(request.user.username)
   #operator_obj = Operator.objects.get(admin=request.user.id)
   print("yiha")
   #print(operator_obj)
