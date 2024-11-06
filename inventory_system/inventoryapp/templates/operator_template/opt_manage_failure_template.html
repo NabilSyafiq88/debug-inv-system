@@ -50,13 +50,15 @@
                             <thead class="thead-dark" style="position: sticky;top: 0">
                                 <tr>
                                 <!--<th>ID</th>-->
+                                <th>Reject status</th>
                                 <th>Reject Bin No</th>
-                                <th>Product FG Model</th>
-                                <th>PCA Part Number</th>
                                 <th>Test Station</th>
+                                <th>Product FG Model</th>
+                                <th>PCA Part No.</th>
                                 <th>Failure Mode</th>
                                 <th>Failure Date</th>
-                                <th>The status</th>
+                                <th>Root Cause</th>
+                                <th>Action Taken</th>
                                 <th>Last Update</th>
                                 <th></th>
 
@@ -69,14 +71,16 @@
                             
                                     <tr>
                                     <!--<td>{{ failure.id }}</td>-->
+                                    <td>{{ failure.failure_status }}</td>
                                     <td>{{ failure.reject_bin }}</td>
+                                    <td>{{ failure.test_Station }}</td>
                                     <td>{{ failure.product_Model }}</td>
                                     <td>{{ failure.PCA_SN_Number }}</td>
-                                    <td>{{ failure.test_Station }}</td>
                                     <td>{{ failure.failure_mode }}</td>
-                                    <td>{{ failure.failure_date }}</td>
-                                    <td>{{ failure.failure_status }}</td>
-                                    <td>{{ failure.completion_date}}</td>
+                                    <td>{{ failure.failure_date|date:"SHORT_DATE_FORMAT"}} {{ failure.failure_date|time:"h:i a"}}</td>
+                                    <td>{{ failure.root_cause }}</td>
+                                    <td>{{ failure.failure_action }}</td>
+                                    <td>{{ failure.completion_date|date:"SHORT_DATE_FORMAT"}} {{ failure.completion_date|time:"h:i a"}}</td>
                                     
                                   {%if failure.failure_status == "OPEN"%}
                                     <td> 

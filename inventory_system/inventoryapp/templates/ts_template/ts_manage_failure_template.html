@@ -52,15 +52,17 @@
                             <thead class="thead-dark" style="position: sticky;top: 0">
                                 <tr>
                                 <!--<th>ID</th>-->
+                                <th>Reject status</th>
                                 <th>Reject Bin No</th>
-                                <th>Product FG Model</th>
-                                <th>PCA Part Number</th>
                                 <th>Test Station</th>
+                                <th>Product FG Model</th>
+                                <th>PCA Part No.</th>
                                 <th>Failure Mode</th>
                                 <th>Failure Date</th>
-                                <th>The status</th>
+                                <th>Root Cause</th>
+                                <th>Action Taken</th>
                                 <th>Last Update</th>
-                                <th>Update Items</th>
+                                <th class="export-exclude">Update Items</th>
 
                                
 
@@ -71,17 +73,19 @@
                             
                                     <tr>
                                     <!--<td>{{ failure.id }}</td>-->
+                                    <td>{{ failure.failure_status }}</td>
                                     <td>{{ failure.reject_bin }}</td>
+                                    <td>{{ failure.test_Station }}</td>
                                     <td>{{ failure.product_Model }}</td>
                                     <td>{{ failure.PCA_SN_Number }}</td>
-                                    <td>{{ failure.test_Station }}</td>
                                     <td>{{ failure.failure_mode }}</td>
-                                    <td>{{ failure.failure_date }}</td>
-                                    <td>{{ failure.failure_status }}</td>
-                                    <td>{{ failure.completion_date}}</td>
+                                    <td>{{ failure.failure_date|date:"SHORT_DATE_FORMAT"}} {{ failure.failure_date|time:"h:i a"}}</td>
+                                    <td>{{ failure.root_cause }}</td>
+                                    <td>{{ failure.failure_action }}</td>
+                                    <td>{{ failure.completion_date|date:"SHORT_DATE_FORMAT"}} {{ failure.completion_date|time:"h:i a"}}</td>
                                     
                                   {%if failure.failure_status == "OPEN"%}
-                                    <td> 
+                                    <td class="export-exclude"> 
                                       <a href="{% url 'ts_edit_failure' failure.id %}" class="btn btn-success">Update Reject</a>
                                       <!--<a href="{% url 'ts_delete_failure' failure.id %}" class="btn btn-danger">Delete</a>-->
                                       <!--<div class="btn-group dropright">
@@ -101,7 +105,6 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
-
                         <script>
                           $(document).ready(function(){
                           $("#myInput").on("keyup", function() {
@@ -120,6 +123,71 @@
             </div>
 
         </div><!-- /.container-fluid -->
+        <div>
+          <button type="button" onclick="tableToCSV()">Download CSV File</button>
+        </div>
+        
+        <script>
+          function tableToCSV() {
+  
+              // Variable to store the final csv data
+              let csv_data = [];
+  
+              // Get each row data
+              let rows = document.getElementsByTagName('tr');
+              for (let i = 0; i < rows.length; i++) {
+  
+                  // Get each column data
+                  let cols = rows[i].querySelectorAll('td:not(.export-exclude), th:not(.export-exclude)');
+  
+                  // Stores each csv row data
+                  let csvrow = [];
+                  for (let j = 0; j < cols.length; j++) {
+  
+                      // Get the text data of each cell
+                      // of a row and push it to csvrow
+                      csvrow.push(cols[j].innerHTML);
+                  }
+  
+                  // Combine each column value with comma
+                  csv_data.push(csvrow.join(","));
+              }
+  
+              // Combine each row data with new line character
+              csv_data = csv_data.join('\n');
+  
+              // Call this function to download csv file  
+              downloadCSVFile(csv_data);
+  
+          }
+  
+          function downloadCSVFile(csv_data) {
+  
+              // Create CSV file object and feed
+              // our csv_data into it
+              CSVFile = new Blob([csv_data], {
+                  type: "text/csv"
+              });
+  
+              // Create to temporary link to initiate
+              // download process
+              let temp_link = document.createElement('a');
+  
+              // Download csv file
+              temp_link.download = "DebugTempData.csv";
+              let url = window.URL.createObjectURL(CSVFile);
+              temp_link.href = url;
+  
+              // This link should not be displayed
+              temp_link.style.display = "none";
+              document.body.appendChild(temp_link);
+  
+              // Automatically click the link to
+              // trigger download
+              temp_link.click();
+              document.body.removeChild(temp_link);
+          }
+      </script>
       </section>
 
   {% endblock main_content %}
