@@ -29,6 +29,7 @@
                       <!--<input type="text" name="query" placeholder="Search by product model" value="{{ request.GET.query }}">-->
                       <label>Select Product FG Model : </label>
                       <select class="form-control" name="query" value="{{ request.GET.query }}" >
+                        <option>{{ " " }}</option>
                         {% for model in FGmodel_list %}
                           <option> {{ model }}</option>
                         {% endfor %}
