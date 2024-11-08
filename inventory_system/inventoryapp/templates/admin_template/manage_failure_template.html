@@ -88,11 +88,11 @@
                             <td>{{ failure.failure_action }}</td>
                             <td>{{ failure.completion_date|date:"SHORT_DATE_FORMAT"}} {{ failure.completion_date|time:"h:i a"}}</td>
                                     
-                              {%if failure.failure_status == "OPEN"%}
+                              
                                   <td class="export-exclude"> 
                                     <a href="{% url 'edit_failure' failure.id %}" class="btn btn-success">Update Reject</a>
                                     <!--<a href="{% url 'delete_failure' failure.id %}" class="btn btn-danger">Delete</a>-->
-
+                                    {%if failure.failure_status == "OPEN"%}
                                     <!--<div class="btn-group dropright">-->
                                       <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
                                       <ul class="dropdown-menu">
