@@ -6,11 +6,12 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import pandas as pd
+from django.template import loader
 
 from .forms import SkuForm, FailureForm, FailureData
 from .models import CustomUser, Admin, Operator, root_Cause, action_Taken, cells_Name, Sku_Info, Failure_Mode, Failure_Data, station_Name, model_Name, Failure_Info, Search_PCA
 from collections import OrderedDict
-from django.db.models import Count
+from django.db.models import Count, Q
 
 def admin_home(request):
   
@@ -543,6 +544,7 @@ def add_failure(request):
     model_name = model_Name.objects.all()
     FG_model = Sku_Info.objects.values_list('FG_Model',flat=True)
     PCA_no = Sku_Info.objects.values_list('PCA_SN_Number',flat=True)
+    #F_mode = Failure_Mode.objects.filter(test_Cells = "LEPTON").values()
     #test = sku_info.values()
     #sku_list = []
     #[sku_list.append(x) for x in sku_info if x not in sku_list]
@@ -588,14 +590,14 @@ def add_failure_save(request):
         print(PCA_Partno)
         print(failure_Mode)
         
-        x = failure_Mode.split(" > ")
+        x = failure_Mode.split(" | ")
         print (x)
+        print (x[0])
         print (x[1])
-        print (x[2])
         #print (x[2])
 
-        test_station = x[1]
-        failure_Mode = x[2]
+        test_station = x[0]
+        failure_Mode = x[1]
      
         
         try:
@@ -708,11 +710,14 @@ def search_PCA(request):
   if 'query' in request.GET:
     query = request.GET['query']
     PCA_SN = Sku_Info.objects.filter(FG_Model__iexact=query)
-
+    F_cells = PCA_SN.values_list('test_Cells',flat=True)
+    F_cells = ''.join(F_cells)
+    F_mode = Failure_Mode.objects.filter(test_Cells = F_cells).values()
   else:
       PCA_SN = Sku_Info.objects.none()
+      F_mode = Failure_Mode.objects.none()
       
-  return render (request, 'admin_template/add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list})
+  return render (request, 'admin_template/add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list,'F_mode':F_mode})
 
 #Actions portion ##############################################################
 def manage_action(request):

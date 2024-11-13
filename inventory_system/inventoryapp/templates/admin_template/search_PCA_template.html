@@ -12,6 +12,7 @@
         <input type="text" name="query" placeholder="Search by PCA PN Number" value="{{ request.GET.query }}">
         <button type="submit">Search</button>
     </form>
+
     {% if PCA_SN %}
         <ul>
             {% for SN in PCA_SN %}

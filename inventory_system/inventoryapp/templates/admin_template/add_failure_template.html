@@ -22,21 +22,22 @@
                     <!-- /.card-header -->
                     <!-- form start -->
 
+                    <div>
+                      <label>Step 1 - Refresh Dataset : </label>
+                      <a href="{% url 'search_PCA' %}" class="btn btn-dark btn-sm">Refresh</a>
+                    </div>
+
                     <form method="GET">
-                      <div>
-                      <a href="{% url 'search_PCA' %}" class="btn btn-dark">Refresh</a>
-                      </div>
                       <!--<input type="text" name="query" placeholder="Search by product model" value="{{ request.GET.query }}">-->
-                      <label>Select Product FG Model : </label>
-                      <select class="form-control" name="query" value="{{ request.GET.query }}" >
+                      <label>Step 2 - Select FG Model : </label>
+                      <select class="form-control" name="query" value="{{ request.GET.query }}">
                         <option>{{ " " }}</option>
                         {% for model in FGmodel_list %}
                           <option> {{ model }}</option>
                         {% endfor %}
-                      </select> <button type="submit">Search</button>
-                        
-                      
+                      </select> <button type="submit">Get FG model Info</button>
                     </form>
+                  </div>
 
                     <form role="form" method="POST" action="{% url 'add_failure_save' %}">
                         {% csrf_token %}
@@ -65,7 +66,7 @@
                                 </div>
                                 </div>
                                 {% endif %}
-                                <div> ---------------------------------------------------------------------------------------</div>
+                                <div> ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</div>
                                 
                             <div class="card-body">
 
@@ -115,15 +116,6 @@
                               </select>
                               </div>
 
-                              <!--<div class="form-group">
-                                <label>Select Test Station : </label>
-                                <select class="form-control" name="station">
-                                  {% for station in station_name %}
-                                    <option>{{ station.station_Name }}</option>
-                                  {% endfor %}
-                                </select>
-                              </div>-->
-
                               <div class="form-group">
                                 <label>Reject Bin No : </label>
                                 <input type="text" class="form-control" name="reject_bin" placeholder="Enter Reject Bin No.">
@@ -134,20 +126,21 @@
                               </select>-->
                               </div>
 
+                              <div class="form-group">
+                                <label>PCA Serial No : </label>
+                                <input type="text" class="form-control" name="PCA_Serial" placeholder="Enter PCA SN.">
+                              </div>
+
                                 <div class="form-group">
-                                  <label>Select Cells_Test Station_Failure Mode : </label>
-                                  <select class="form-control" name="failure_mode">
-                                    {% for failure in failure_mode %}
-                                      <option>{{ failure.test_Cells }}{{' > '}}{{ failure.test_Station }}{{' > '}}{{ failure.failure_Mode }}</option>
+                                  <label>Select Station | Failure Mode : </label>
+                                  <div>
+                                  <select class="form-control select2 input-lg" name="failure_mode">
+                                    {% for failure in F_mode %}
+                                      <option>{{ failure.test_Station }}{{' | '}}{{ failure.failure_Mode }}</option>
                                     {% endfor %}
                                   </select>
                                 </div>
-
-                                <div class="form-group">
-                                  <label>PCA Serial No : </label>
-                                  <input type="text" class="form-control" name="PCA_Serial" placeholder="Enter PCA SN.">
                                 </div>
-
 
                             </div>
 
@@ -163,6 +156,10 @@
 
                 </div>
             </div>
+
+            <script>
+              $('.select2').select2();
+            </script>
 
         </div><!-- /.container-fluid -->
       </section>
