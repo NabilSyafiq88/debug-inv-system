@@ -153,14 +153,14 @@ def opt_add_failure_save(request):
         print(PCA_Partno)
         print(failure_Mode)
         
-        x = failure_Mode.split(" > ")
+        x = failure_Mode.split(" | ")
         print (x)
+        print (x[0])
         print (x[1])
-        print (x[2])
         #print (x[2])
 
-        test_station = x[1]
-        failure_Mode = x[2]
+        test_station = x[0]
+        failure_Mode = x[1]
         try:
             sku = Failure_Info(test_Cells=test_cells,
                             product_Model=product_family,
@@ -268,11 +268,15 @@ def opt_search_PCA(request):
   if 'query' in request.GET:
     query = request.GET['query']
     PCA_SN = Sku_Info.objects.filter(FG_Model__iexact=query)
+    F_cells = PCA_SN.values_list('test_Cells',flat=True)
+    F_cells = ''.join(F_cells)
+    F_mode = Failure_Mode.objects.filter(test_Cells = F_cells).values()
 
   else:
       PCA_SN = Sku_Info.objects.none()
+      F_mode = Failure_Mode.objects.none()
       
-  return render (request, 'operator_template/opt_add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list})
+  return render (request, 'operator_template/opt_add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list,'F_mode':F_mode})
 
 
 
