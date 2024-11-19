@@ -5,6 +5,14 @@ from django.contrib.auth.models import User, AbstractUser
 from django import forms
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from pytz import timezone as tz
+from django.utils import timezone
+from django.utils.timezone import localtime
+
+# Get the current time in the default timezone
+now = timezone.now()
+Asia_MY = tz('Asia/Kuala_Lumpur')
+now_in_Asia_MY = now.astimezone(Asia_MY)
 
 FAILURE_STATION = (
     ("PCA Burn IN", "PCA Burn IN"),
@@ -126,6 +134,9 @@ class Failure_Info(models.Model):
     
     def __str__(self) -> str:
         return self.PCA_SN_Number
+      
+    def get_local_start_time(self):
+        return localtime(self.failure_date,self.completion_date)
 
 #class getDebugData(forms.Form):
   #info = forms.CharField(max_length=100)
