@@ -40,11 +40,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- general form elements -->
-                    <div class="card">
+                    <!--<div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Search SKU Details</h3>
                             <input class="form-control" id="myInput" type="text" placeholder="Type anything here to search">
-                            <br>
+                            <br>-->
 
                             <!--<div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -58,16 +58,23 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0" style="height: 600px; overflow-y: auto;">
-                            <table class="table table-sm table-hover text-nowrap">
+                            <table class="table table-sm table-hover text-nowrap"
+                            id="table"
+                            data-pagination="true"
+                            data-search="true"
+                            data-show-toggle="false"
+                            data-toolbar=".toolbar"
+                            data-use-row-attr-func="true"
+                            data-reorderable-rows="true">
                             <thead class="table-dark" style="position: sticky;top: 0">
                                 <tr>
                                 <!--<th>ID</th>-->
-                                <th>Cells Name</th>
-                                <th>Product Family</th>
-                                <th>FG Part Number</th>
-                                <th>FG Model</th>
-                                <th>PCA Part Number</th>
-                                <th>Product status</th>
+                                <th data-sortable="true">Cells Name</th>
+                                <th data-sortable="true">Product Family</th>
+                                <th data-sortable="true">FG Part Number</th>
+                                <th data-sortable="true">FG Model</th>
+                                <th data-sortable="true">PCA Part Number</th>
+                                <th data-sortable="true">Product status</th>
                                 <th>Edit/Delete</th>
                                 </tr>
                             </thead>
@@ -111,6 +118,8 @@
                             });
                           });
                         });
+
+                        $('#table').bootstrapTable()
                         </script>
                         
                         </div>
