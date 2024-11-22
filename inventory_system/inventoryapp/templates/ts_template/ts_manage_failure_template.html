@@ -41,29 +41,36 @@
                 <div class="col-md-12">
                     <!-- general form elements -->
                     <div class="card">
-                        <div class="card-header">
+                        <!--<div class="card-header">
                             <h3 class="card-title">Search Reject Info</h3>
                             <input class="form-control" id="myInput" type="text" placeholder="Type anything here to search">
                             <br>
-                        </div>
+                        </div>-->
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0" style="height: 600px; overflow-y: auto;">
-                            <table class="table table-sm table-hover table-bordered text-nowrap">
+                        <div class="card-body table-responsive p-0" style="height: 800px; overflow-y: auto;">
+                            <table class="table table-sm table-hover table-bordered text-nowrap"
+                            id="table"
+                            data-pagination="true"
+                            data-search="true"
+                            data-show-toggle="false"
+                            data-toolbar=".toolbar"
+                            data-use-row-attr-func="true"
+                            data-reorderable-rows="true">
                             <thead class="thead-dark" style="position: sticky;top: 0">
                                 <tr>
                                 <!--<th>ID</th>-->
-                                <th>Reject status</th>
+                                <th data-sortable="true">Reject status</th>
                                 <!--<th>Reject Bin No</th>-->
-                                <th>Test Station</th>
-                                <th>Product FG Model</th>
-                                <th>PCA Serial No.</th>
-                                <th>PCA Part No.</th>
-                                <th>Failure Mode</th>
-                                <th>Failure Date</th>
-                                <th>Root Cause</th>
-                                <th>The Findings</th>
-                                <th>Action Taken</th>
-                                <th>Last Update</th>
+                                <th data-sortable="true">Test Station</th>
+                                <th data-sortable="true">Product FG Model</th>
+                                <th data-sortable="true">PCA Serial No.</th>
+                                <th data-sortable="true">PCA Part No.</th>
+                                <th data-sortable="true">Failure Mode</th>
+                                <th data-sortable="true">Failure Date</th>
+                                <th data-sortable="true">Root Cause</th>
+                                <th data-sortable="true">The Findings</th>
+                                <th data-sortable="true">Action Taken</th>
+                                <th data-sortable="true">Last Update</th>
                                 <th class="export-exclude">Update Items</th>
 
                                
@@ -118,6 +125,9 @@
                             });
                           });
                         });
+
+                        $('#table').bootstrapTable()
+                        
                         </script>
 
                         </div>
@@ -127,9 +137,9 @@
             </div>
 
         </div><!-- /.container-fluid -->
-        <div>
+        <!--<div>
           <button type="button" onclick="tableToCSV()">Download CSV File</button>
-        </div>
+        </div>-->
         
         <script>
           function tableToCSV() {

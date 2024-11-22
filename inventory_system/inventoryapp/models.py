@@ -135,8 +135,8 @@ class Failure_Info(models.Model):
     def __str__(self) -> str:
         return self.PCA_SN_Number
       
-    def get_local_start_time(self):
-        return localtime(self.failure_date,self.completion_date)
+    #def get_local_start_time(self):
+        #return localtime(self.failure_date,self.completion_date)
 
 #class getDebugData(forms.Form):
   #info = forms.CharField(max_length=100)
