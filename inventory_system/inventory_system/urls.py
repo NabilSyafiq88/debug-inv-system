@@ -44,6 +44,13 @@ urlpatterns = [
     
     #Admin page
     path('admin_home/', AdminViews.admin_home, name="admin_home"),
+    
+    #escalate
+    path('manage_escalate/', AdminViews.manage_escalate, name="manage_escalate"),
+    path('edit_escalate/<failure_id>', AdminViews.edit_escalate, name="edit_escalate"),
+    path('edit_escalate_save/', AdminViews.edit_escalate_save, name="edit_escalate_save"),
+    path('delete_escalate/<failure_id>/', AdminViews.delete_escalate, name="delete_escalate"),
+    
     #failure
     path('manage_failure/', AdminViews.manage_failure, name="manage_failure"),
     path('add_failure/', AdminViews.add_failure, name="add_failure"),
@@ -110,6 +117,12 @@ urlpatterns = [
     path('ts_edit_failure/<failure_id>', TsViews.ts_edit_failure, name="ts_edit_failure"),
     path('ts_edit_failure_save/', TsViews.ts_edit_failure_save, name="ts_edit_failure_save"),
     path('ts_delete_failure/<failure_id>/', TsViews.ts_delete_failure, name="ts_delete_failure"),
+    
+    #Escalation
+    path('ts_manage_escalate/', TsViews.ts_manage_escalate, name="ts_manage_escalate"),
+    path('ts_edit_escalate/<failure_id>', TsViews.ts_edit_escalate, name="ts_edit_escalate"),
+    path('ts_edit_escalate_save/', TsViews.ts_edit_escalate_save, name="ts_edit_escalate_save"),
+    
     #search PCA
     path('ts_search_PCA/', TsViews.ts_search_PCA, name="ts_search_PCA"),
     

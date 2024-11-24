@@ -1,7 +1,7 @@
 {% extends 'admin_template/base_template.html' %}
 
 {% block page_title %}
-    Manage Reject
+    Manage Escalation
 {% endblock page_title %}
 
 {% block main_content %}
@@ -11,7 +11,7 @@
 <section class="content">
   <div class="container-fluid">
 
-    <a class="btn btn-primary" href="{% url 'add_failure' %}" role="button">+ Add Reject Info</a> <br/>&nbsp;
+    <!--<a class="btn btn-primary" href="{% url 'add_failure' %}" role="button">+ Add Reject Info</a> <br/>&nbsp;-->
 
     {% if messages %}
       <div class="form-group">
@@ -72,7 +72,7 @@
                             <th data-sortable="true">The Findings</th>
                             <th data-sortable="true">Action Taken</th>
                             <th data-sortable="true">Last Update</th>
-                            <th class="export-exclude">Update/Delete</th>
+                            <th class="export-exclude">Update Escalation</th>
                           </tr>
                       </thead>
 
@@ -80,7 +80,7 @@
               
                           {% for failure in failure_info %}
                           
-                          {%if failure.failure_action != "Escalate"%}
+                          {%if failure.failure_action == "Escalate"%}
                           <tr>
                             <!--<td>{{ failure.id }}</td>-->
                             <td>{{ failure.failure_status }}</td>
@@ -98,15 +98,15 @@
                                     
                               
                                   <td class="export-exclude"> 
-                                    <a href="{% url 'edit_failure' failure.id %}" class="btn btn-success">Update Reject</a>
+                                    <a href="{% url 'edit_escalate' failure.id %}" class="btn btn-success">Update</a>
                                     <!--<a href="{% url 'delete_failure' failure.id %}" class="btn btn-danger">Delete</a>-->
-                                    {%if failure.failure_status == "OPEN"%}
+                                    <!--{%if failure.failure_status == "OPEN"%}-->
                                     <!--<div class="btn-group dropright">-->
-                                      <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
+                                      <!--<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
                                       <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="#">No, Abort</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'delete_failure' failure.id %}">Yes, Proceed</a></li>
-                                      </ul>
+                                        <li><a class="dropdown-item" href="{% url 'delete_escalate' failure.id %}">Yes, Proceed</a></li>
+                                      </ul>-->
                                     <!--</div>-->
 
                                     <!--<ul class="dropdown-menu">

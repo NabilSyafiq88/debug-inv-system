@@ -1,7 +1,7 @@
 {% extends 'ts_template/ts_base_template.html' %}
 
 {% block page_title %}
-    Manage Reject
+    Manage Escalation
 {% endblock page_title %}
 
 {% block main_content %}
@@ -80,7 +80,7 @@
                             <tbody id="myTable">
                                 {% for failure in failure_info %}
 
-                                {%if failure.failure_action != "Escalate"%}
+                                {%if failure.failure_action == "Escalate"%}
                             
                                     <tr>
                                     <!--<td>{{ failure.id }}</td>-->
@@ -99,7 +99,7 @@
                                     
                                   {%if failure.failure_status == "OPEN"%}
                                     <td class="export-exclude"> 
-                                      <a href="{% url 'ts_edit_failure' failure.id %}" class="btn btn-success">Update Reject</a>
+                                      <a href="{% url 'ts_edit_escalate' failure.id %}" class="btn btn-success">Update</a>
                                       <!--<a href="{% url 'ts_delete_failure' failure.id %}" class="btn btn-danger">Delete</a>-->
                                       <!--<div class="btn-group dropright">
                                         <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
@@ -111,7 +111,7 @@
                                     </td>
                                   {% endif %}
                                     </tr>
-                                  {% endif %}
+                                {% endif%}
                                   
                                 {% endfor %}
                                 

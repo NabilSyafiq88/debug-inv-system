@@ -42,6 +42,17 @@
                 </p>
               </a>
             </li>
+
+            <li class="nav-item">
+              {% url 'ts_manage_escalate' as ts_manage_escalate %}
+              {% url 'ts_edit_escalate' failure_id=id as ts_edit_escalate %}
+              <a href="{{ ts_manage_escalate }}" class="nav-link {% if request.path == ts_manage_escalate %} active {% endif %} {% if request.path == ts_edit_escalate %} active {% endif %}">
+                <i class="nav-icon fas fa-pencil-ruler"></i>
+                <p>
+                  Manage Escalation
+                </p>
+              </a>
+            </li>
             
             <!--<li class="nav-item">
               {% url 'opt_add_failure' as opt_add_failure %}

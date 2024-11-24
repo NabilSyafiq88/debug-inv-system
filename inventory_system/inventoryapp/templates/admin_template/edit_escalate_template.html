@@ -1,7 +1,7 @@
 {% extends 'admin_template/base_template.html' %}
 
 {% block page_title %}
-    Update Reject Info | #ID : {{ failure.id }}
+    Update Escalation Info | #ID : {{ failure.id }}
 {% endblock page_title %}
 
 {% block main_content %}
@@ -16,11 +16,11 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Update Reject Info</h3>
+                        <h3 class="card-title">Update Escalation Info</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" method="POST" action="{% url 'edit_failure_save' %}">
+                    <form role="form" method="POST" action="{% url 'edit_escalate_save' %}">
                         {% csrf_token %}
 
                         
@@ -149,7 +149,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Update Failure Info</button>
+                        <button type="submit" class="btn btn-primary">Update Escalation Info</button>
                         </div>
                     </form>
                     </div>

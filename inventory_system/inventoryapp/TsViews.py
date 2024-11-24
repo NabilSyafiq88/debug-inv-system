@@ -90,6 +90,78 @@ def ts_home(request):
 
   return render(request, "ts_template/ts_home_template.html",context)
 
+#Escalate Portion########################
+def ts_manage_escalate(request):
+    failure_info = Failure_Info.objects.all()
+    
+    context = {
+        "failure_info":failure_info
+    }
+    return render(request, "ts_template/ts_manage_escalate_template.html", context) 
+  
+def ts_edit_escalate(request, failure_id):
+    failure = Failure_Info.objects.get(id=failure_id)
+    action_taken = action_Taken.objects.all()
+    root_cause = root_Cause.objects.all()
+
+    context = {
+        "id": failure_id,
+        "failure": failure,
+        "action_taken":action_taken,
+        "root_cause":root_cause
+    }
+    print (failure_id)
+    #print (cells)
+    return render(request, 'ts_template/ts_edit_escalate_template.html', context)
+  
+def ts_edit_escalate_save(request):
+    if request.method != "POST":
+        HttpResponse("Invalid Method")
+    else:
+        failure_id = request.POST.get('failure_id')
+        failure_cells = request.POST.get('failure_cells')
+        failure_model = request.POST.get('failure_model')
+        failure_PCApartno = request.POST.get('failure_PCApartno')
+        failure_station = request.POST.get('station')
+        failure_PCASN = request.POST.get('failure_SN')
+        failure_mode = request.POST.get('failure_mode')
+        failure_rootcause = request.POST.get('failure_rootcause')
+        failure_findings = request.POST.get('failure_findings')
+        failure_action = request.POST.get('failure_action')
+        #failure_status = request.POST.get('status')
+        
+        #print(failure_id)
+        #print(failure_cells)
+        #print(failure_model)
+        #print(failure_PCApartno)
+        #print(failure_station)
+        #print(failure_PCASN)
+        print(failure_mode)
+        print(failure_findings)
+        print(failure_action)
+        
+        try:
+            failure = Failure_Info.objects.get(id=failure_id)
+            failure.PCA_serial = failure_PCASN
+            failure.root_cause = failure_rootcause
+            failure.Findings = failure_findings
+            failure.failure_action = failure_action
+            
+            if failure_action == "Escalate" or failure_action == "None":
+                failure.failure_status = "OPEN"
+            else:
+                failure.failure_status = "CLOSED"
+            
+            failure.save()
+          
+
+            messages.success(request, "Escalation Info Updated Successfully.")
+            return redirect('ts_manage_escalate')
+
+        except:
+            messages.error(request, "Failed to Update Escalation Info.")
+            return redirect('ts_manage_escalate')
+
 #Failure portion #############################################################################
 def ts_manage_failure(request):
     failure_info = Failure_Info.objects.all()
@@ -238,7 +310,7 @@ def ts_edit_failure_save(request):
             failure.Findings = failure_findings
             failure.failure_action = failure_action
             
-            if failure_action == "Need Help" or failure_action == "None":
+            if failure_action == "Escalate" or failure_action == "None":
                 failure.failure_status = "OPEN"
             else:
                 failure.failure_status = "CLOSED"
