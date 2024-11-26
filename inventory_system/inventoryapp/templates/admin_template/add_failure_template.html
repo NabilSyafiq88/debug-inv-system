@@ -31,12 +31,12 @@
                     <form method="GET">
                       <div>
                         <label>Step 2 - Select Station : </label>
-                        <input name="F_Station" type="radio" value="Manual Test" />Manual Test</input> &nbsp;
-                        <input name="F_Station" type="radio" value="Temperature Test" />Temperature Test</input> &nbsp;
-                        <input name="F_Station" type="radio" value="Calibration" />Calibration</input> &nbsp;
-                        <input name="F_Station" type="radio" value="Final Test" />Final Test</input> &nbsp;
-                        <input name="F_Station" type="radio" value="Jaw Balance" />Jaw Balance</input> &nbsp;
-                        <input name="F_Station" type="radio" value="PCA Burn In" />PCA Burn In</input> &nbsp;
+                        <input name="F_Station" type="radio" value="Manual Test" /> Manual Test </input> &nbsp;
+                        <input name="F_Station" type="radio" value="Temperature Test" /> Temperature Test </input> &nbsp;
+                        <input name="F_Station" type="radio" value="Calibration" /> Calibration </input> &nbsp;
+                        <input name="F_Station" type="radio" value="Final Test" /> Final Test </input> &nbsp;
+                        <input name="F_Station" type="radio" value="Jaw Balance" /> Jaw Balance </input> &nbsp;
+                        <input name="F_Station" type="radio" value="PCA Burn In" /> PCA Burn In </input> &nbsp;
                       </div>
 
                       <!--<input type="text" name="query" placeholder="Search by product model" value="{{ request.GET.query }}">-->
@@ -150,7 +150,7 @@
                                 <div class="form-group">
                                   <label>Select Failure Mode : </label>
                                   <div>
-                                  <select class="form-control select2 input-lg" name="failure_mode">
+                                  <select id= "F_mode" class="form-control select2 input-lg" name="failure_mode">
                                     {% for failure in F_mode %}
                                       <option>{{ failure.failure_Mode }}</option>
                                     {% endfor %}
@@ -173,9 +173,20 @@
                 </div>
             </div>
 
-            <!--<script>
-              $('.select2').select2();
-            </script>-->
+            <script>
+              //$('.select2').select2();
+              $(function() {
+                // choose target dropdown
+                var select = $('#F_mode');
+                select.html(select.find('option').sort(function(x, y) {
+                  // to change to descending order switch "<" for ">"
+                  return $(x).text() > $(y).text() ? 1 : -1;
+                }));
+              
+                // select default item after sorting (first item)
+                // $('select').get(0).selectedIndex = 0;
+              });
+            </script>
 
         </div><!-- /.container-fluid -->
       </section>
