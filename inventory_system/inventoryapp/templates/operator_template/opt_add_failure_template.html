@@ -27,17 +27,28 @@
                     <!-- /.card-header -->
                     <!-- form start -->
 
+                  <div>
                     <form method="GET">
+                      <div>
+                        <label>Step 2 - Select Station : </label>
+                        <input name="F_Station" type="radio" value="Manual Test" />Manual Test</input> &nbsp;
+                        <input name="F_Station" type="radio" value="Temperature Test" />Temperature Test</input> &nbsp;
+                        <input name="F_Station" type="radio" value="Calibration" />Calibration</input> &nbsp;
+                        <input name="F_Station" type="radio" value="Final Test" />Final Test</input> &nbsp;
+                        <input name="F_Station" type="radio" value="Jaw Balance" />Jaw Balance</input> &nbsp;
+                        <input name="F_Station" type="radio" value="PCA Burn In" />PCA Burn In</input> &nbsp;
+                      </div>
+
                       <!--<input type="text" name="query" placeholder="Search by product model" value="{{ request.GET.query }}">-->
-                      <label>Step 2 - Select FG Model : </label>
+                      <label>Step 3 - Select FG Model : </label>
                       <select class="form-control" name="query" value="{{ request.GET.query }}" >
                         <option>{{ " " }}</option>
                           {% for model in FGmodel_list %}
                             <option> {{ model }}</option>
                           {% endfor %}
                       </select> <button type="submit">Get FG model Info</button>
-                        
                     </form>
+                  <div>
 
                     <form role="form" method="POST" action="{% url 'opt_add_failure_save' %}">
                         {% csrf_token %}
@@ -66,7 +77,7 @@
                                 </div>
                                 </div>
                                 {% endif %}
-                                <div> ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</div>
+                                <div> ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</div>
                                 
                             <div class="card-body">
 
@@ -125,8 +136,13 @@
                               </div>-->
 
                               <div class="form-group">
+                                <label>Test Station : </label>
+                                <input type="text" class="form-control" name="Test_Station" value= "{{ F_Station }}" readonly>
+                              </div>
+
+                              <!--<div class="form-group">
                                 <label>Reject Bin No : </label>
-                                <input type="text" class="form-control" name="reject_bin" placeholder="Enter Reject Bin No.">
+                                <input type="text" class="form-control" name="reject_bin" placeholder="Enter Reject Bin No.">-->
                                 <!--<select class="form-control" name="FGmodel" readonly>
                                 {% for SN in PCA_SN %}
                                 <option> {{ SN.FG_Model }}</option>
@@ -140,10 +156,10 @@
                               </div>
 
                                 <div class="form-group">
-                                  <label>Select Station | Failure Mode : </label>
+                                  <label>Select Failure Mode : </label>
                                   <select class="form-control select2 input-lg" name="failure_mode">
                                     {% for failure in F_mode %}
-                                      <option>{{ failure.test_Station }}{{' | '}}{{ failure.failure_Mode }}</option>
+                                      <option>{{ failure.failure_Mode }}</option>
                                     {% endfor %}
                                   </select>
                                 </div>
@@ -163,9 +179,9 @@
                 </div>
             </div>
 
-            <script>
+            <!--<script>
               $('.select2').select2();
-            </script>
+            </script>-->
 
         </div><!-- /.container-fluid -->
       </section>

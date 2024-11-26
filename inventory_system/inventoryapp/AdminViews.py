@@ -666,31 +666,33 @@ def add_failure_save(request):
         test_cells = request.POST.get('cells')
         PCA_Partno = request.POST.get('PCA_PN')
         test_station = request.POST.get('station')
-        reject_Bin = request.POST.get('reject_bin')
+        #reject_Bin = request.POST.get('reject_bin')
+        test_station = request.POST.get('Test_Station') 
         failure_Mode = request.POST.get('failure_mode') 
         PCA_Serial = request.POST.get('PCA_Serial')
         
         print(test_cells)
         print(product_family)
-        print(reject_Bin)
+        #print(reject_Bin)
         print(PCA_Serial)
         print(PCA_Partno)
+        print(test_station)
         print(failure_Mode)
         
-        x = failure_Mode.split(" | ")
-        print (x)
-        print (x[0])
-        print (x[1])
+        #x = failure_Mode.split(" | ")
+        #print (x)
+        #print (x[0])
+        #print (x[1])
         #print (x[2])
 
-        test_station = x[0]
-        failure_Mode = x[1]
+        #test_station = x[0]
+        #failure_Mode = x[1]
      
         
         try:
             sku = Failure_Info(test_Cells=test_cells,
                             product_Model=product_family,
-                            reject_bin=reject_Bin,
+                            #reject_bin=reject_Bin,
                             PCA_serial=PCA_Serial,
                             PCA_SN_Number=PCA_Partno,
                             test_Station=test_station,
@@ -788,6 +790,7 @@ def search_PCA(request):
   failure_mode = Failure_Mode.objects.all()
   FG_model = Sku_Info.objects.values_list('FG_Model',flat=True)
   PCA_no = Sku_Info.objects.values_list('PCA_SN_Number',flat=True)
+  F_Station = ""
   
   FGmodel_list = list(set(FG_model))
   FGmodel_list.sort()
@@ -796,15 +799,19 @@ def search_PCA(request):
   
   if 'query' in request.GET:
     query = request.GET['query']
+    F_Station = request.GET['F_Station']
+    
+    print(F_Station)
+    
     PCA_SN = Sku_Info.objects.filter(FG_Model__iexact=query)
     F_cells = PCA_SN.values_list('test_Cells',flat=True)
     F_cells = ''.join(F_cells)
-    F_mode = Failure_Mode.objects.filter(test_Cells = F_cells).values()
+    F_mode = Failure_Mode.objects.filter(test_Cells = F_cells,test_Station = F_Station).values()
   else:
       PCA_SN = Sku_Info.objects.none()
       F_mode = Failure_Mode.objects.none()
-      
-  return render (request, 'admin_template/add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list,'F_mode':F_mode})
+       
+  return render (request, 'admin_template/add_failure_template.html',{'PCA_SN': PCA_SN,'cells_name': cells_name,'station_name':test_station,"failure_mode":failure_mode,'FGmodel_list':FGmodel_list,'PCAnumber_list':PCAnumber_list,'F_mode':F_mode,'F_Station':F_Station})
 
 #Actions portion ##############################################################
 def manage_action(request):
