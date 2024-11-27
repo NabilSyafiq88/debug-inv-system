@@ -13,6 +13,11 @@ from .models import CustomUser, Admin, Operator, root_Cause, action_Taken, cells
 from collections import OrderedDict
 from django.db.models import Count, Q
 
+from django.utils import timezone
+import pytz
+
+timezone.activate(pytz.timezone("Asia/Singapore"))
+
 def admin_home(request):
   
   print("Admin Home")
@@ -71,13 +76,13 @@ def admin_home(request):
   #print (cells_list)
   #print (count_list)
   
-  for failuremode in failure_all:
-    failure_Mode = Failure_Info.objects.filter(failure_mode = failuremode.failure_mode).count()
-    failure_mode_list.append(failuremode.failure_mode)
-    failuremode_count_list.append(failure_Mode)
+  #for failuremode in failure_all:
+    #failure_Mode = Failure_Info.objects.filter(failure_mode = failuremode.failure_mode).count()
+    #failure_mode_list.append(failuremode.failure_mode)
+    #failuremode_count_list.append(failure_Mode)
   
-  print(failure_mode_list)
-  print(failuremode_count_list)
+  #print(failure_mode_list)
+  #print(failuremode_count_list)
 
   
   context={
@@ -757,8 +762,12 @@ def edit_failure_save(request):
             failure.Findings = failure_findings
             failure.failure_action = failure_action
             
-            if failure_action == "Escalate" or failure_action == "None":
+            if failure_action == "None":
               failure.failure_status = "OPEN"
+            elif failure_action == "Escalate":
+              failure.failure_status = "OPEN"
+              failure.failure_Category = "Escalation"
+              failure.escalation_Date = timezone.localtime(timezone.now())
             else:
               failure.failure_status = "CLOSED"
             

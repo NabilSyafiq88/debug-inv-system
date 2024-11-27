@@ -1,7 +1,7 @@
 {% extends 'ts_template/ts_base_template.html' %}
 
 {% block page_title %}
-    Manage Escalation
+    Manage Escalation Category
 {% endblock page_title %}
 
 {% block main_content %}
@@ -64,7 +64,7 @@
                                 <th data-sortable="true">Test Station</th>
                                 <th data-sortable="true">Product FG Model</th>
                                 <th data-sortable="true">PCA Serial No.</th>
-                                <th data-sortable="true">PCA Part No.</th>
+                                <!--<th data-sortable="true">PCA Part No.</th>-->
                                 <th data-sortable="true">Failure Mode</th>
                                 <th data-sortable="true">Failure Date</th>
                                 <th data-sortable="true">Root Cause</th>
@@ -80,7 +80,7 @@
                             <tbody id="myTable">
                                 {% for failure in failure_info %}
 
-                                {%if failure.failure_action == "Escalate"%}
+                                {%if failure.failure_Category == "Escalation"%}
                             
                                     <tr>
                                     <!--<td>{{ failure.id }}</td>-->
@@ -89,7 +89,7 @@
                                     <td>{{ failure.test_Station }}</td>
                                     <td>{{ failure.product_Model }}</td>
                                     <td>{{ failure.PCA_serial }}</td>
-                                    <td>{{ failure.PCA_SN_Number }}</td>
+                                    <!--<td>{{ failure.PCA_SN_Number }}</td>-->
                                     <td>{{ failure.failure_mode }}</td>
                                     <td>{{ failure.failure_date|date:"SHORT_DATE_FORMAT"}} {{ failure.failure_date|time:"h:i a"}}</td>
                                     <td>{{ failure.root_cause }}</td>

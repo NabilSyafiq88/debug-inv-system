@@ -129,6 +129,8 @@ class Failure_Info(models.Model):
     failure_date = models.DateTimeField(auto_now_add=True)
     failure_status = models.CharField(max_length=100, null=True)
     completion_date = models.DateTimeField(auto_now=True)
+    failure_Category = models.CharField(max_length=200, null=True)
+    escalation_Date = models.DateTimeField(null=True)
     
     search_fields = ("PCA_serial__startwith")
     

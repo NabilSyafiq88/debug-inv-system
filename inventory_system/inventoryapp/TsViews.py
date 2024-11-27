@@ -7,6 +7,10 @@ from django.urls import reverse
 import datetime # To Parse input DateTime into Python Date Time Object
 
 from .models import CustomUser,action_Taken, root_Cause, cells_Name, Failure_Info, station_Name, Failure_Mode, model_Name, Sku_Info, Operator
+from django.utils import timezone
+import pytz
+
+timezone.activate(pytz.timezone("Asia/Singapore"))
 
 
 def ts_home(request):
@@ -65,10 +69,10 @@ def ts_home(request):
   for item in items:
         cells_list.append(item[0]), count_list.append(item[1])
   
-  print (cells_name_list)
-  print (failure_count_list)  
-  print (cells_list)
-  print (count_list)
+  #print (cells_name_list)
+  #print (failure_count_list)  
+  #print (cells_list)
+  #print (count_list)
   
   sku_info_list = []
   failure_info_list = []
@@ -310,10 +314,14 @@ def ts_edit_failure_save(request):
             failure.Findings = failure_findings
             failure.failure_action = failure_action
             
-            if failure_action == "Escalate" or failure_action == "None":
-                failure.failure_status = "OPEN"
+            if failure_action == "None":
+              failure.failure_status = "OPEN"
+            elif failure_action == "Escalate":
+              failure.failure_status = "OPEN"
+              failure.failure_Category = "Escalation"
+              failure.escalation_Date = timezone.localtime(timezone.now())
             else:
-                failure.failure_status = "CLOSED"
+              failure.failure_status = "CLOSED"
             
             failure.save()
           
