@@ -40,35 +40,35 @@ def operator_home(request):
     open_percentage = round(100 - complete_percentage,2)
   
 #total failure in each cells
-  failure_all = Failure_Info.objects.all()
-  failure_list = Failure_Info.objects.values_list('test_Cells',flat=True)
+  #failure_all = Failure_Info.objects.all()
+  #failure_list = Failure_Info.objects.values_list('test_Cells',flat=True)
   
-  failure_cell_list = list(set(failure_list))
+  #failure_cell_list = list(set(failure_list))
   
   #print (failure_all)
    
-  cells_name_list =[]
-  failure_count_list = []
+  #cells_name_list =[]
+  #failure_count_list = []
   
-  for failure in failure_all:
-    failures = Failure_Info.objects.filter(test_Cells = failure.test_Cells).count()
-    cells_name_list.append(failure.test_Cells)
-    failure_count_list.append(failures)
+  #for failure in failure_all:
+    #failures = Failure_Info.objects.filter(test_Cells = failure.test_Cells).count()
+    #cells_name_list.append(failure.test_Cells)
+    #failure_count_list.append(failures)
 
-  res = dict(map(lambda i,j : (i,j) , cells_name_list,failure_count_list))
+  #res = dict(map(lambda i,j : (i,j) , cells_name_list,failure_count_list))
 
   #print (res)
   
-  cells_list = []
-  count_list = []
-  items = res.items()
-  for item in items:
-        cells_list.append(item[0]), count_list.append(item[1])
+  #cells_list = []
+  #count_list = []
+  #items = res.items()
+  #for item in items:
+        #cells_list.append(item[0]), count_list.append(item[1])
   
-  print (cells_name_list)
-  print (failure_count_list)  
-  print (cells_list)
-  print (count_list)
+  #print (cells_name_list)
+  #print (failure_count_list)  
+  #print (cells_list)
+  #print (count_list)
   
   sku_info_list = []
   failure_info_list = []
@@ -82,8 +82,8 @@ def operator_home(request):
     "open_item":open_item,
     "close_item":close_item,
     #"failures":failures,
-    "cells_list":cells_list,
-    "count_list":count_list,
+    #"cells_list":cells_list,
+    #"count_list":count_list,
     "complete_percentage":complete_percentage,
     "open_percentage":open_percentage,
   }
@@ -142,14 +142,14 @@ def opt_add_failure_save(request):
         test_cells = request.POST.get('cells')
         PCA_Partno = request.POST.get('PCA_PN')
         test_station = request.POST.get('station')
-        #reject_Bin = request.POST.get('reject_bin')
+        PCA_Price = request.POST.get('PCA_price')
         test_station = request.POST.get('Test_Station')
         failure_Mode = request.POST.get('failure_mode') 
         PCA_Serial = request.POST.get('PCA_Serial')
         
         print(test_cells)
         print(product_family)
-        #print(reject_Bin)
+        print(PCA_Price)
         print(PCA_Serial)
         print(PCA_Partno)
         print(test_station)
@@ -166,7 +166,7 @@ def opt_add_failure_save(request):
         try:
             sku = Failure_Info(test_Cells=test_cells,
                             product_Model=product_family,
-                            #reject_bin=reject_Bin,
+                            PCA_Price_USD=PCA_Price,
                             PCA_serial=PCA_Serial,
                             PCA_SN_Number=PCA_Partno,
                             test_Station=test_station,
@@ -270,6 +270,7 @@ def opt_search_PCA(request):
   
   if 'query' in request.GET:
     query = request.GET['query']
+    print(query)
     F_Station = request.GET['F_Station']
     
     print(F_Station)

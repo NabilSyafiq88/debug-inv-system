@@ -51,23 +51,23 @@ def ts_home(request):
   
   #print (failure_all)
    
-  cells_name_list =[]
-  failure_count_list = []
+  #cells_name_list =[]
+  #failure_count_list = []
   
-  for failure in failure_all:
-    failures = Failure_Info.objects.filter(test_Cells = failure.test_Cells).count()
-    cells_name_list.append(failure.test_Cells)
-    failure_count_list.append(failures)
+  #for failure in failure_all:
+    #failures = Failure_Info.objects.filter(test_Cells = failure.test_Cells).count()
+    #cells_name_list.append(failure.test_Cells)
+    #failure_count_list.append(failures)
 
-  res = dict(map(lambda i,j : (i,j) , cells_name_list,failure_count_list))
+  #res = dict(map(lambda i,j : (i,j) , cells_name_list,failure_count_list))
 
   #print (res)
   
-  cells_list = []
-  count_list = []
-  items = res.items()
-  for item in items:
-        cells_list.append(item[0]), count_list.append(item[1])
+  #cells_list = []
+  #count_list = []
+  #items = res.items()
+  #for item in items:
+        #cells_list.append(item[0]), count_list.append(item[1])
   
   #print (cells_name_list)
   #print (failure_count_list)  
@@ -86,8 +86,8 @@ def ts_home(request):
     "open_item":open_item,
     "close_item":close_item,
     #"failures":failures,
-    "cells_list":cells_list,
-    "count_list":count_list,
+    #"cells_list":cells_list,
+    #"count_list":count_list,
     "complete_percentage":complete_percentage,
     "open_percentage":open_percentage,
   }
@@ -295,6 +295,7 @@ def ts_edit_failure_save(request):
         failure_rootcause = request.POST.get('failure_rootcause')
         failure_findings = request.POST.get('failure_findings')
         failure_action = request.POST.get('failure_action')
+        failure_PCA_price = request.POST.get('failure_PCA_Price')
         #failure_status = request.POST.get('status')
         
         print(failure_id)
@@ -306,6 +307,7 @@ def ts_edit_failure_save(request):
         print(failure_mode)
         print(failure_findings)
         print(failure_action)
+        print(failure_PCA_price)
         
         try:
             failure = Failure_Info.objects.get(id=failure_id)
@@ -313,6 +315,7 @@ def ts_edit_failure_save(request):
             failure.root_cause = failure_rootcause
             failure.Findings = failure_findings
             failure.failure_action = failure_action
+            failure.PCA_Price_USD = failure_PCA_price
             
             if failure_action == "None":
               failure.failure_status = "OPEN"

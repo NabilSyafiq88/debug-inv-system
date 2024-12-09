@@ -140,15 +140,17 @@
                                 <input type="text" class="form-control" name="Test_Station" value= "{{ F_Station }}" readonly>
                               </div>
 
-                              <!--<div class="form-group">
-                                <label>Reject Bin No : </label>
-                                <input type="text" class="form-control" name="reject_bin" placeholder="Enter Reject Bin No.">-->
-                                <!--<select class="form-control" name="FGmodel" readonly>
+                              <div class="form-group">
+                                <label>PCA price per unit_USD : </label>
+                                <!--<input type="text" class="form-control" name="PCA_price" readonly>-->
+                                <select class="form-control" name="PCA_price" readonly>
                                 {% for SN in PCA_SN %}
-                                <option> {{ SN.FG_Model }}</option>
+                                <option> {{ SN.PCA_Price_USD }}</option>
                                 {% endfor %}
-                              </select>-->
+                              </select>
                               </div>
+
+                            </div>
 
                               <div class="form-group">
                                 <label>PCA Serial No : </label>

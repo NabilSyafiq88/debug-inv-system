@@ -53,23 +53,23 @@ def admin_home(request):
   all_action_count = Failure_Info.objects.all()
   #failure_mode_all = Failure_Mode.objects.all()
  
-  cells_name_list =[]
-  failure_count_list = []
+  #cells_name_list =[]
+  #failure_count_list = []
   failure_mode_list = []
   failuremode_count_list = []
   
-  for failure in failure_all:
-    failures = Failure_Info.objects.filter(test_Cells = failure.test_Cells).count()
-    cells_name_list.append(failure.test_Cells)
-    failure_count_list.append(failures)
+  #for failure in failure_all:
+    #failures = Failure_Info.objects.filter(test_Cells = failure.test_Cells).count()
+    #cells_name_list.append(failure.test_Cells)
+    #failure_count_list.append(failures)
 
-  res = dict(map(lambda i,j : (i,j) , cells_name_list,failure_count_list))
+  #res = dict(map(lambda i,j : (i,j) , cells_name_list,failure_count_list))
 
-  cells_list = []
-  count_list = []
-  items = res.items()
-  for item in items:
-        cells_list.append(item[0]), count_list.append(item[1])
+  #cells_list = []
+  #count_list = []
+  #items = res.items()
+  #for item in items:
+        #cells_list.append(item[0]), count_list.append(item[1])
   
   #print (cells_name_list)
   #print (failure_count_list)  
@@ -94,8 +94,8 @@ def admin_home(request):
     "open_item":open_item,
     "close_item":close_item,
     #"failures":failures,
-    "cells_list":cells_list,
-    "count_list":count_list,
+    #"cells_list":cells_list,
+    #"count_list":count_list,
     "complete_percentage":complete_percentage,
     "open_percentage":open_percentage,
   }
@@ -212,20 +212,20 @@ def add_sku_save(request):
         product_status = request.POST.get('product_status')
         test_cells = request.POST.get('cells')
         product_family = request.POST.get('model')
-        FG_partno = request.POST.get('FGpartno')
+        PCA_Price = request.POST.get('PCAprice')
         FG_model = request.POST.get('FGmodel')
         PCA_Partno = request.POST.get('PCA_PN')
         
         print(product_status)
         print(test_cells)
         print(product_family)
-        print(FG_partno)
+        print(PCA_Price)
         print(FG_model)
         print(PCA_Partno)
         try:
             sku = Sku_Info(test_Cells=test_cells,
                             product_Model=product_family,
-                            FG_PartNo=FG_partno,
+                            PCA_Price_USD=PCA_Price,
                             FG_Model=FG_model,
                             PCA_SN_Number=PCA_Partno,
                             product_Status =product_status)
@@ -255,7 +255,7 @@ def edit_sku_save(request):
         sku_id = request.POST.get('sku_id')
         sku_name = request.POST.get('sku_cells')
         sku_model = request.POST.get('sku_model')
-        sku_FGpartno = request.POST.get('sku_FGpartno')
+        sku_PCAprice = request.POST.get('sku_PCAprice')
         sku_FGmodel = request.POST.get('sku_FGmodel')
         sku_PCApartno = request.POST.get('sku_PCApartno')
         sku_status = request.POST.get('sku_status')
@@ -263,14 +263,14 @@ def edit_sku_save(request):
         print(sku_id)
         print(sku_name)
         print(sku_model)
-        print(sku_FGpartno)
+        print(sku_PCAprice)
         print(sku_FGmodel)
         print(sku_PCApartno)
         print(sku_status)
         
         try:
             sku = Sku_Info.objects.get(id=sku_id)
-            sku.FG_PartNo = sku_FGpartno
+            sku.PCA_Price_USD = sku_PCAprice
             sku.FG_Model = sku_FGmodel
             sku.PCA_SN_Number = sku_PCApartno
             sku.product_Status = sku_status
@@ -671,14 +671,14 @@ def add_failure_save(request):
         test_cells = request.POST.get('cells')
         PCA_Partno = request.POST.get('PCA_PN')
         test_station = request.POST.get('station')
-        #reject_Bin = request.POST.get('reject_bin')
+        PCA_Price = request.POST.get('PCA_price')
         test_station = request.POST.get('Test_Station') 
         failure_Mode = request.POST.get('failure_mode') 
         PCA_Serial = request.POST.get('PCA_Serial')
         
         print(test_cells)
         print(product_family)
-        #print(reject_Bin)
+        print(PCA_Price)
         print(PCA_Serial)
         print(PCA_Partno)
         print(test_station)
@@ -697,7 +697,7 @@ def add_failure_save(request):
         try:
             sku = Failure_Info(test_Cells=test_cells,
                             product_Model=product_family,
-                            #reject_bin=reject_Bin,
+                            PCA_Price_USD=PCA_Price,
                             PCA_serial=PCA_Serial,
                             PCA_SN_Number=PCA_Partno,
                             test_Station=test_station,
@@ -742,6 +742,8 @@ def edit_failure_save(request):
         failure_findings = request.POST.get('failure_findings')
         failure_action = request.POST.get('failure_action')
         failure_status = request.POST.get('status')
+        failure_PCA_price = request.POST.get('failure_PCA_Price')
+        
         
         print(failure_id)
         print(failure_cells)
@@ -754,6 +756,7 @@ def edit_failure_save(request):
         print(failure_findings)
         print(failure_action)
         print(failure_status)
+        print(failure_PCA_price)
         
         try:
             failure = Failure_Info.objects.get(id=failure_id)
@@ -761,6 +764,7 @@ def edit_failure_save(request):
             failure.root_cause = failure_rootcause
             failure.Findings = failure_findings
             failure.failure_action = failure_action
+            failure.PCA_Price_USD = failure_PCA_price
             
             if failure_action == "None":
               failure.failure_status = "OPEN"
@@ -808,8 +812,8 @@ def search_PCA(request):
   
   if 'query' in request.GET:
     query = request.GET['query']
+    print(query)
     F_Station = request.GET['F_Station']
-    
     print(F_Station)
     
     PCA_SN = Sku_Info.objects.filter(FG_Model__iexact=query)

@@ -72,7 +72,7 @@
                             <th data-sortable="true">The Findings</th>
                             <th data-sortable="true">Action Taken</th>
                             <th data-sortable="true">Last Update</th>
-                            <th class="export-exclude">Update Escalation</th>
+                            <th class="export-exclude">Update/Delete</th>
                           </tr>
                       </thead>
 
@@ -102,10 +102,10 @@
                                     <!--<a href="{% url 'delete_failure' failure.id %}" class="btn btn-danger">Delete</a>-->
                                     <!--{%if failure.failure_status == "OPEN"%}-->
                                     <!--<div class="btn-group dropright">-->
-                                      <!--<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>
-                                      <ul class="dropdown-menu">
+                                      <!--<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Delete?</button>-->
+                                      <!--<ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="#">No, Abort</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'delete_escalate' failure.id %}">Yes, Proceed</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'delete_failure' failure.id %}">Yes, Proceed</a></li>
                                       </ul>-->
                                     <!--</div>-->
 
@@ -113,7 +113,7 @@
                                         <li><a class="dropdown-item" href="{% url 'delete_failure' failure.id %}">Proceed to Delete?</a></li>
                                       </ul>-->
                                   </td>
-                              {% endif %}
+                              <!--{% endif %}-->
                           </tr>
                           {% endif %}
                                   

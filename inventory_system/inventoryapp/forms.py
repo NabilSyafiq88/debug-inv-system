@@ -23,7 +23,7 @@ class UserRegistry(UserCreationForm):
 class SkuForm(forms.ModelForm):
     class Meta:
         model = Sku_Info
-        fields = ["test_Cells", "product_Model","FG_PartNo" ,"FG_Model", "PCA_SN_Number","product_Status"]
+        fields = ["test_Cells", "product_Model","PCA_Price_USD" ,"FG_Model", "PCA_SN_Number","product_Status"]
 
 
 class FailureForm(forms.ModelForm):

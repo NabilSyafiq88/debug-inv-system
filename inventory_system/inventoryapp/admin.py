@@ -8,7 +8,7 @@ admin.site.site_header = "Inventory Management System"
 
 class SkuAdmin(admin.ModelAdmin):
     model = Sku_Info
-    list_display = ("test_Cells", "product_Model","FG_PartNo" ,"FG_Model", "PCA_SN_Number","product_Status")
+    list_display = ("test_Cells", "product_Model","PCA_Price_USD" ,"FG_Model", "PCA_SN_Number","product_Status")
     list_filter = ["product_Model"]
     search_fields = ["PCA_SN_Number"]
 
