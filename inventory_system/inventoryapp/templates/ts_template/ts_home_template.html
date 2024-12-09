@@ -14,7 +14,7 @@
                 <div class="inner">
                   <h3>{{ all_failed_data }}</h3>
 
-                  <p>TOTAL REJECT REGISTERED</p>
+                  <p>TOTAL ITEM REGISTERED</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -43,9 +43,9 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>{{ open_percentage }} {{'%'}}</h3>
+                  <h3>{{ reject_item }}</h3>
 
-                  <p>OPEN ITEMS</p>
+                  <p>REJECT ITEMS</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -56,11 +56,11 @@
             <!-- ./col -->
             <div class="col-lg-4 col-6">
               <!-- small box -->
-              <div class="small-box bg-success">
+              <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>{{ complete_percentage }} {{'%'}}</h3>
+                  <h3>{{ escalation_item }}</h3>
 
-                  <p>CLOSED ITEMS</p>
+                  <p>ESCALATION ITEMS</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
@@ -78,9 +78,9 @@
         <div class="row">
           <div class="col-lg-6">
             <!-- PIE CHART -->
-            <div class="card card-dark">
+            <div class="card card-warning">
               <div class="card-header">
-                <h3 class="card-title">Status Breakdown</h3>
+                <h3 class="card-title">Reject Item Breakdown</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -97,10 +97,10 @@
           </div>
 
           <div class="col-lg-6">
-            <!-- DONUT CHART -->
-            <div class="card card-dark">
+            <!-- PIE CHART -->
+            <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">Reject Count from Each Test Cells</h3>
+                <h3 class="card-title">Escalation Item Breakdown</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -109,13 +109,13 @@
                 </div>
               </div>
               <div class="card-body">
-                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="pieChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-            
           </div>
+
         </div>
 
         <!--<div class="row">
@@ -157,7 +157,7 @@
       ],
       datasets: [
         {
-          data: [{{ open_item }},{{ close_item }}],
+          data: [{{ Reject_open }},{{ Reject_close }}],
           backgroundColor : ['#f39c12', '#00a65a'],
         }
       ]
@@ -181,32 +181,64 @@
       options: pieOptions      
     })
 
-
-    // Get context with jQuery - using jQuery's .get() method.
-    var cells_list = {{ cells_list|safe }}
-    var count_list = {{ count_list}}
-    var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-    var donutData        = {
-      labels: cells_list,
+    var donutChartCanvas = $('#pieChart2').get(0).getContext('2d')
+    var pieData        = {
+      labels: [ 
+          'Open',
+          'Closed',
+      ],
       datasets: [
         {
-          data: count_list,
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#000000', '#00FF00', '#FF00FF', '	#0000FF', '	#FF0000', '#cea9bc' , '#59bd99', '#a11624' ,
-          '#4b6a81' , '#fdf6ad', '#2b1820', '#9d813b' , '#bb6567' ,'#ef5d3e', '#8f8297'],
+          data: [{{ Escalation_open }},{{ Escalation_close }}],
+          backgroundColor : ['#f39c12', '#00a65a'],
         }
       ]
     }
-    var donutOptions     = {
+
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart2').get(0).getContext('2d')
+    var pieData        = pieData;
+    var pieOptions     = {
       maintainAspectRatio : false,
       responsive : true,
     }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
-    var donutChart = new Chart(donutChartCanvas, {
-      type: 'doughnut',
-      data: donutData,
-      options: donutOptions      
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions      
     })
+
+
+    // Get context with jQuery - using jQuery's .get() method.
+    //var cells_list = {{ cells_list|safe }}
+    //var count_list = {{ count_list}}
+    //var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    //var donutData        = {
+      //labels: cells_list,
+      //datasets: [
+       //{
+          //data: count_list,
+          //backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#000000', '#00FF00', '#FF00FF', '	#0000FF', '	#FF0000', '#cea9bc' , '#59bd99', '#a11624' ,
+          //'#4b6a81' , '#fdf6ad', '#2b1820', '#9d813b' , '#bb6567' ,'#ef5d3e', '#8f8297'],
+        //}
+      //]
+    //}
+    //var donutOptions     = {
+      //maintainAspectRatio : false,
+      //responsive : true,
+    //}
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    //var donutChart = new Chart(donutChartCanvas, {
+      //type: 'doughnut',
+      //data: donutData,
+      //options: donutOptions      
+    //})
 
   })
 </script>

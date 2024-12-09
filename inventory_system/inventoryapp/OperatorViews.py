@@ -26,6 +26,8 @@ def operator_home(request):
   new_failure = Failure_Info.objects.filter(failure_status = "NEW").count()
   open_item = Failure_Info.objects.filter(failure_status = "OPEN").count()
   close_item= Failure_Info.objects.filter(failure_status = "CLOSED").count()
+  escalation_item = Failure_Info.objects.filter(failure_Category = "Escalation").count()
+  reject_item = all_failed_data - escalation_item
   
   print(new_failure)
   
@@ -56,7 +58,10 @@ def operator_home(request):
     #failure_count_list.append(failures)
 
   #res = dict(map(lambda i,j : (i,j) , cells_name_list,failure_count_list))
-
+  Escalation_open = Failure_Info.objects.filter(failure_status = "OPEN",failure_Category = "Escalation").count()
+  Escalation_close = escalation_item - Escalation_open
+  Reject_open = Failure_Info.objects.filter(failure_status = "OPEN",failure_Category__isnull = True).count()
+  Reject_close = reject_item - Reject_open
   #print (res)
   
   #cells_list = []
@@ -69,7 +74,10 @@ def operator_home(request):
   #print (failure_count_list)  
   #print (cells_list)
   #print (count_list)
-  
+  print (Escalation_open)
+  print (Escalation_close)
+  print (Reject_open)
+  print (Reject_close)
   sku_info_list = []
   failure_info_list = []
   
@@ -81,6 +89,12 @@ def operator_home(request):
     "new_failure":new_failure,
     "open_item":open_item,
     "close_item":close_item,
+    "escalation_item":escalation_item,
+    "reject_item":reject_item,
+    "Escalation_open":Escalation_open,
+    "Escalation_close":Escalation_close,
+    "Reject_open":Reject_open,
+    "Reject_close":Reject_close,
     #"failures":failures,
     #"cells_list":cells_list,
     #"count_list":count_list,
